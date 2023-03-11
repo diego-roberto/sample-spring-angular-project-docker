@@ -1,0 +1,114 @@
+form#worker-edit-all-form  {
+
+  md-list {
+    max-height: 300px;
+    overflow-y: scroll;
+    margin: 0 -18px;
+    padding: 0 20px;
+
+    md-list-item {
+      flex: 1;
+      overflow: hidden;
+
+      p {
+        flex: 1;
+        margin-right: 20px;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      transition: opacity 0.2s;
+
+      &:hover{
+        opacity: 0.6;
+        cursor: pointer;
+      }
+
+      & + md-list-item {
+        border-top: 1px solid rgba(0, 0, 0, 0.250);
+      }
+
+      &:first-child {
+        margin-top: 10px;
+      }
+    }
+
+    @media(min-width: 600px) {
+      min-width: 500px;
+      max-height: 500px;
+    }
+  }
+
+  #worker-edit-all-dialog {
+    safety-dialog-content {
+      header {
+        padding: 10px 0;
+        background-color: white;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        span {
+          display: block;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+#worker-edit-all-dialog > md-dialog-container > md-dialog-content{
+  overflow-y: hidden !important;
+}
+
+md-spinner {
+  position: relative !important;
+  top: 0;
+  left: 50%;
+
+  transform: translateX(-50%);
+  display: block;
+  width: 64px !important;
+  height: 64px;
+  flex-basis: 24px;
+
+  padding: 20px;
+}
+
+safety-dialog-actions {
+  .pagination {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+
+    .paginator {
+      height: 15px;
+      display: grid !important;
+    }
+
+  }
+
+  @keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+  }
+}
+

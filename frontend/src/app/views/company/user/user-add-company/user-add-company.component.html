@@ -1,0 +1,49 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }} {{ managements.user.name }} 
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form #f="ngForm" [formGroup]="userAddCompanyForm" novalidate enctype="multipart/form-data">
+      <div class="form-content grid-container">
+        <div class="grid-column">
+          <div *ngIf="companiesList.length > 0">
+            <div class="grid-row" style="margin-top: 0; margin-bottom: 0;">
+              <b>Empresas Não Vinculadas</b>
+            </div>
+            <div class="grid-row" style="width: 60%;">
+              <ul style="margin-top:0;">
+                  <li *ngFor="let c of companiesList" style="margin-top:0; margin-bottom: 10px; list-style: none;">
+                    <div style="display: flex; justify-content: space-between;">
+                      {{ c.fakeName }}
+                      <safety-dialog-actions>
+                        <button md-button class="button-red custom" (click)="addCompanyToUser(c.id, managements.user.id)"><i class="material-icons">add_circle</i>
+                        </button>
+                      </safety-dialog-actions>  
+                    </div>
+                  </li>
+              </ul>
+            </div>
+          </div>
+          <div *ngIf="managementsList.length > 0">
+            <div class="grid-row" style="margin-top: 0; margin-bottom: 0;">
+              <b>Empresas Vinculadas</b>
+            </div>
+            <div class="grid-row">
+              <ul style="margin-top:0;">
+                <li *ngFor="let m of managementsList" style="margin-top:0; margin-bottom: 10px; list-style: none;">
+                  <div *ngIf="m.active == true" style="display: flex; justify-content: space-between;">
+                    {{ m.company.fakeName }}
+                    <safety-dialog-actions>
+                      <button md-button class="button-red custom" (click)="updCompanyToUser(m.id, m)"><i class="material-icons">remove_circle</i>
+                      </button>
+                    </safety-dialog-actions> 
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+</safety-dialog>

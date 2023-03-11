@@ -1,0 +1,88 @@
+@import "../../../../scss/components/color.scss";
+
+.top-actionbar {
+    margin-bottom: 10px;
+
+    .right-actionbar {
+        & > md-select {
+            margin: 0 10px;
+        }
+
+        md-icon {
+            color: $warm-grey-four;
+        }
+
+        .actived {
+            color: black;
+        }
+    }
+}
+
+construction-list-item {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.order {
+
+    & /deep/ {
+        .mat-select-placeholder,
+        .mat-select-value {
+            color: $warm-grey-four;
+            font-size: 10px;
+            font-weight: 900;
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+
+        .mat-select-underline {
+            display: none !important;
+        }
+    }
+}
+
+.status-icon {
+    display: block;
+    font-size: 1em;
+}
+
+.status-label {
+    margin: 0 1em;
+}
+
+fab-speed-dial {
+    md-icon {
+        color: white;
+    }
+}
+
+.body-content {
+    height: 100vh;
+}
+
+.empty-list-text{
+    text-align: center;
+}
+
+@media screen and (max-width: 959px) {
+    .order {
+        & /deep/ {
+            .mat-select-placeholder,
+            .mat-select-value,
+            .mat-select-value-text {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .top-actionbar {
+        height: 70px;
+    }
+}
+
+.clean-button{
+  background-color: #37a2e1;
+  bottom: 3px;
+  left: 3px;
+}

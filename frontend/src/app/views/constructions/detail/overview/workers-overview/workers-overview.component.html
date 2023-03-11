@@ -1,0 +1,14 @@
+<safety-card toggleDisable>
+    <safety-card-header>
+        <span class="number">{{total}}</span><span>Trabalhadores na Obra</span>
+    </safety-card-header>
+    <safety-card-content>
+        <div class="items">
+            <base-day-status class="emoticon" [image]="'/assets/icon/rostos/empolgado/31.png'" [value]="results.excited"></base-day-status>
+            <base-day-status class="emoticon" [image]="'/assets/icon/rostos/irritado/31.png'" [value]="results.angry"></base-day-status>
+            <base-day-status class="emoticon" [image]="'/assets/icon/rostos/triste/31.png'" [value]="results.sad"></base-day-status>
+            <base-day-status class="emoticon" [image]="'/assets/icon/rostos/contente/31.png'" [value]="results.glad"></base-day-status>
+            <base-day-status class="emoticon" [image]="'/assets/icon/rostos/naoRespondido/31.png'" [value]="results.notAnswered"></base-day-status>
+        </div>
+    </safety-card-content>
+</safety-card>

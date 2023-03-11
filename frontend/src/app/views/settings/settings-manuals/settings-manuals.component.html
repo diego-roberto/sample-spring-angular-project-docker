@@ -1,0 +1,49 @@
+<div class="body-content">
+
+    <div class="list-wrapper">
+        <div *ngFor="let manual of manualsList">
+
+           <div fxFlex fxLayout fxLayoutAlign="space-between center">
+
+              <safety-list-item fxFlex="100">
+                  <div fxLayout fxFlex="fill" fxLayoutAlign="start center" class="item-info" >
+                      <span class="corporate-name">{{ manual.userFileName }}</span>
+                </div>
+
+                  <div fxFlex="noshrink" fxLayout fxLayoutAlign="start center" class="tools">
+                      <a md-icon-button (click)="downloadManual(manual)">
+                          <md-icon>file_download</md-icon>
+                      </a>
+
+                      <a md-icon-button *ngIf="hasPermissionAddRemoveManuals()" (click)="deleteManual(manual)">
+                          <md-icon>delete</md-icon>
+                      </a>
+
+                      <a md-icon-button mdTooltip="Replicar" (click)="openReplicateDialog(manual)"
+                      *ngIf="hasPermissionToReplicateFiles()">
+                          <md-icon>repeat</md-icon>
+                      </a>
+
+                  </div>
+
+              </safety-list-item>
+           </div>
+        </div>
+    </div>
+
+    <fab-speed-dial #myFab *ngIf="hasPermissionAddRemoveManuals()" [direction]="'up'" [animationMode]="'fling'" [fixed]="false" (mouseenter)="myFab.open = true"
+        (mouseleave)="myFab.open = false">
+        <fab-trigger [spin]="true">
+            <button md-fab>
+                <md-icon>add</md-icon>
+            </button>
+        </fab-trigger>
+
+        <fab-actions>
+            <button md-mini-fab mdTooltip="Cadastrar Arquivo" mdTooltipPosition="before"  (click)="openManualsDialog()">
+                <i class="safety-icn-repositorio-svg"></i>
+            </button>
+
+        </fab-actions>
+    </fab-speed-dial>
+  </div>

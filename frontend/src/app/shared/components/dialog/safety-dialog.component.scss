@@ -1,0 +1,62 @@
+@import '../../../../scss/components/color.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: auto !important;
+    height: auto !important;
+}
+
+md-toolbar {
+  position: relative;
+  padding: 0;
+  border-bottom: 1px solid $pale-gray2;
+}
+
+md-dialog-content {
+  position: relative;
+
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.noTopBar {
+    padding: 0;
+    border-bottom: 0;
+    background-color: #ffffff;
+}
+
+.top {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: $greyish-brown;
+}
+
+h1 {
+    padding: 0 0 0 20px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: $greyish-brown;
+}
+
+button.close {
+    float: right;
+    opacity: 0.4;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    text-decoration: none;
+    -webkit-appearance: none;
+
+    &:hover, &:focus {
+        opacity: 0.8;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .mat-icon {
+        color: $grapefruit;
+    }
+}

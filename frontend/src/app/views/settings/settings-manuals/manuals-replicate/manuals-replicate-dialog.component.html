@@ -1,0 +1,34 @@
+
+<safety-dialog >
+
+  <safety-dialog-header>{{ title }}</safety-dialog-header>
+  <safety-dialog-content>
+      <form [formGroup]="filesReplicateFormGroup"  novalidate>
+
+        <div  fxLayout.gt-sm="row">
+            <div fxFlex.gt-sm="100" fxFlex.lt-md="100" fxLayout.lt-md="row">
+
+                <section class="left-side-selection">
+                    <div class="check-all">
+                      <md-checkbox (change)="checkAll($event)">
+                        Marcar todas as empresas
+                      </md-checkbox>
+                    </div>
+                    <div *ngFor="let interest of tenantList; let i = index">
+                      <md-checkbox  [checked]="interest.checked"
+                        (change)="onChange($event)" [value]="interest.id">{{interest.company}}
+                      </md-checkbox>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+    </form>
+  </safety-dialog-content>
+      <safety-dialog-actions>
+        <md-spinner color="warn" *ngIf="loading"></md-spinner>
+        <button md-raised-button class="button-red button-layout" [disabled]="!isValidForm()" (click)="replicate()">SALVAR</button>
+      </safety-dialog-actions>
+</safety-dialog>

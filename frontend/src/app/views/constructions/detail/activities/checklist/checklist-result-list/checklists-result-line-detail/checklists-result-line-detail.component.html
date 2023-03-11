@@ -1,0 +1,24 @@
+<safety-list-item [bulkEditable]="false">
+
+  <div fxLayout fxFlex fxLayoutAlign="start center" class="worker-info">
+    <span class="name" [mdTooltip]="checklist?.name"> {{ checklistAnswer?.checklist.name | Limit:30 }} </span>
+    <span class="checklist-version-number"> Versão {{ checklistAnswer?.checklist.versionNumber }} </span>
+    <span fxHide.sm fxHide.xs class="horizontal-divider"> | </span>
+    <span fxHide.sm fxHide.xs class="checklist-info"> Respondido em: {{ checklistAnswer?.endAnswer | date: 'dd/MM/yyyy HH:mm'}} </span>
+    <span fxHide.sm fxHide.xs class="horizontal-divider"> | </span>
+    <span fxHide.sm fxHide.xs class="checklist-info"> Por: {{ checklistAnswer?.user?.name }} </span>
+  </div>
+
+  <div fxLayout fxFlex="initial" fxLayoutAlign="end center" class="tools" [mdTooltip]="getGenerateActionPlanTooltip()">
+    <button md-icon-button *ngIf="isGenerateActionPlanEnabled()" (click)="generateActionPlan()">
+      <md-icon>event_note</md-icon>
+    </button>
+  </div>
+
+  <div fxLayout fxFlex="initial" fxLayoutAlign="end center" class="tools" [mdTooltip]="downloadMessage()">
+    <button md-icon-button (click)="downloadChecklistResult()" [disabled]="! isDownloadEnabled()">
+      <md-icon>assignment</md-icon>
+    </button>
+  </div>
+  
+</safety-list-item>

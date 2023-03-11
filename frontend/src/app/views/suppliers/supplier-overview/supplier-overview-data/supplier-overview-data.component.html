@@ -1,0 +1,42 @@
+<div fxFlex="100" fxLayout="row" fxLayoutGap="1em">
+  <div md-card-avatar class="image-wrapper" fxFlex="160px" fxLayoutAlign="center center">
+    <img *ngIf="supplier.logoUrl" [src]="supplier.logoUrl | backendPath">
+    <img *ngIf="! supplier.logoUrl" src="assets/no-image-placeholder.jpg">
+  </div>
+
+  <div fxLayout="column" fxFlex="30" fxLayoutGap="1em">
+    <div>
+      <p class="supplier-tradding-name bolder-info">{{ supplier.traddingName }}</p>
+    </div>
+
+    <div>
+      <p class="supplier-cnpj"><span class="bolder-info">CNPJ:</span> {{ supplier.cnpj | cnpjMask }}</p>
+      <p *ngIf="isSupplierCnaeVisible()" class="supplier-cnae"><span class="bolder-info">CNAE:</span> {{ supplier.cnae.code }}</p>
+    </div>
+  </div>
+
+  <div fxFlex="initial">
+    <md-chip-list>
+      <md-chip class="supplier-status-chip">
+        <span>{{ supplier.active ? 'Ativo' : 'Inativo' }}</span>
+      </md-chip>
+    </md-chip-list>
+  </div>
+
+  <div *ngIf="isSupplierAddressVisible() || isSupplierUrlDomainVisible()" fxLayout="column" fxFlex="fill" fxLayoutGap="1em">
+    <div *ngIf="isSupplierAddressVisible()">
+      <p class="bolder-info">Endereço</p>
+      <p class="bolder-info">
+        {{ supplier.addressStreet }}
+        <span *ngIf="supplier.addressNumber">, n&ordm; {{ supplier.addressNumber }}</span>
+        <span *ngIf="supplier.addressComplement">/ {{ supplier.addressComplement }}</span>
+      </p>
+      <p class="bolder-info">{{ supplier.cep }}</p>
+    </div>
+
+    <div *ngIf="isSupplierUrlDomainVisible()">
+      <p class="bolder-info">URL</p>
+      <p>{{ supplier.urlDomain }}</p>
+    </div>
+  </div>
+</div>

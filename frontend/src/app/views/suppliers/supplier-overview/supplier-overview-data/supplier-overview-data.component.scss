@@ -1,0 +1,40 @@
+@import '../../../../../scss/components/color.scss';
+
+p {
+    margin: initial;
+}
+
+.image-wrapper {
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        background-size: cover;
+    }
+}
+
+.supplier-tradding-name {
+    font-size: 1.2em;
+}
+
+.supplier-cnpj, .supplier-cnae {
+    font-size: 0.9em;
+}
+
+.bolder-info {
+    font-weight: bold;
+}
+
+.supplier-status-chip {
+    background-color: $greyish-brown;
+    color: $greyish-light;
+    cursor: default;
+    
+    span {
+        font-size: 1em;
+        font-weight: 900;
+    }
+}

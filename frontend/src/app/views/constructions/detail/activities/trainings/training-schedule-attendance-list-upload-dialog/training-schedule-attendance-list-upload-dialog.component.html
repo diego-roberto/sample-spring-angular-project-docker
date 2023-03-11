@@ -1,0 +1,65 @@
+
+
+
+<safety-dialog>
+  <safety-dialog-header>
+    Lista de Presença
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form  id="formBasicData" name="formBasicData" novalidate>
+
+      <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutWrap>
+       
+           <div fxLayout fxLayoutAlign="end center">
+
+              <div fxLayout fxLayoutAlign="start center" *ngIf="fileName">
+                  <span *ngIf="!downloadUrl" style="white-space: nowrap;">{{ fileName | Limit: 18}}</span>
+                  <a *ngIf="downloadUrl" fxFlexOffset="2px" href="{{ downloadUrl | backendPath }}" download>{{ fileName | Limit: 18 }}</a>
+              </div>
+          
+              <button md-icon-button [disabled]="disabled" *ngIf="fileName" (click)="clearFile()">
+                  <md-icon>clear</md-icon>
+              </button>
+          </div>
+      </div>
+      <div class="grid-container">
+          <div class="grid-column">
+              
+             
+              <div #fileDrop class="grid-row" *ngIf="!limitSelectionReached() ">
+                  <drop-file [showPreview]="false" [editable]="! disabled" [supportedFileTypes]="supportedFileTypes" [multiple]="false" 
+                    (fileChanged)="addFile($event)" class="half grid-row-last">
+                    <div fxLayout  fxLayoutWrap>
+                        <div fxLayoutAlign="center center">
+                            <img src="/assets/plus.svg" alt="" />
+                          </div>
+                        <div fxLayout="column" >
+                            <span >
+                                <b>Adicionar documento</b>
+                            </span>
+
+                            <span >
+                                Para adicionar arraste ou
+                                <a>clique aqui</a>
+                            </span>
+
+                            <span >
+                                <b class="info">MÁXIMO DE UM ARQUIVO.</b>
+                            </span>
+                           
+                        </div>
+                      
+                    </div>
+               
+                    
+                  </drop-file>
+              </div>
+          </div>
+      </div>
+  </form>
+
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <button md-button class="button-red" [disabled]="!theFile" (click)="upload()" >Importar</button>
+  </safety-dialog-actions>
+</safety-dialog>

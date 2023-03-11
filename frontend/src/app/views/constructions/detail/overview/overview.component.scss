@@ -1,0 +1,99 @@
+$warm-grey: #999999;
+
+:host {
+  height: 100% !important;
+}
+
+p {
+  font-size: 2em;
+  font-weight: 300;
+  text-align: center;
+  color: $warm-grey;
+  padding: 1em;
+
+  b {
+    font-weight: 900;
+  }
+}
+
+.overview {
+  width: 100%;
+  height: calc(100vh - 8em);
+}
+
+.floor-summary,
+.workers,
+.last-alerts,
+.constructions-status,
+.forthcoming-maturities,
+.forthcoming-trainings,
+.tasks {
+  margin-right: 5%;
+  margin-bottom: 20px;
+}
+
+md-card {
+  padding: 0;
+  width: 95%;
+  margin-bottom: 20px;
+}
+
+.last-alerts {
+  height: auto !important;
+  max-height: 370px;
+}
+
+.forthcoming-maturities {
+  height: auto !important;
+  max-height: 861px;
+}
+
+.forthcoming-trainings {
+  max-height: 280px;
+}
+
+.tasks {
+  height: auto !important;
+}
+
+floors-summary {
+  width: 95%;
+}
+
+.floor-summary-size {
+  max-height: 636px;
+  overflow-y: auto;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+safety-card-content {
+  overflow: scroll;
+}
+
+fab-speed-dial {
+  md-icon {
+    color: white;
+  }
+}
+
+.col-2 {
+  position: relative !important;
+}
+
+@media only screen and (min-width: 599px) {
+  .body-content {
+    padding: 20px 45px 35px 20px !important;
+  }
+}
+
+.row {
+  display: block !important;
+  flex: 1 !important;
+}
+
+@media only screen and (max-width: 599px) {
+  .body-content {
+    padding: 10px 5px 10px 5px !important;
+  }
+}

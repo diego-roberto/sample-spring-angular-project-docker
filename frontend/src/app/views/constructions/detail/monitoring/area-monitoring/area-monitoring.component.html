@@ -1,0 +1,42 @@
+<div fxLayout="column" class="body-content">
+    <app-filters [icons]="icons" (change)="iconChanged($event)"></app-filters>
+
+    <div fxFlex="4"></div>
+
+    <div fxLayout fxLayoutAlign="space-between stretch" fxFlex style="height: 100%">
+        <floors-summary 
+            *ngIf="gtSm"
+            id="monitoringSummary" 
+            scrollContainerId="monitoringSummary"
+            [showResume]="true"  
+            [(showing)]="showingFloor"
+            class="summary-overflow" 
+            [fxFlex]="showingFloor ? '360px' : '70px'" 
+            [(selectedFloor)]="floor"
+            [coneChanged]="somethingChanged"
+            [sectors]="sectors"
+            (requestConstructionRedirect)="requestConstructionRedirect.emit()">
+        </floors-summary>
+
+        <md-sidenav-container fxFlexOffset.gt-sm="15px">
+            <md-sidenav #sidenav id="monitoringSummaryResume">
+                <floors-summary *ngIf="ltMd" scrollContainerId="monitoringSummaryResume" [sectors]="sectors" [showResume]="true" (showingChange)="sidenav.close()"
+                    [(selectedFloor)]="floor" (selectedFloorChange)="sidenav.close()" (requestConstructionRedirect)="requestConstructionRedirect.emit()"></floors-summary>
+            </md-sidenav>
+
+            <div fxLayout fxFlex>
+                <div class="area-tab-toolbar" *ngIf="ltMd" (click)="sidenav.open()">
+                    <div class="hamburger">
+                        <span class="hamburger-text">Pavimentos</span>
+                    </div>
+                </div>
+
+                <blueprint-monitoring fxFlex
+                    [sectorsEvents]="events" 
+                    [floorChange]="floorChange" 
+                    [iconsToNotShow]="selectedIconsChange">
+                </blueprint-monitoring>
+            </div>
+        </md-sidenav-container>
+    </div>
+</div>

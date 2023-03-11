@@ -1,0 +1,69 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start">
+    <div fxLayout="column" fxLayout.xs="row" class="img" fxLayoutAlign.xs="space-between start">
+        <md-icon *ngIf="worker.contractType === 'Terceiro'" class="mat-icon-card">
+            title</md-icon>
+        <div md-card-avatar class="image-wrapper" *ngIf="worker.photoUrl">
+            <img [src]="worker.photoUrl + '?t=' + worker.photoFilename | backendPath" alt="">
+        </div>
+
+        <div md-card-avatar class="image-wrapper" *ngIf="!worker.photoUrl" [ngStyle]="{'background-image': 'url(' + (worker.gender ? 'assets/avatar_m.png' : 'assets/avatar_f.png') + ');'}"></div>
+        <div fxShow.xs fxHide fxLayout="column" class="tools">
+            <md-icon (click)="redirectTo()">edit</md-icon>
+        </div>
+    </div>
+    <div fxLayout="row" fxFlex="100" fxLayout.lt-md="column" fxLayoutAlign="space-between start">
+        <div class="col1" fxLayout="column">
+            <div fxLayout="row">
+                <p class="nameLabel">{{ worker.name }}</p>
+                <md-chip-list>
+                    <md-chip class="chip" *ngIf="worker.status" fxLayout fxLayoutAlign="start center">
+                        <span>ATIVO</span>
+                    </md-chip>
+                    <md-chip class="chip" *ngIf="!worker.status" fxLayout fxLayoutAlign="start center">
+                        <span>INATIVO</span>
+                    </md-chip>
+                </md-chip-list>
+            </div>
+            <p class="birthDateLabel no-margin">
+                <b>DATA NASCIMENTO:</b> {{ worker.birthDate | date: 'dd/MM/yyyy'}}
+            </p>
+
+            <div [ngSwitch]="worker.gender" class="genderLabel no-margin">
+                <b>GÊNERO:</b>
+                <span *ngSwitchCase="false">FEMININO</span>
+                <span *ngSwitchDefault>MASCULINO</span>
+            </div>
+
+            <p class="no-margin">
+                <b>FUNÇÃO:</b> {{ worker.cbos.title }}
+            </p>
+
+            <div *ngIf="worker.contractType === 'Terceiro'">
+                <p class="no-margin">
+                    <b>VÍNCULO EMPREGATÍCIO:</b> {{ worker.company | Limit: 28 }}
+                </p>
+            </div>
+        </div>
+        <div fxLayout="column" class="col2">
+            <div fxLayout="row">
+                <b>
+                    <p class="no-margin">ENDEREÇO</p>
+                    <p class="no-margin">{{ worker.completeAddress }}</p>
+                    <p class="no-margin">{{ worker.cep }}</p>
+                </b>
+            </div>
+            <div fxLayout="row">
+                <b>
+                    <p class="contact">CONTATO</p>
+                    <p class="no-margin">{{ worker.contact | phoneMask }}</p>
+                </b>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div fxHide.xs fxLayout="column" class="tools">
+        <md-icon (click)="redirectTo()">edit</md-icon>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+@import '../../../../scss/components/color.scss';
+
+.list-wrapper {
+    margin: 0 15px;
+
+    & > div {
+        & > div {
+            margin: 16px 0;
+        }
+    }
+}
+
+md-chip {
+    padding:        3px 10px !important;
+    margin:         0 5px !important;
+    border-radius:  0 !important;
+    font-size:      10px !important;
+    font-weight:    900 !important;
+    line-height:    1.4;
+    letter-spacing: 0.5px;
+    text-align:     left;
+    outline:        none;
+    cursor:         pointer;
+}
+
+
+.page{
+    font-size:      12px !important;
+    font-weight:    900 !important;
+}
+
+.button-red {
+    min-width: 1%;
+
+    border-radius:  0 !important;
+    line-height:    1.4;
+    margin-right: 50px;
+    letter-spacing: 0.5px;
+    font-size:      10px !important;
+    height: 26px;
+    font-weight:    900 !important;
+}
+.chip {
+    background-color: $greyish-brown;
+    color:            #FFFFFF;
+    border:           2px solid $greyish-brown;
+
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2em;
+    width: 100%;
+  
+    .separator {
+      background-color: $light-gray;
+      height: 1px;
+      flex: 1;
+      flex-grow: 1;
+    }
+  
+    .section-area {
+      width: 280px;
+    }
+}

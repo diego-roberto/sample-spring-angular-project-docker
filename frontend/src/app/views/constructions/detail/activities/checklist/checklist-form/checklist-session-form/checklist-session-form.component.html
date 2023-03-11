@@ -1,0 +1,26 @@
+<form [formGroup]="checklistSessionForm" fxLayout="column" fxLayoutGap="1em">
+  <md-input-container fxHide>
+    <input mdInput  formControlName="sessionTitle" >
+  </md-input-container>
+
+  <safety-card *ngFor="let question of checklistSession.checklistQuestions; let index = index" [isHidden]="! isChecklistQuestionOnEdit(question)" #questionCardComponent (onOpen)="setChecklistQuestionOnEdit(question)">
+    <safety-card-header>
+      {{ checklistQuestionHeaderTitle(question, questionCardComponent) | Limit: 150 }}
+
+      <div fxFlex fxLayoutAlign="end center">
+        <button md-icon-button mdTooltip="Excluir" *ngIf="! checklistQuestionRequired()" (click)="doRemoveQuestion(index)">
+          <md-icon>delete</md-icon>
+        </button>
+      </div>
+    </safety-card-header>
+
+    <safety-card-content fxLayout="column">
+      <checklist-question-form [checklistQuestion]="question" [required]="checklistQuestionRequired()" [checklistGeneratesActionPlan]="checklistGeneratesActionPlan" (addForm)="doAddChecklistQuestionForm($event, index)"></checklist-question-form>
+    </safety-card-content>
+  </safety-card>
+
+  <div class="add-new" (click)="doAddNewQuestion()" fxLayout="row" fxflex="100" fxLayoutAlign="start center">
+    <md-icon class="add-icon">add</md-icon>
+    <span>Adicione uma nova questão à {{ checklistSession.session ? checklistSession.session : 'seção' }}</span>
+  </div>
+</form>

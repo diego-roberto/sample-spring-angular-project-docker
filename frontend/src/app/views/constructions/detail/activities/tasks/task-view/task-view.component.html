@@ -1,0 +1,59 @@
+<safety-dialog>
+
+    <safety-dialog-header fxLayoutAlign=" center">
+        <img src="assets/activities/tasks/ic-time-{{task?.statusName}}.svg" alt="{{task?.statusName}}"> {{ task?.title | Limit: 50 }}
+    </safety-dialog-header>
+
+    <safety-dialog-content>
+        <div class="grid-container">
+            <div class="grid-column">
+
+                <div class="grid-row">
+                    <span>
+                        <b>{{ formatName(task) | Limit: 50 }}</b>
+                    </span>
+                </div>
+
+                <div class="grid-row">
+                    <span>
+                        <b>solicitou </b>
+                        <br> {{ task?.description }}
+                    </span>
+                </div>
+
+                <div class="grid-row">
+                    <span>
+                        <b>prazo</b>
+                        <br> {{ task?.deadline | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <span *ngIf="task?.responsibleId===0">
+                        <b>responsável pela execução</b>
+                        <br> {{ task?.responsibleName }}</span>
+                    <span *ngIf="task?.responsibleId>0">
+                        <b>responsável pela execução</b>
+                        <br> {{ task?.responsible?.name }}</span>
+                </div>
+                <tasks-attachment-files [task]="task" [editable]="false" [history]="false"></tasks-attachment-files>
+
+                <span *ngIf="task?.checked == true">
+                    <hr>
+                    <br>
+                    <div>
+                        <b>Histórico: </b>
+                        <h4>Conclusão: {{ checkedAt }} </h4>
+                        <span *ngIf="task?.checkedObservation != null">
+                            <h4>Observação: {{ task?.checkedObservation }} </h4>
+                        </span>
+                    </div>
+
+                    <tasks-attachment-files [task]="task" [editable]="false" [history]="true"></tasks-attachment-files>
+                </span>
+            </div>
+        </div>
+    </safety-dialog-content>
+
+    <safety-dialog-actions>
+        <button md-button class="button-default" md-dialog-close>Fechar</button>
+    </safety-dialog-actions>
+
+</safety-dialog>

@@ -1,0 +1,4 @@
+<ul class="no-margin-no-padding">
+  <ng-content></ng-content>
+</ul>
+<add-category [newCategoryLabel]="newCategoryLabel" (added)="added.emit($event)"></add-category>

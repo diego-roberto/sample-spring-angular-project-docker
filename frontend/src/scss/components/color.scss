@@ -1,0 +1,59 @@
+$cool-grey:         #A1ABB0;
+$grapefruit:        #FF4C4C;
+$green-blue:        #00BD87;
+$light-teal:        #80e1b3;
+$greyish:           #A4A4A4;
+$greyish-light:     #FCFCFC;
+$greyish-brown:     #3C3C3C;
+$light-gray:        #C3CCCE;
+
+$gray-dashed:       #E0E4E5;
+$gray-drop-file:    #EDEFF0;
+
+$link:              #888888;
+$inactive:          #8f8f8f;
+$macaroni:          #EEBA34;
+$orangey:           #FFBB1A;
+$pale-gray:         #F8FAFB;
+$pale-gray2:        #F2F6F7;
+$silver:            #E8E8E8;
+$silver2:           #B8B9B9;
+$sunflower:         #FFC315;
+$topaz:             #13AFCB;
+$warm-grey-four:    #999999;
+
+$black-87-opacity: rgba(black, 0.87);
+$white-87-opacity: rgba(white, 0.87);
+
+$greyish-brown-t: (
+    50: #ffebee,
+    100: #ffcdd2,
+    200: #ef9a9a,
+    300: #e57373,
+    400: #ef5350,
+    500: #f44336,
+    600: #e53935,
+    700: #d32f2f,
+    800: #c62828,
+    900: #b71c1c,
+    A100: #ff8a80,
+    A200: #ff5252,
+    A400: #009688,
+    A700: #3C3C3C,
+    contrast: (
+      50: $black-87-opacity,
+      100: $black-87-opacity,
+      200: $black-87-opacity,
+      300: $black-87-opacity,
+      400: $black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900: $white-87-opacity,
+      A100: $black-87-opacity,
+      A200: white,
+      A400: white,
+      A700: white,
+    )
+);

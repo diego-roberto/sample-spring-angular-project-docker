@@ -1,0 +1,13 @@
+.global-notification{
+  margin-bottom: 34px;
+
+  > span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  > div {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,122 @@
+<div #bodyContent class="listTemplate body-content" fxFlex>
+
+  <div>
+    <div>
+
+      <safety-card [isHidden]="false" #companyDetails>
+        <safety-card-header>Dados da Empresa</safety-card-header>
+        <safety-card-content>
+          <company-details [company]="company" (saved)="onCompanyDetailsSaved($event)"></company-details>
+        </safety-card-content>
+      </safety-card>
+      <!-- Inicio - Implementação em andamento -->
+      <!-- <safety-card *ngIf="profiles" [isHidden]="true" #listNotCompaniesLinkedToUser>
+                <safety-card-header>Empresas Não Vinculadas</safety-card-header>
+
+                <safety-card-content *ngIf="companiesList.length <= 0">
+                    Não existem empresas a serem listadas
+                </safety-card-content>
+
+                <safety-card-content>
+                    <div class="grid-row">
+                        <ul style="margin-top:0;">
+                            <li *ngFor="let c of companiesList" style="margin-top:0; margin-bottom: 10px; list-style: none;">
+                              <div style="display: flex; justify-content: space-between;">
+                                {{ c.fakeName }}
+                                <safety-dialog-actions>
+                                  <button md-button class="button-red custom" (click)="addCompanyToUser(c.id, currentUser.id)"><i class="material-icons">add_circle</i>
+                                  </button>
+                                </safety-dialog-actions>
+                              </div>
+                            </li>
+                        </ul>
+                      </div>
+                </safety-card-content>
+            </safety-card>
+
+            <safety-card *ngIf="profiles" [isHidden]="true" #listCompaniesLinkedToUser>
+                <safety-card-header>Empresas Vinculadas</safety-card-header>
+
+                <safety-card-content *ngIf="managementsList.length <= 0">
+                    Não existem empresas a serem listadas
+                </safety-card-content>
+
+                <safety-card-content>
+                    <div class="grid-row">
+                        <ul style="margin-top:0;">
+                          <li *ngFor="let m of managementsList" style="margin-top:0; margin-bottom: 10px; list-style: none;">
+                            <div *ngIf="m.active == true" style="display: flex; justify-content: space-between;">
+                              {{ m.company.fakeName }}
+                              <safety-dialog-actions>
+                                <button md-button class="button-red custom" (click)="updCompanyToUser(m.id)"><i class="material-icons">remove_circle</i>
+                                </button>
+                              </safety-dialog-actions>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                </safety-card-content>
+            </safety-card> -->
+      <!-- Fim - Implementação em andamento -->
+
+      <safety-card [isHidden]="true" #responsableData>
+        <safety-card-header>Dados do responsável Pela Empresa</safety-card-header>
+        <safety-card-content>
+          <responsable-data [company]="company" (saved)="onResponsableData($event)"
+            [responsibleType]="responsibleDataType"></responsable-data>
+        </safety-card-content>
+      </safety-card>
+
+      <safety-card [isHidden]="true" #responsableSstData>
+        <safety-card-header>Dados do responsável SST</safety-card-header>
+        <safety-card-content>
+          <responsable-data [company]="company" (saved)="onResponsableSstData($event)"
+            [responsibleType]="responsibleSstDataType"></responsable-data>
+        </safety-card-content>
+      </safety-card>
+
+      <safety-card [isHidden]="true" #responsableContactData>
+        <safety-card-header>Dados Do Contato</safety-card-header>
+        <safety-card-content>
+          <responsable-data [company]="company" (saved)="onResponsableContactData($event)"
+            [responsibleType]="responsibleContactDataType"></responsable-data>
+        </safety-card-content>
+      </safety-card>
+
+      <safety-card [isHidden]="true" #companyDocumentation
+        *ngIf="permissionService.hasSomePermission(['COMPANY_SHOW_COMPANY_DOCS'])">
+        <safety-card-header>controle de documentos</safety-card-header>
+        <safety-card-content>
+          <company-documentation [(companyDocumentationList)]="company.companyDocumentationList"
+            (doSave)="doSaveCompanyDocumentationList()"></company-documentation>
+        </safety-card-content>
+      </safety-card>
+
+      <safety-card [isHidden]="true" #additionalInformation>
+        <safety-card-header>Informações Adicionais</safety-card-header>
+        <safety-card-content>
+          <additional-information [company]="company" (saved)="onAdditionalInformation($event)">
+          </additional-information>
+        </safety-card-content>
+      </safety-card>
+
+    </div>
+
+    <fab-speed-dial *ngIf="permissionService.hasSomePermission(['COMPANY_WORKERS_LIST']) && showFabButton" #myFab
+      [direction]="direction" [animationMode]="animationMode" [fixed]="fixed" (mouseenter)="myFab.open = true"
+      (mouseleave)="myFab.open = false">
+      <fab-trigger [spin]="spin">
+        <button md-fab name="addMore">
+          <md-icon>add</md-icon>
+        </button>
+      </fab-trigger>
+
+      <fab-actions>
+        <button md-mini-fab mdTooltip="Gerar Relatório documentos" mdTooltipPosition="before"
+          (click)="openPrintCompanyDocumentationReportDialog()">
+          <md-icon>assignment</md-icon>
+        </button>
+      </fab-actions>
+    </fab-speed-dial>
+  </div>
+</div>

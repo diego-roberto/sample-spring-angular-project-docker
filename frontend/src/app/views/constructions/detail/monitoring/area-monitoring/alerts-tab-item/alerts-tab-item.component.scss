@@ -1,0 +1,48 @@
+.alert-tab-item {
+    display: flex;
+    align-items: center;
+    flex-basis: 0;
+    justify-content: flex-start;
+
+    font-size: 14px;
+    color: #3c3c3c;
+    padding: 1em;
+
+    border-bottom: 1px solid #f2f5f6;
+
+    .icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        background-image: url('/assets/markers/danger-colored.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left center;
+        margin-right: 1em;
+        box-sizing: border-box;
+
+        &.cone {
+            background-image: url('/assets/markers/cone-colored.png');
+        }
+    }
+
+    .message {
+        display: inline;
+        a {
+            color: #ff4c4c;
+        }
+        .time {
+            color: #999;
+        }
+    }
+
+    &:hover {
+        border-left: 2px solid #ff4c4c;
+        background-color: #f8fafb;
+        .icon {
+            margin-left: -2px;
+        }
+    }
+}

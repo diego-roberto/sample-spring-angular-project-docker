@@ -1,0 +1,23 @@
+<safety-dialog [actionItemForm]="actionItemForm">
+
+  <safety-dialog-header fxLayoutAlign="start center">
+    <md-icon class="{{actionPlanItem.status}}">access_time</md-icon>  
+    <div class="icon-margin">
+        {{ title | Limit: 30 }}
+        {{actionItemForm.disabled}}
+    </div>
+   
+  </safety-dialog-header>
+
+  <safety-dialog-content >
+    <action-plan-item-form #actionItemForm [actionPlanItem]="actionPlanItem"></action-plan-item-form>
+  </safety-dialog-content>
+
+  <safety-dialog-actions>
+   
+    <button md-button class="button-default" md-dialog-close>Fechar</button>
+    <button *ngIf="isEnableEdit()" [disabled]="actionItemFormView.form.enabled" md-button class="button-red" (click)="edit()">Editar</button>
+    <button  *ngIf="actionItemFormView.form.enabled" [disabled]="!isEditMode()" md-button class="button-red" md-dialog-close (click)="save(actionPlanItem)">Salvar</button>
+  </safety-dialog-actions>
+
+</safety-dialog>

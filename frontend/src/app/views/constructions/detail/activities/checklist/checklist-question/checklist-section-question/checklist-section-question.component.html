@@ -1,0 +1,21 @@
+<div fxLayoutAlign="none center">
+  <div [ngSwitch]="hasAnswered">
+    <md-icon *ngSwitchCase="true" class="success-icon"> check_circle</md-icon>
+    <md-icon *ngSwitchCase="false" class="disabled-icon"> panorama_fish_eye</md-icon>
+    <md-icon *ngSwitchDefault class="disabled-icon"> panorama_fish_eye</md-icon>
+  </div>
+
+  <!-- titulo e help -->
+  <div>
+    <span>
+      <b> {{ questionIndexes.get(question.id) }} - {{ question?.title }} </b>
+    </span>
+
+    <button md-icon-button [mdTooltip]="question?.help">
+      <md-icon>help</md-icon>
+    </button>
+  </div>
+</div>
+
+<checklist-answer [answers]="checklistQuestionAnswer" [checklistPossibleAnswers]="checklistPossibleAnswers"
+  (sendAnswerValue)="answerQuestion($event)" (sendAttachmentValue)="emitAttachmentValue($event)"></checklist-answer>

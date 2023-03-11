@@ -1,0 +1,18 @@
+<div>
+  <div class="sector" fxLayout="row" fxLayoutAlign="center center">
+    <div class="separator"></div>
+    <span>
+      <b class="sector-title" fxFlexOffset="64px" [mdTooltip]="section?.session">{{ section.session | Limit:90 }}</b>
+    </span>
+    <div fxFlexOffset="64px" class="separator"></div>
+    <md-checkbox  fxLayout="row nowrap" fxFlexOffset="18px" [checked]="isChecked" (change)="changeToogle()" (value)="showSection">
+      <span class=nowrap>não se aplica</span>
+    </md-checkbox>
+  </div>
+
+  <div *ngIf="!showSection">
+    <checklist-section-question *ngFor="let question of section.checklistQuestions" [questionIndexes]="questionIndexes" [question]="question"
+      [checklistPossibleAnswers]="checklistPossibleAnswers" [checklistAnswer]="checklistAnswer" [hasAnswered]="hasAnswered"
+      (hasAnsweredSectionQuestion)="hasAnsweredQuestion($event)" (hasChanged)="hasChangedAnswer()"></checklist-section-question>
+  </div>
+</div>

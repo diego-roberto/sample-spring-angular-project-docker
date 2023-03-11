@@ -1,0 +1,13 @@
+<safety-dialog>
+    <safety-dialog-header>
+        {{ title }}
+    </safety-dialog-header>
+    <safety-dialog-content>
+        {{ description }}
+        <p *ngFor="let desc of listDescription">{{ desc }}</p>
+        <span [innerHTML]="descriptionInnerHtml"></span>
+    </safety-dialog-content>
+    <safety-dialog-actions>
+        <button md-button class="button-default" md-dialog-close>fechar</button>
+    </safety-dialog-actions>
+</safety-dialog>

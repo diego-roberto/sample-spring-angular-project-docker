@@ -1,0 +1,50 @@
+@import '../../../../../scss/components/color.scss';
+
+drop-file {
+    width: 100% !important;
+    height: 25% !important;
+    border: 2px dashed $light-gray !important;
+
+    img {
+        float: left !important;
+        margin: 31px 32px 0 34px;
+        width: 23px !important;
+        height: 23px !important;
+    }
+
+    div {
+        float: left;
+        margin-top: 2%;
+    }
+
+    span {
+        font-size: 14px;
+        font-weight: 300;
+        color: $greyish-brown;
+
+        b {
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            color: #5e5e5e;
+        }
+
+        a {
+            color: $grapefruit;
+            text-decoration: underline;
+            opacity: 0.7;
+    
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+drop-file.thumb {
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.md-select-container {
+    padding-bottom: 1.3em;
+}

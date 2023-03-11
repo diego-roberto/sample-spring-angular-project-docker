@@ -1,0 +1,320 @@
+<div
+  #bodyContent
+  class="listTemplate body-content"
+  fxFlex
+>
+  <md-spinner
+    *ngIf="loading || showPrintLoader"
+    color="warn"
+  ></md-spinner>
+  <div *ngIf="!loading">
+    <div *ngIf="workersRequest.workers.length > 0 || isSearch">
+      <safety-card>
+        <safety-card-header>próximos vencimentos</safety-card-header>
+        <safety-card-content>
+          <worker-next-expirations (toShowPrintLoader)="toShowPrintLoader($event)"></worker-next-expirations>
+        </safety-card-content>
+      </safety-card>
+
+      <div
+        fxLayout
+        fxLayoutAlign="space-between center"
+        class="top-actionbar"
+        ngClass.lt-md="slim-actionbar"
+      >
+        <div
+          fxFlex
+          fxLayout="row wrap"
+          fxLayoutAlign.lt-md="start"
+          fxLayoutAlign="start center"
+          class="divtop"
+          fxLayoutGap
+        >
+          <search
+            (applyFilter)="filterByText()"
+            (onTextChange)="onSearchValueChange($event)"
+            [(value)]="searchValue"
+          ></search>
+
+          <md-select
+            multiple
+            placeholder="Cargos"
+            [fxHide.sm]="showSearch"
+            [fxHide.xs]="showSearch"
+            [(ngModel)]="selectedCbo"
+            [fxFlex]="10"
+            class="order"
+          >
+            <md-option
+              *ngFor="let cbo of cbos"
+              [value]="cbo.id"
+            >
+              {{ cbo.title }}
+            </md-option>
+          </md-select>
+
+          <md-chip-list>
+            <md-chip
+              class="main-chip"
+              [ngClass.lt-md]="{
+                'small-chip': true,
+                active: activeFilters.personal
+              }"
+              [ngClass]="{ active: activeFilters.personal }"
+              fxLayout
+              fxLayoutAlign="center center"
+              (click)="toggleActiveFilter('personal')"
+              mdTooltip="Clique para Filtrar"
+              mdTooltipPosition="above"
+            >
+              próprios
+            </md-chip>
+            <md-chip
+              class="main-chip"
+              [ngClass.lt-md]="{
+                'small-chip': true,
+                success: activeFilters.outsourced
+              }"
+              [ngClass]="{ success: activeFilters.outsourced }"
+              fxLayout
+              fxLayoutAlign="space-around center"
+              (click)="toggleActiveFilter('outsourced')"
+              mdTooltip="Clique para Filtrar"
+              mdTooltipPosition="above"
+            >
+              <md-icon
+                fxLayout
+                fxLayoutAlign="center center"
+              >title</md-icon>
+              terceiros
+            </md-chip>
+          </md-chip-list>
+
+          <md-select
+            [disabled]="!activeFilters.outsourced"
+            multiple
+            placeholder="Empresa"
+            [fxHide.sm]="showSearch"
+            [fxHide.xs]="showSearch"
+            [(ngModel)]="selectedCompany"
+            [fxFlex]="10"
+            class="order"
+          >
+            <md-option
+              *ngFor="let supplier of supplierList"
+              [value]="supplier.id"
+            >
+              {{ supplier.traddingName }}
+            </md-option>
+          </md-select>
+
+          <md-select
+            multiple
+            placeholder="Status"
+            [fxHide.sm]="showSearch"
+            [fxHide.xs]="showSearch"
+            [(ngModel)]="selectedActives"
+            [fxFlex]="10"
+            class="order"
+          >
+            <md-option
+              *ngFor="let item of availableActives"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </md-option>
+          </md-select>
+
+          <button
+            md-raised-button
+            class="button-red mat-button"
+            (click)="search()"
+            style="bottom: 3px;"
+          >
+            Filtrar
+          </button>
+          <button
+            md-raised-button
+            class="clean-button button-default mat-button"
+            (click)="clearstoragedFilter()"
+          >
+            Limpar
+          </button>
+
+          <div
+            fxFlexOffset="60"
+            fxFlex
+            fxLayoutAlign="end center "
+          >
+            <div fxFill></div>
+            <md-select
+              [fxHide.sm]="showSearch"
+              [fxHide.xs]="showSearch"
+              mdTooltip="Ordenação"
+              mdTooltipPosition="above"
+              [(ngModel)]="selectedOrder"
+              [fxFlex.gt-sm]="selectedOrder === 'name' ? '130px' : '210px'"
+              class="order"
+            >
+              <md-option
+                *ngFor="let orderStyle of availableOrders"
+                [value]="orderStyle.sort.field"
+                (click)="search()"
+              >
+                {{ orderStyle.name }}
+              </md-option>
+            </md-select>
+
+            <button
+              md-icon-button
+              type="button"
+              name="button"
+              [disabled]="showListDashboard"
+              (click)="toggleListDashboard()"
+            >
+              <md-icon class="actived">list</md-icon>
+            </button>
+            <button
+              md-icon-button
+              type="button"
+              name="dashboard"
+              [disabled]="!showListDashboard"
+              (click)="toggleListDashboard()"
+            >
+              <md-icon class="actived">dashboard</md-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        fxLayoutAlign="end center"
+        *ngIf="hasWorkerList()"
+        class="list-wrapper"
+      >
+        <div fxLayoutAlign="end center">
+          <button
+            md-icon-button
+            (click)="previousPage()"
+            [disabled]="workersRequest.first"
+          >
+            <md-icon>keyboard_arrow_left</md-icon>
+          </button>
+          <span>{{ workersRequest.number + 1 }}</span>
+          <button
+            md-icon-button
+            (click)="nextPage()"
+            [disabled]="workersRequest.last"
+          >
+            <md-icon>keyboard_arrow_right</md-icon>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="list-wrapper"
+        *ngIf="showListDashboard"
+        boundSensor
+      >
+        <div
+          class="line"
+          *ngFor="let worker of workersFilteredList; let i = index"
+        >
+          <workers-line-detail
+            fxFlex
+            fxLayout
+            fxLayoutAlign="space-between center"
+            [worker]="worker"
+            (toShowPrintLoader)="toShowPrintLoader($event)"
+            (toEditWorker)="editWorker($event.id)"
+          >
+          </workers-line-detail>
+        </div>
+      </div>
+
+      <div
+        class="list-wrapper"
+        *ngIf="!showListDashboard"
+        boundSensor
+      >
+        <div class="card-line">
+          <div
+            *ngFor="let worker of workersFilteredList"
+            class="card-container"
+          >
+            <workers-card-detail
+              [worker]="worker"
+              (toShowPrintLoader)="toShowPrintLoader($event)"
+              (toEditWorker)="editWorker($event.id)"
+              (toDeleteWorker)="deleteWorker($event)"
+            >
+            </workers-card-detail>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <workers-landing-page *ngIf="workersRequest.workers.length === 0 && !isSearch"></workers-landing-page>
+
+    <fab-speed-dial
+      *ngIf="
+        permissionService.hasSomePermission(['COMPANY_WORKERS_LIST']) &&
+        showFabButton
+      "
+      #myFab
+      [direction]="direction"
+      [animationMode]="animationMode"
+      [fixed]="fixed"
+      (mouseenter)="myFab.open = true"
+      (mouseleave)="myFab.open = false"
+    >
+      <fab-trigger [spin]="spin">
+        <button md-fab>
+          <md-icon>add</md-icon>
+        </button>
+      </fab-trigger>
+
+      <fab-actions>
+        <button
+          md-mini-fab
+          mdTooltip="Adicionar trabalhador"
+          mdTooltipPosition="before"
+          (click)="redirectTo('/workers/new')"
+        >
+          <i class="safety-icn-worker-svg"></i>
+        </button>
+
+        <button
+          *ngIf="
+            permissionService.hasSomePermission(['INACTIVATE_WORKERS_DIALOG'])
+          "
+          md-mini-fab
+          mdTooltip=" Editar
+          status dos trabalhadores"
+          mdTooltipPosition="before"
+          (click)="openWorkerEditAllDialog()"
+        >
+          <md-icon>edit</md-icon>
+        </button>
+
+        <button
+          md-mini-fab
+          mdTooltip="Importar trabalhadores"
+          mdTooltipPosition="before"
+          (click)="redirectTo('/workers/upload')"
+        >
+          <md-icon>cloud_upload</md-icon>
+        </button>
+
+        <button
+          md-mini-fab
+          mdTooltip="Gerar Relatório"
+          mdTooltipPosition="before"
+          (click)="openWorkerReportDialog()"
+        >
+          <md-icon>assignment</md-icon>
+        </button>
+      </fab-actions>
+    </fab-speed-dial>
+  </div>
+</div>

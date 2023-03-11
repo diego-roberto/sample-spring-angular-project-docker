@@ -1,0 +1,11 @@
+<div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <md-button-toggle-group fxLayout="row" fxLayoutAlign="start center" fxFlex.lt-md="100%" fxFlex.gt-sm="60%" (ngModelChange)="emitAnswerValue($event)"
+      [(ngModel)]="answers.idAnswerPossible">
+      <md-button-toggle [checked]="((answers.idAnswerPossible == answer?.id) && (answers.questionAnswered === true)) ? true : false"
+        *ngFor="let answer of checklistPossibleAnswers" fxLayoutAlign="center center" fxFlex value="{{answer?.id}}">
+        {{ answer.answer }}
+      </md-button-toggle>
+    </md-button-toggle-group>
+  </div>
+</div>

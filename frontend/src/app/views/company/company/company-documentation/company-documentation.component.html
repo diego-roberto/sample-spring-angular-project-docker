@@ -1,0 +1,18 @@
+<form [formGroup]="companyDocumentationForm" (ngSubmit)="save()" novalidate enctype="multipart/form-data">
+  <div class="form-content" fxLayout="column">
+    <diV *ngFor="let companyDocumentation of companyDocumentationList">
+      <company-documentation-item [companyDocumentation]="companyDocumentation" (addFormToFormArrayOfParent)="doAddFormToFormArray($event)"
+        (removeFormFromFormArrayOfParent)="doRemoveFormFromFormArray($event)" (renewCompanyDocumentationEvent)="doRenewCompanyDocumentation($event)"
+        (removeCompanyDocumentationEvent)="doRemoveCompanyDocumentation($event)"></company-documentation-item>
+    </diV>
+
+    <div id="add-new-company-documentation" (click)="doAddNewCompanyDocumentation()" fxLayout="row" fxflex="100" fxLayoutAlign="start center">
+      <md-icon class="add-icon">add</md-icon>
+      <span>Adicione uma nova documentação</span>
+    </div>
+  </div>
+
+  <div class="form-bottom">
+    <button md-raised-button class="button-default" [disabled]="!companyDocumentationForm.valid ">SALVAR E CONTINUAR</button>
+  </div>
+</form>

@@ -1,0 +1,17 @@
+@import "../../../../scss/components/color.scss";
+
+.settings-overview-card {
+    margin-bottom: 1.25em;
+    margin-right: 1%;
+
+    a {
+        text-decoration: none;
+    }
+
+    p {
+        font-size: 1em;
+        font-weight: 500;
+        color: $warm-grey-four;
+        padding: 1em;
+    }
+}

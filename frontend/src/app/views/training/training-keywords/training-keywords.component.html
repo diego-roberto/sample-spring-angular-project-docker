@@ -1,0 +1,37 @@
+<div *ngIf="!disabled" fxFlex="100" fxLayout="column" style="margin-top: -20px; padding-top: 5px !important;">
+    <md-input-container fxFlex="100"        >
+        <input #trainingkeywords mdInput  
+        placeholder={{placeHolder}}
+        [mdAutocomplete]="auto" 
+        [formControl]="stateCtrl" 
+        [(ngModel)]="query"          
+        (blur)="blurEventHandler()" 
+        (focus)="focusEventHandler()" 
+        (focusout)="focusOutEventHandler()" >
+        
+    </md-input-container>
+
+    <md-autocomplete    #auto="mdAutocomplete"  >
+        
+        <md-option  *ngFor="let keyword of filteredKeywords| async;let last=last;let index=index  " 
+                          [value]="keyword.keyword" 
+                          (click)="process(keyword,isSelected(keyword.keyword) )">
+                  <md-checkbox  *ngIf="keyword.id>=0"  [checked]="isSelected(keyword.keyword)" [disabled]=true></md-checkbox>     
+                  <span>{{keyword.keyword}}</span>
+         </md-option>
+        
+    </md-autocomplete>
+    <md-error *ngIf="selected.length>5">O número máximo de palavras-chave que podem ser selecionados é 5</md-error>      
+</div>
+<div *ngIf="disabled" fxFlex="100" fxLayout="column" style="margin-top: -20px">
+    <md-input-container fxFlex="100"     [disabled]="true"     >
+        <input  mdInput
+        placeholder={{placeHolder}}
+        [disabled]="true"
+        [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="query"          
+     >
+
+    </md-input-container>
+
+</div>

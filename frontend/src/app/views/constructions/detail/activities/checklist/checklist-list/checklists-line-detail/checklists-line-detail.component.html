@@ -1,0 +1,111 @@
+<safety-list-item [bulkEditable]="false">
+  <div
+    fxLayout
+    fxFlex
+    fxLayoutAlign="start center"
+    class="worker-info"
+  >
+    <span
+      class="name"
+      [mdTooltip]="checklist?.name"
+    > {{ checklist.name | Limit:90 }} </span>
+    <span
+      fxHide.sm
+      fxHide.xs
+      *ngIf="lastChecklistAnswer?.endAnswer"
+      class="horizontal-divider"
+    > | </span>
+    <span
+      fxHide.sm
+      fxHide.xs
+      *ngIf="lastChecklistAnswer?.endAnswer"
+      class="checklist-info"
+    > Última resposta em: {{
+      lastChecklistAnswer?.endAnswer | date: 'dd/MM/yyyy HH:mm'}} </span>
+    <span
+      fxHide.sm
+      fxHide.xs
+      *ngIf="lastChecklistAnswer?.user?.name"
+      class="horizontal-divider"
+    > | </span>
+    <span
+      fxHide.sm
+      fxHide.xs
+      *ngIf="lastChecklistAnswer?.user?.name"
+      class="checklist-info"
+    > Por: {{
+      lastChecklistAnswer?.user?.name }} </span>
+  </div>
+
+  <div>
+    <div
+      fxLayout
+      fxFlex="auto"
+      fxLayoutAlign="end center"
+      class="tools"
+    >
+      <md-chip-list
+        class="iconImg"
+        *ngIf="getCheckpoint(checklist) != null"
+      >
+        <md-chip class="chip active {{ getCheckpoint(checklist).class }} ">
+          <span fxHide.lt-md>{{getCheckpoint(checklist).text}}</span>
+        </md-chip>
+      </md-chip-list>
+
+      <button
+        class="loading-button"
+        md-icon-button
+        mdTooltip="Responder"
+        [disabled]="checklist.checklistToAnswerId == null || loading"
+        (click)="emitVerifyChecklist()"
+        *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_ANSWER'])"
+      >
+        <md-spinner *ngIf="loading"></md-spinner>
+        <md-icon *ngIf="!loading">reply</md-icon>
+      </button>
+
+      <button
+        class="loading-button"
+        md-icon-button
+        mdTooltip="Continuar Responder"
+        [disabled]="checklist.continueDisable || activeQuestionLoading"
+        (click)="emitActiveQuestions()"
+        *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_ANSWER'])"
+      >
+        <md-spinner *ngIf="activeQuestionLoading"></md-spinner>
+        <md-icon *ngIf="!activeQuestionLoading">update</md-icon>
+      </button>
+
+      <button
+        md-icon-button
+        mdTooltip="Resultado"
+        [disabled]="!checklist.hasResult"
+        (click)="emitActiveResultList()"
+        *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_REPORT'])"
+      >
+        <md-icon>assignment</md-icon>
+      </button>
+
+      <button
+        md-icon-button
+        [disabled]="!checklist.continueDisable"
+        (click)="emitEditChecklist()"
+        *ngIf="hasEditPermission()"
+      >
+        <md-icon *ngIf="checklist.continueDisable" mdTooltip="Editar">edit</md-icon>
+        <md-icon *ngIf="!checklist.continueDisable" mdTooltip="Não é possível editar as questões de um checklist com respostas em andamento">edit</md-icon>
+      </button>
+
+      <button
+        md-icon-button
+        mdTooltip="Replicar"
+        (click)="replicate()"
+        *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_REPLICATE'])"
+      >
+        <md-icon>repeat</md-icon>
+      </button>
+    </div>
+  </div>
+
+</safety-list-item>

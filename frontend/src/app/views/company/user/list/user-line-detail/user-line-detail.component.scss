@@ -1,0 +1,86 @@
+@import '../../../../../../scss/components/color.scss';
+
+.danger { 
+    color: $grapefruit; 
+    font-size: 11px !important;
+}
+
+.expired {
+    color: $grapefruit; 
+}
+
+.users-info {
+    span {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.21;
+        text-align: center;
+        color: $greyish-brown;
+        margin-left: 10px;
+    }
+    .image-wrapper {
+        height: 50px;
+        width: 80px;
+
+        img {
+            height: 50px;
+            width: 80px;
+            margin-left: 5%;
+        }
+    }
+}
+
+.tools {
+    padding: 0 10px;
+
+    & > md-icon {
+        color: $silver2;
+        cursor: pointer;
+        font-size: 20px;
+        margin: 10px;
+
+        &:hover {
+            color: black;
+        }
+
+        &.slim {
+            width: 21px;
+            margin: 5px;
+        }
+    }
+
+    .bell {
+        margin: 0 15px;
+        color: $greyish-brown;
+    }
+
+    .pencil {
+        margin: 0 5px;
+    }
+
+    img {
+        width: 12px;
+        height: 16px;
+    }
+
+    .labeled-icon {
+        margin: 5px 10px;
+
+        span {
+            margin-top: 5px;
+            font-size: 12.1px;
+            font-weight: 300;
+            line-height: 1;
+            text-align: center;
+            color: $greyish-brown;
+        }
+    }
+}
+
+.user-description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: auto;
+    max-width: 18vw;
+}

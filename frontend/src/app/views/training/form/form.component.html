@@ -1,0 +1,88 @@
+<div class="body-content">
+    <safety-card #datailsCard>
+        <safety-card-header>nova capacitação</safety-card-header>
+        <safety-card-content>
+            <form [formGroup]="trainingForm" id="formBasicData" name="formBasicData">
+                <div class="grid-container">
+
+                    <div class="grid-column">
+                        <div class="grid-row">
+                            <md-input-container>
+                                <input mdInput required formControlName="title" placeholder="Título" [(ngModel)]="title" trimText>
+                            </md-input-container>
+                        </div>
+
+                        <div class="grid-row">
+                            <md-select required class="exhibition" [(ngModel)]="selectedExhibitions" formControlName="exhibition" placeholder="Modo de Exibição">
+                                <md-option *ngFor="let exhibition of exhibitions" [value]="exhibition.id">
+                                    {{ exhibition.name }}
+                                </md-option>
+                            </md-select>
+
+                            <md-input-container class="horario">
+                                <input mdInput formControlName="cargaHoraria" [(ngModel)]="cargaHoraria" [textMask]="{ mask: durationTimeMask,guide: false  }"
+                                    placeholder="Carga Horária" required>
+                            </md-input-container>
+
+                        </div>
+                        <div class="grid-row">
+                            <md-select required placeholder="Categoria" formControlName="category" [(ngModel)]="category">
+                                <md-option *ngFor="let cat of categories" [value]="cat.id">
+                                    {{ cat.name }}
+                                </md-option>
+                            </md-select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="grid-column">
+
+                        <div class="grid-row">
+                            <md-input-container>
+                                <input mdInput [required]="selectedExhibitions===2" placeholder="Url da Mídia" formControlName="midia" (change)="checkDuration()"  [(ngModel)]="midia" trimText>
+                                <md-hint align="end">{{ urlHint }}</md-hint>
+                            </md-input-container>
+                        </div>
+
+                        <div class="grid-row">
+                            <md-select multiple required formControlName="selectedServices" [(ngModel)]="selectedServices" placeholder="Serviço de obra relacionado">
+                                <md-option *ngFor="let service of services" [value]="service.id">
+                                    {{ service.name }}
+                                </md-option>
+                            </md-select>
+                        </div>
+
+                        <div class="grig-row">
+                            <training-keywords id="trainingKeywords" fxFlex="100" [selectedExhibitions]="selectedExhibitions" (selectedKeywords)="hasKeywords($event)"></training-keywords>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="grid-row">
+                    <md-input-container fxFlex="100">
+                        <textarea mdInput formControlName="description" [(ngModel)]="description" placeholder="Descrição" [maxlength]="trainingDescMaxLength" trimText></textarea>
+                        <md-hint align="end">{{ description ? description.length : 0 }} / {{ trainingDescMaxLength }}</md-hint>
+                    </md-input-container>
+                </div>
+
+                <div class="grid-row" style="min-height:45px"></div>
+                <div  class="form-bottom">
+                <!--<div  class="button-default" fxLayoutAlign="center center">
+                    <button class="button-link" (click)="confirmCancel()">Cancelar</button>
+                    <button md-button class="button-red" [disabled]="hasPendingFields()" (click)="saveIt()">Salvar</button>-->
+                    <button md-raised-button class="button-default" [disabled]="hasPendingFields()" (click)="saveIt()">Salvar</button>
+                                       
+                </div>
+
+                <div class="grid-row">
+                    <md-error *ngIf="selected.length>5">O número máximo de palavras-chave que podem ser selecionadas é 5</md-error>
+                </div>
+
+
+            </form>
+        </safety-card-content>
+    </safety-card>
+</div>

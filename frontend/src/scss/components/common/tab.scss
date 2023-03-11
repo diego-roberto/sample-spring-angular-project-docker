@@ -1,0 +1,47 @@
+.mat-ink-bar {
+    background-color: black !important;
+    min-width: auto !important;
+}
+
+.mat-tab-label {
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+    text-align: left !important;
+    text-transform: uppercase !important;
+    min-width: auto !important;
+
+    &:focus {
+        background-color: #e9eced !important;
+    }
+}
+
+.mat-tab-header {
+    border-bottom: none !important;
+    // margin: 0 0 20px 0; // WARD
+}
+
+div{
+    .mat-tab-label, .mat-ripple, .mat-tab-label-active{
+        font-family:Lato !important;
+        letter-spacing: 0.5px; 
+    }
+    .mat-tab-label, .mat-ripple{
+        font-family:Lato !important;
+        letter-spacing: 0.5px; 
+    }
+}
+
+@media screen and (min-width: 1150px) and (max-width: 1450px) { 
+    .mat-tab-link {
+        min-width: 0 !important;
+        max-width: 140px;
+    }
+}
+
+@media screen and (max-width: 1150px) { 
+    .mat-tab-link {
+        min-width: 0 !important;
+        max-width: 100px;
+    }
+}

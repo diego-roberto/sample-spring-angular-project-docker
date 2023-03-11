@@ -1,0 +1,279 @@
+<safety-dialog fxFlex="100" class="fullscreen-dialog">
+    <safety-dialog-header class="fullscreen-dialog" *ngIf="step > 0">
+        {{ title | Limit: 30 }}
+    </safety-dialog-header>
+
+    <safety-dialog-content class="fullscreen-dialog" *ngIf="step > 0">
+        <title-training-schedule-dialog [totalSteps]="totalSteps" [step]="step"></title-training-schedule-dialog>
+    </safety-dialog-content>
+
+    <safety-dialog-content class="fullscreen-dialog" *ngIf="step === 1 && showPreview">
+        <div fxLayout="column" fxLayoutAlign="space-around center">
+            <div style="width: 60%">
+                <div>
+                    <button md-icon-button (click)="backToList()">
+                        <md-icon>keyboard_arrow_left</md-icon> Voltar para a lista
+                    </button>
+                </div>
+                <div class="video-container">
+                    <div [innerHtml]="iframe_html">
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div>
+                        <div>
+                            <span id="training-title">{{previewingTraining.title}}</span>
+                        </div>
+                        <div>
+                            {{previewingTraining.description}}
+                        </div>
+                        <div>
+                            <span class="horizontal-divider"> {{previewingTraining.keywords}} | Serviço de obra relacionado:</span>
+                            <b>{{ previewingTraining.stringServices | Limit:40 }}</b>
+                            <span [mdTooltip]="previewingTraining.stringServices">
+                            </span>
+                        </div>
+                    </div>
+                    <div fxLayout fxLayoutAlign="end center middle" class="tools">
+                        <button md-button class="button-default" (click)="hasChanged(previewingTraining.id) ">SELECIONAR </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </safety-dialog-content>
+
+    <safety-dialog-content class="fullscreen-dialog" *ngIf="step === 1 && !showPreview">
+        <div fxLayout fxLayoutAlign="space-between center" class="top-actionbar">
+            <div fxLayout fxLayoutAlign="start center">
+                <button md-icon-button type="button" (click)="toggleSearch()" fxLayout fxLayoutAlign="center center">
+                    <md-icon class="search">search</md-icon>
+                </button>
+                <md-input-container *ngIf="showSearch" class="search-input">
+                    <input #textFilterInput (ngModelChange)="updateQuery($event)" [ngModel]="query" [value]="query" mdInput floatPlaceholder="never">
+                </md-input-container>
+                <button md-raised-button *ngIf="showSearch" class="button-red mat-button" (click)="doSearch()">Filtrar</button>
+                <md-chip-list>
+                    <md-chip class="main-chip" (click)="toggleActiveFilter(1)" [ngClass]="{ active: !filters[1]  }" fxLayout fxLayoutAlign="start center">
+                        <span>profissionalizante</span>
+                    </md-chip>
+                    <md-chip class="main-chip" (click)="toggleActiveFilter(2)" [ngClass]="{  active: !filters[2]  }" fxLayout fxLayoutAlign="start center">
+                        <span>sst</span>
+                    </md-chip>
+                    <md-chip class="main-chip" (click)="toggleActiveFilter(3)" [ngClass]="{  active: !filters[3]  }" fxLayout fxLayoutAlign="start center">
+                        <span>outros</span>
+                    </md-chip>
+                </md-chip-list>
+            </div>
+            <div fxFlexOrder.lt-md="2" fxFlex.gt-sm="nogrow" fxFlex fxLayoutAlign="end center" class="right-actionbar">
+                <div fxLayout fxLayoutAlign="start center">
+                    <button md-icon-button (click)="back()">
+                        <md-icon>keyboard_arrow_left</md-icon>
+                    </button>
+                    <span class="page">{{page}} </span>
+                    <button md-icon-button (click)="next()" [disabled]="trainings.length < 30">
+                        <md-icon>keyboard_arrow_right</md-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-wrapper">
+            <div class="list">
+
+                <div *ngFor="let training of trainings; let index=index">
+                    <training-line-detail fxFlex fxLayout fxLayoutAlign="space-between center" (pageChanged)="hasChanged($event)" (previewSelected)="hasPreviewSelected($event)"
+                        [step]="step" [selectedId]="selectedTraining.id" [training]="training" [index]="index">
+                    </training-line-detail>
+                </div>
+            </div>
+        </div>
+    </safety-dialog-content>
+
+    <safety-dialog-content class="fullscreen-dialog" *ngIf="step === 2">
+        <form [formGroup]="trainingScheduleForm">
+
+            <div fxLayout="row" fxLayout.md="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="space-between center center">
+                <div fxFlex="100" fxLayout="column">
+                    <hr class="line">
+                    <span class="selected-title" fxFlex="100">Capacitação selecionada: <b>{{selectedTraining?.title}}</b> </span>
+                    <hr class="line">
+                </div>
+            </div>
+
+            <ul class="no-margin-no-padding">
+                <li>
+                    <div fxLayout.lt-lg="column">
+                        <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+
+                            <md-input-container fxFlex="50">
+                                <input mdInput dateMask="99/99/9999" formControlName="startDate" [mdDatepicker]="beginPicker" placeholder="Data de Início"
+                                    [(ngModel)]="selectedSchedule.scheduledBegin" required validateOnBlur [disabled]="capacitationHasBegined"
+                                    [ngModelOptions]="{standalone: true}">
+                                <button mdSuffix [disabled]="capacitationHasBegined" [mdDatepickerToggle]="beginPicker"></button>
+                                <md-error *ngIf="hasErrorForm('startDate', 'invalid')">data inválida.</md-error>
+                                <md-error *ngIf="hasErrorForm('startDate', 'isbefore')">data superior a data fim.</md-error>
+                                <md-error *ngIf="hasErrorForm('startDate', 'isnecessary')">data fim não preenchida ou inválida.</md-error>
+                                <md-datepicker #beginPicker [disabled]="capacitationHasBegined"></md-datepicker>
+                            </md-input-container>
+
+                            <md-input-container fxFlex="50">
+                                <input mdInput dateMask="99/99/9999" formControlName="endDate" [mdDatepicker]="endPicker" placeholder="Data de Fim" [(ngModel)]="selectedSchedule.scheduledEnd"
+                                    required validateOnBlur [ngModelOptions]="{standalone: true}">
+                                <button mdSuffix [mdDatepickerToggle]="endPicker"></button>
+                                <md-error *ngIf="hasErrorForm('endDate', 'invalid')">data inválida.</md-error>
+                                <md-error *ngIf="hasErrorForm('endDate', 'isbefore')">data inferior a data início.</md-error>
+                                <md-error *ngIf="hasErrorForm('endDate', 'isnecessary')">data início não preenchida ou inválida.</md-error>
+                                <md-datepicker #endPicker></md-datepicker>
+                            </md-input-container>
+                        </div>
+
+                        <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+                            <md-input-container fxFlex="100">
+                                <input class="place" [disabled]="true" placeholder="Modo de Exibição" mdInput [ngModel]="selectedSchedule.exhibitionMode"
+                                    [ngModelOptions]="{standalone: true}">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div *ngIf="selectedSchedule?.exhibitionModeId==1" fxLayout.lt-lg="column">
+                        <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+
+                            <md-input-container fxFlex="100">
+
+                                <input class="place" [disabled]="selectedSchedule.exhibitionModeId!=1 ||  capacitationHasBegined" placeholder="Local" mdInput
+                                    [(ngModel)]="selectedSchedule.place" [ngModelOptions]="{standalone: true}" trimText>
+
+                            </md-input-container>
+
+                        </div>
+
+                        <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" fxLayoutAlign="space-between start">
+
+                            <md-input-container fxFlex="30" fxLayoutAlign="space-between">
+
+                                <input class=" qtd" [disabled]="selectedSchedule.exhibitionModeId!=1  ||  capacitationHasBegined" placeholder="Horário" mdInput
+                                    [textMask]="{ mask: trainingTimeMask,guide: false  }" [(ngModel)]="formatedTime" [ngModelOptions]="{standalone: true}">
+
+                            </md-input-container>
+
+                            <ministers class="ministers" fxFlex="70" [disabled]="capacitationHasBegined" [selectedInput]="inputSelectedMinister" [constructionId]="constructionId"
+                                [selectedExhibitions]="selectedExhibitions" (ministrantesSelecionados)="hasMinistrantes($event)"></ministers>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+
+            <div>
+                <div fxFlex="100" fxLayout="column">
+                    <div class="gid-row">
+                        <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxFlex=100>
+                            <div fxFlex.gt-sm="100" fxFlex.lt-md="100" fxLayout.lt-md="row" fxLayout.gt-sm="column">
+                                <div class="workers-selection">
+                                    <section class="left-side-selection">
+                                        <h2>Todos os trabalhadores </h2>
+                                        <md-input-container style="width: 100% !important; display: block !important">
+                                            <md-icon mdPrefix>search</md-icon>
+                                            <input mdInput maxlength="30" #workers (input)="searchWorkers(workers.value)" placeholder="Buscar por nome, CPF ou função">
+                                        </md-input-container>
+                                        <table>
+                                            <tr>
+                                                <thead *ngIf="filteredWorkers.length > 0">
+                                                    <md-checkbox (change)="setAllSelectedToAdd()" [checked]="checkedAddAll">
+                                                        Todos
+                                                    </md-checkbox>
+                                                </thead>
+                                            </tr>
+                                            <tr class="bordered" *ngIf="filteredWorkers.length > 0">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <virtual-scroll [items]="filteredWorkers" (update)="scrollWorkers = $event" [childHeight]="34" [bufferAmount]="5" *ngIf="filteredWorkers.length > 0">
+                                                <tbody>
+                                                    <tr *ngFor="let c of scrollWorkers">
+                                                        <div fxLayout>
+                                                            <md-checkbox (change)="setSelectedToAdd(c)" [checked]="selectedToAdd.includes(c)">
+                                                            </md-checkbox>
+                                                            <td [mdTooltip]="c?.name">{{ c.name }}</td>
+                                                        </div>
+                                                        <td [mdTooltip]="c.cbos?.title" class="cbo">{{ c.cbos.title }}</td>
+                                                        <td class="cpf" fxHide.xs>{{ c.cpf | cpfMask }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </virtual-scroll>
+                                        </table>
+
+                                        <p *ngIf="filteredWorkers.length === 0">Todos os trabalhadores foram selecionados para assistir a capacitação</p>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout.lt-md="row" fxLayout.gt-sm="column" fxLayout.gt-sm="column" class="button-group" fxLayout.lt-md="row">
+                            <button md-button [disabled]="selectedToAdd.length === 0" (click)="addSelected()">
+                                <md-icon fxHide.lt-md>keyboard_arrow_right</md-icon>
+                                <md-icon fxHide fxShow.lt-md>keyboard_arrow_down</md-icon>
+                            </button>
+                            <button md-button [disabled]="selectedToRemove.length === 0" (click)="removeSelected()">
+                                <md-icon fxHide.lt-md>keyboard_arrow_left</md-icon>
+                                <md-icon fxHide fxShow.lt-md>keyboard_arrow_up</md-icon>
+                            </button>
+                        </div>
+
+                        <div fxFlex.gt-sm="100" fxFlex.lt-md="100" fxLayout.lt-md="row" fxLayout.gt-sm="column">
+                            <section class="right-side-selection">
+                                <h2>Trabalhadores relacionados para a capacitação</h2>
+
+                                <md-input-container style="width: 100% !important; display: block !important">
+                                    <md-icon mdPrefix>search</md-icon>
+                                    <input mdInput maxlength="30" #workersOfConstruction (input)="searchWorkersOfConstruction(workersOfConstruction.value)" placeholder="Buscar por nome, CPF ou função">
+                                </md-input-container>
+
+                                <table>
+                                    <tr *ngIf="filteredWorkersOfConstruction.length > 0">
+                                        <thead>
+                                            <md-checkbox (change)="setAllSelectedToRemove()" [checked]="checkedRemoveAll">
+                                                Todos
+                                            </md-checkbox>
+                                        </thead>
+                                    </tr>
+                                    <tr class="bordered" *ngIf="filteredWorkersOfConstruction.length > 0">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <virtual-scroll [items]="filteredWorkersOfConstruction" (update)="scrollWorkersOfConstruction = $event" [childHeight]="34"
+                                        [bufferAmount]="5" *ngIf="filteredWorkersOfConstruction.length > 0">
+                                        <tbody>
+                                            <tr *ngFor="let c of scrollWorkersOfConstruction">
+                                                <div fxLayout>
+                                                    <md-checkbox [disabled]="watched(c?.id)" class="name" (change)="setSelectedToRemove(c)" [checked]="selectedToRemove.includes(c) && !watched(c?.id)">
+                                                    </md-checkbox>
+                                                    <td [mdTooltip]="c?.name"> {{ c.name }} </td>
+                                                </div>
+                                                <td [mdTooltip]="c.cbos?.title" class="cbo">{{ c.cbos.title }}</td>
+                                                <td class="cpf" fxHide.xs>{{ c.cpf }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </virtual-scroll>
+                                </table>
+                                <p *ngIf="filteredWorkersOfConstruction.length === 0">Nenhum trabalhador selecionado para assistir a capacitação</p>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </safety-dialog-content>
+    <safety-dialog-actions>
+        <div>
+           <!-- <a (click)="close()" class="close-link">FECHAR</a>-->
+            <button *ngIf="step === 2" md-button class="button-red" (click)="updateIt()">Salvar</button>
+            <button *ngIf="step === 1" md-button class="button-red" (click)="advance()">Avançar</button>
+        </div>
+    </safety-dialog-actions>
+</safety-dialog>

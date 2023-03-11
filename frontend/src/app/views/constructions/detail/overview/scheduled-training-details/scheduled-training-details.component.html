@@ -1,0 +1,67 @@
+<safety-dialog>
+    <safety-dialog-header>
+        Visualizar Capacitação
+    </safety-dialog-header>
+
+    <safety-dialog-content>
+        <div fxLayout="column" fxLayoutGap="20px">
+            <div fxLayout="column" fxLayoutAlign="space-evenly none" fxLayoutGap="20px" class="content">
+                <div fxLayout="column">
+                    <div class="bold">Capacitação Selecionada:</div>
+                    <div>{{ trainingTitle }}</div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between start" fxLayout.xs="column" 
+                     fxLayout.sm="column" fxLayoutAlign.xs="space-between center" fxLayoutAlign.sm="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="start center">
+                        <div class="bold">Data:</div>
+                        <div>{{ scheduledDate }} - {{ scheduledEndDate }}</div>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="end center" fxLayoutAlign.sm="end center">
+                        <div class="bold">Modo de Exibição:</div>
+                        <div>{{ exhibitionType }}</div>
+                    </div>
+                </div>
+                <div *ngIf="exhibitionType==='Presencial'" fxLayout="row" fxLayoutAlign="space-between start" 
+                     fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.xs="space-between center" fxLayoutAlign.sm="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="start center">
+                        <div class="bold">Local:</div>
+                        <div>{{ scheduledPlace }}</div>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="center center" fxLayoutAlign.sm="center center">
+                        <div class="bold">Horário:</div>
+                        <div>{{ scheduledTime }}</div>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center end" fxLayoutAlign.xs="end center" fxLayoutAlign.sm="end center">
+                        <div class="bold">Responsáveis:</div>
+                        <div *ngFor="let ministerName of ministersNames; let i = index">
+                            {{ ministerName }} <span *ngIf="(i+1) < ministersCount">,</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="end none">
+                <div class="bold">Trabalhadores relacionados</div>
+
+                <virtual-scroll #workersVirtualScroll [items]="workers" [childHeight]="20" (update)="workersVirtualScrollItems = $event">
+                    <div class="info-empty-box" *ngIf="workers.length === 0" fxLayout="column" fxLayoutAlign="end center">
+                        <div>Nenhum trabalhador relacionado.</div>
+                    </div>
+                    <div *ngFor="let worker of workersVirtualScrollItems">
+                        <div><span class="bold">{{ worker.name }}</span> - <span>{{ worker.cbo }}</span></div>
+                    </div>
+                </virtual-scroll>
+            </div>
+            <button md-icon-button  mdTooltip="Importar Lista de Presença" 
+            (click)="openTrainingScheduleAttendanceListUploadDialogComponent()">
+            <md-icon>attach_file</md-icon>
+        </button> 
+        </div>
+    </safety-dialog-content>
+
+    <safety-dialog-actions>
+            
+        <button md-button (click)="closeDialog()" class="grey-btn">FECHAR</button>
+    </safety-dialog-actions>
+</safety-dialog>

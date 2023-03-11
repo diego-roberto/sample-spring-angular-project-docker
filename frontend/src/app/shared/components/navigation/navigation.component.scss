@@ -1,0 +1,165 @@
+$vars: (
+    maximized-width: 500px,
+);
+
+@mixin var($property, $variable) {
+    #{$property}: map-get($vars, $variable);
+    #{$property}: var(--#{$variable});
+}
+
+:root {
+    @each $property, $value in $vars {
+      --#{$property}: #{$value};
+    }
+}
+
+.main-nav {
+    $minimized-width: 65px;
+    width: auto;
+    max-width: $minimized-width;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+    transition: all 1s ease;
+    background-color: #3f3f3f;
+    &:hover {
+        width: auto;
+        @include var(max-width, maximized-width);
+
+        .divisor {
+            color: #5d6266 !important;
+        }
+    }
+    header {
+        background-color: #de4d4d;
+        color: white;
+        height: 8em;
+        line-height: 8em;
+        h1 {
+            margin: 0;
+            font-weight: 300;
+            font-size: 1.5em;
+            vertical-align: middle;
+            padding-right: 0.5em;
+            color: white;
+        }
+        .logo {
+            width: $minimized-width;
+            display: inline-block;
+            text-align: center;
+            font-size: 2em;
+            font-weight: 900;
+            vertical-align: middle;
+            color: white;
+            text-transform: uppercase
+        }.logoSubTitle {
+            width: 120px;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.5em;
+            font-weight: 300;
+            vertical-align: middle;
+            color: white;
+            text-transform: uppercase
+        }
+    }
+    ul {
+        padding: 0;
+        list-style-type: none;
+        .logo {
+            width: $minimized-width;
+            display: inline-block;
+            text-align: center;
+            font-size: 2em;
+            font-weight: 900;
+            vertical-align: middle;
+        }
+    }
+    ul {
+        padding: 0;
+        list-style-type: none;
+        .divisor,
+        .label {
+            letter-spacing: 0.5px;
+            font-weight: 900;
+            font-size: 0.7em;
+        }
+        .divisor {
+            border-bottom: 1px solid #0d75ca;
+            color: transparent;
+            display: block;
+            padding: 1em 0.8em 0.5em;
+        }
+        i,md-icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: $minimized-width;
+            text-align: center;
+            box-sizing: border-box;
+            font-size: 1.5em;
+        }
+        a {
+            color: #a2a9ae;
+            padding: 0 1em 0 0;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            line-height: 3em;
+            height: 3em;
+            &:hover {
+                background-color: #343434;
+            }
+            &:hover {
+                background-color: #343434;
+            }
+            &.active {
+                color: #de4d4d;
+                background-color: #343434;
+                border-left: 3px solid #de4d4d;
+                md-icon {
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 749px) {
+    .main-nav {
+        max-width: 40px;
+        &:hover {
+            max-width: 40px;
+        }
+        header {
+            h1 {
+                font-size: 1em;
+            }
+            .logo {
+                width: 40px;
+                font-size: 2em;
+            }
+        }
+        ul {
+            .logo {
+                width: 40px;
+                font-size: 1em;
+            }
+        }
+        ul {
+            i,md-icon {
+                width: 40px;
+                font-size: 1em;
+            }
+            a {
+                width: 37px !important;
+                &:active {
+                    i,md-icon {
+                        width: 37px !important;
+                    }
+                }
+            }
+        }
+    }
+}

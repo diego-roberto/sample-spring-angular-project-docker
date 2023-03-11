@@ -1,0 +1,170 @@
+<div
+  #bodyContent
+  class="body-content"
+>
+
+  <md-spinner
+    *ngIf="loadStep < 1"
+    color="warn"
+  ></md-spinner>
+  <div *ngIf="loadStep >= 1">
+    <div class="list-content">
+      <div
+        fxLayout
+        fxLayoutAlign="space-between center"
+        class="filters"
+      >
+        <div
+          fxFlex
+          fxLayoutAlign.lt-md="start"
+          fxLayoutAlign="space-between center"
+          class="divtop"
+          fxLayout="row wrap"
+        >
+          <search
+            fxFlexOrder.lt-md="1"
+            (applyFilter)="filterByText()"
+            (onTextChange)="onSearchValueChange($event)"
+            [(value)]="searchValue"
+          ></search>
+
+          <md-chip-list
+            fxFlexOrder.lt-md="0"
+            fxFlex.lt-md="100"
+            fxFlex
+          >
+            <md-chip
+              class="main-chip {{ this.selectedFilters.epiExpired ? 'active' : ''}}"
+              (click)="toggleEpiActiveFilter('epiExpired')"
+            >
+              <span>Vencidos</span>
+            </md-chip>
+            <md-chip
+              class="main-chip {{ this.selectedFilters.epiForthComingMaturities ? 'active' : ''}}"
+              (click)="toggleEpiActiveFilter('epiForthComingMaturities')"
+            >
+              <span>Próximos Vencimentos</span>
+            </md-chip>
+            <md-chip
+              class="main-chip {{ this.selectedFilters.epiRegistered ? 'active' : ''}}"
+              (click)="toggleEpiActiveFilter('epiRegistered')"
+            >
+              <span>EPI Cadastrados</span>
+            </md-chip>
+          </md-chip-list>
+
+          <div
+            fxFlexOrder.lt-md="2"
+            fxFlex.gt-sm="nogrow"
+            fxFlex
+            fxLayoutAlign="end center"
+            class="right-actionbar"
+          >
+            <div fxFill></div>
+            <md-select
+              [(ngModel)]="orderParams"
+              floatPlaceholder="never"
+              class="order"
+              (change)="filterEpis()"
+            >
+              <md-option
+                *ngFor="let orderStyle of availableOrders"
+                [value]="orderStyle.orderParams"
+              >
+                {{ orderStyle.name }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="list-wrapper">
+        <div class="list-content">
+          <div
+            class="list"
+            *ngIf="caEpiList.length > 0"
+          >
+            <div
+              class="epi-item"
+              *ngFor="let caEpi of filteredCaEpi; let i = index"
+            >
+              <div
+                *ngIf="(selectedFilters.epiRegistered || selectedFilters.epiForthComingMaturities) && i === 0 && !selectedFilters.epiExpired"
+                class="container"
+              >
+                <div class="separator"></div>
+                <div class="section-area">
+                  <span *ngIf="selectedFilters.epiRegistered && !selectedFilters.epiForthComingMaturities">EPI
+                    Cadastrados</span>
+                  <span *ngIf="selectedFilters.epiForthComingMaturities">EPI Próximos Vencimentos</span>
+                </div>
+                <div class="separator"></div>
+              </div>
+
+              <div
+                *ngIf="(selectedFilters.epiRegistered || selectedFilters.epiForthComingMaturities) && firstIndexExpired(caEpi, false) && selectedFilters.epiExpired"
+                class="container"
+              >
+                <div class="separator"></div>
+                <div class="section-area">
+                  <span *ngIf="selectedFilters.epiRegistered && !selectedFilters.epiForthComingMaturities">EPI
+                    Cadastrados</span>
+                  <span *ngIf="selectedFilters.epiForthComingMaturities">EPI Próximos Vencimentos</span>
+                </div>
+                <div class="separator"></div>
+              </div>
+
+              <div
+                *ngIf="selectedFilters.epiExpired && firstIndexExpired(caEpi, true)"
+                class="container"
+              >
+                <div class="separator"></div>
+                <div class="section-area">
+                  <span>EPI Vencidos</span>
+                </div>
+                <div class="separator"></div>
+              </div>
+              <epi-line-detail
+                [caEpi]="caEpi.caEpi"
+                (removed)="removeEpi($event.id)"
+              ></epi-line-detail>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="caEpiList.length === 0">
+        <div class="body-content">
+          <div
+            fxFlex
+            fxLayout="column"
+            fxLayoutAlign="space-around center"
+          >
+            <div
+              fxFlex
+              class="hello"
+            >
+              <p>Você não tem EPI cadastrados, cadastre um
+                <b>novo EPI.</b>
+              </p>
+            </div>
+            <div fxFlex>
+              <a
+                class="start"
+                md-raised-button
+                type="button"
+                name="button"
+                (click)="openEpiDialog()"
+              >
+                <span>Cadastrar</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<epi-fab-button (updateOnSave)="updateLists()"></epi-fab-button>

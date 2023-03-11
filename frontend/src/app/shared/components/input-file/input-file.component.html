@@ -1,0 +1,20 @@
+<div fxLayout fxLayoutAlign="{{ contentAlign }}">
+
+    <div fxLayout fxLayoutAlign="start center" *ngIf="showName">
+        <span *ngIf="!isDownloadable" style="white-space: nowrap;">{{ fileName | Limit: 18}}</span>
+        <a *ngIf="isDownloadable && ! _file" fxFlexOffset="2px" target="_blank" href="{{ isBackendClientType() ? (fileUrl | backendPath) : (fileUrl | authPath) }}" download>{{ fileName | Limit: 12 }}</a>
+        <a *ngIf="isDownloadable && _file" fxFlexOffset="2px" (click)="doDownloadFile()" download>{{ fileName | Limit: 12 }}</a>
+    </div>
+
+    <button md-icon-button [disabled]="disabled" *ngIf="showClear && hasFile()" (click)="clearFile()">
+        <md-icon>clear</md-icon>
+    </button>
+
+    <input [accept]="accept" type="file" (change)="onNativeInputFileSelect($event)" #inputFile hidden/>
+    <button *ngIf="!buttonText" md-icon-button (click)="selectFile()" [disabled]="disabled">
+        <md-icon>{{buttonIcon}}</md-icon>
+    </button>
+    <button *ngIf="buttonText"md-raised-button (click)="selectFile()" class="button-red mat-warn" [disabled]="disabled">
+        {{buttonText}}
+    </button>
+</div>

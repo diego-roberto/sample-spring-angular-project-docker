@@ -1,0 +1,41 @@
+<div class="body-content">
+    <div>
+        <a md-raised-button class="button-default mat-button" routerLink="/settings/">Voltar</a>
+    </div>
+
+    <div class="list-wrapper">
+      <div *ngFor="let aso of asos">
+         <div fxFlex fxLayout fxLayoutAlign="space-between center">
+            <safety-list-item fxFlex="100">
+                <div fxLayout fxFlex="fill" fxLayoutAlign="start center" class="item-info">
+                    <span class="corporate-name">{{ aso.name }}</span>
+              </div>
+                <div fxFlex="noshrink" fxLayout fxLayoutAlign="start center" class="tools">
+                    <a md-icon-button (click)="openAsoDialog(aso)">
+                        <md-icon>edit</md-icon>
+                    </a>
+
+                    <a md-icon-button (click)="openDeleteDialog(aso)">
+                      <md-icon>delete</md-icon>
+                    </a>
+                </div>
+            </safety-list-item>
+         </div>
+      </div>
+    </div>
+
+    <fab-speed-dial #myFab *ngIf="permissionService.hasSomePermission(['COMPANY_SETTINGS'])" [direction]="'up'" [animationMode]="'fling'" [fixed]="false" (mouseenter)="myFab.open = true"
+      (mouseleave)="myFab.open = false">
+      <fab-trigger [spin]="true">
+          <button md-fab>
+              <md-icon>add</md-icon>
+          </button>
+      </fab-trigger>
+
+      <fab-actions>
+          <button md-mini-fab *ngIf="permissionService.hasSomePermission(['COMPANY_SETTINGS'])" mdTooltip="Adicionar ASO" mdTooltipPosition="before"  (click)="openAsoDialog(null)">
+              <em class="safety-icn-gerenciamento-svg"></em>
+          </button>
+      </fab-actions>
+    </fab-speed-dial>
+</div>

@@ -1,0 +1,26 @@
+<form [formGroup]="constructionModulesFormGroup" (ngSubmit)="save()" novalidate>
+    <div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+        <div fxFlex.gt-sm="45" fxFlex.lt-md="100" fxLayout.lt-md="row" fxLayout.gt-sm="column">
+            <div class="workers-selection">
+                <section class="left-side-selection">
+                    <table>
+                        <tr class="bordered">
+                            <thead></thead>
+                            <tbody>
+                                <tr *ngFor="let interest of itemsModules; let i = index">
+                                    <div fxLayout>
+                                        <md-checkbox class="" [checked]="interest.checked" (change)="onChange($event)"
+                                            [value]="interest.id">{{interest.name}}</md-checkbox>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="form-bottom">
+        <button md-raised-button class="button-default" [disabled]="!isValidForm()">SALVAR E CONTINUAR</button>
+    </div>
+</form>

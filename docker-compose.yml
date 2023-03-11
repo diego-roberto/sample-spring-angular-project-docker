@@ -1,0 +1,93 @@
+version: '3.7'
+networks:
+  traefik_network:
+    external: true
+services:
+  mariadb:
+    image: 'mariadb:10.2'
+    container_name: mariadb
+    hostname: mariadb
+    volumes:
+      - '/data/dev/project/mariadb:/var/lib/mysql:rw'
+      - './mariadb/my.cnf:/etc/mysql/my.cnf'
+    environment:
+      SERVICE_NAME: mariadb
+      MYSQL_DATABASE: project_db
+      MYSQL_USER: project_usr
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      TZ: America/Sao_Paulo
+    ports:
+      - '3306:3306'
+    networks:
+      - traefik_network
+    command: mysqld
+    restart: always
+    labels:
+      - traefik.enable=false
+  backend:
+    image: 'project/backend:latest'
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile.dev
+    container_name: backend
+    hostname: backend
+    environment:
+      APP_ENV: local
+      BACKEND_SERVER_PORT: 8082
+      BACKEND_DB_URL: 'jdbc:mariadb://localhost:3306/project_db'
+      DB_DRIVER_CLASS: org.mariadb.jdbc.Driver
+      DB_BASE_URL: 'jdbc:mariadb://localhost:3306/'
+      DB_ROOT_USER: root
+      DB_ROOT_PASS: password
+      CORS_ORIGIN: '*'
+      CORS_WEBSOCKET_ALLOWED_HOST: '*'
+      CORS_METHODS: 'GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD'
+      CORS_ALLOW_HEADERS: 'Authorization,Content-Type,X-Authorization,authorization,content-type,x-authorization'
+      CORS_ALLOW_CREDENTIALS: 'true'
+      FRONTEND_URL: 'http://localhost:4200/#/'
+      SERVICE_NAME: backend
+      TZ: America/Sao_Paulo
+    volumes:
+      - './backend:/app'
+      - './backend/.m2:/root/.m2'
+    working_dir: /app
+    networks:
+      - traefik_network
+    depends_on:
+      - mariadb
+    ports:
+      - '8401:8080'
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend.rule=Host(`backend.docker.localhost`)
+      - traefik.http.services.backend.loadbalancer.server.port=8080
+      - traefik.http.routers.backend.tls=true
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: docker/Dev.Dockerfile
+    image: 'project/frontend:latest'
+    container_name: frontend
+    hostname: frontend
+    volumes:
+      - './frontend:/opt/frontend:rw'
+    environment:
+      SERVICE_NAME: frontend
+      TZ: America/Sao_Paulo
+      FRONTEND_PROFILE: dev
+      FRONTEND_BACKEND_URL: 'http://localhost:8082'
+    networks:
+      - traefik_network
+    depends_on:
+      - mariadb
+    entrypoint:
+      - /opt/start_dev.sh
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`frontend.docker.localhost`)
+      - traefik.http.services.frontend.loadbalancer.server.port=4200
+      - traefik.http.routers.frontend.tls=true

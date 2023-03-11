@@ -1,0 +1,65 @@
+@import '../../../../scss/components/color';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+router-outlet /deep/ + * {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+a {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    color: $greyish-brown;
+    line-height: 10vh;
+    height: 10vh;
+}
+
+h1 {
+    display: block;
+    width: 218px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.arrow {
+    margin: 5px 20px 0 0;
+    width: 9px;
+    height: 5px;
+    color: $grapefruit;
+}
+
+.menu-icon {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 1150px) { 
+    a {
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.6px;
+        color: $greyish-brown;
+        line-height: 10vh;
+        height: 10vh;
+    }
+}
+
+@media screen and (max-width: 1024px) { 
+    a, .more-icon {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) { 
+    .menu-icon {
+        display: none;
+    }
+}

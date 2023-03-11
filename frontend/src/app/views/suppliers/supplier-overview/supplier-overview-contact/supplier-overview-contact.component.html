@@ -1,0 +1,19 @@
+<div fxFlex="100" fxLayout="column" fxLayoutGap="1em">
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="1em">
+    <p fxFlex="fill"><span class="bolder-info">Responsável pela Empresa:</span> {{ supplier.supplierResponsible.name }}</p>
+    <p *ngIf="isSupplierContactPhoneVisible(supplier.supplierResponsible)" fxFlex="20"><span class="bolder-info">Telefone:</span> {{ supplier.supplierResponsible.phone | phoneMask }}</p>
+    <p *ngIf="isSupplierContactEmailVisible(supplier.supplierResponsible)" fxFlex="30"><span class="bolder-info">E-mail:</span> {{ supplier.supplierResponsible.email }}</p>
+  </div>
+
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="1em">
+    <p fxFlex="fill"><span class="bolder-info">Responsável SST:</span> {{ supplier.supplierResponsibleSST.name }}</p>
+    <p *ngIf="isSupplierContactPhoneVisible(supplier.supplierResponsibleSST)" fxFlex="20"><span class="bolder-info">Telefone:</span> {{ supplier.supplierResponsibleSST.phone | phoneMask }}</p>
+    <p *ngIf="isSupplierContactEmailVisible(supplier.supplierResponsibleSST)" fxFlex="30"><span class="bolder-info">E-mail:</span> {{ supplier.supplierResponsibleSST.email }}</p>
+  </div>
+
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="1em">
+    <p fxFlex="fill"><span class="bolder-info">Contato:</span> {{ supplier.supplierContact.name }}</p>
+    <p *ngIf="isSupplierContactPhoneVisible(supplier.supplierContact)" fxFlex="20"><span class="bolder-info">Telefone:</span> {{ supplier.supplierContact.phone | phoneMask }}</p>
+    <p *ngIf="isSupplierContactEmailVisible(supplier.supplierContact)" fxFlex="30"><span class="bolder-info">E-mail:</span> {{ supplier.supplierContact.email }}</p>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<safety-list-item [bulkEditable]="false" class="epi-line">
+    <div fxLayout fxFlex fxLayoutAlign="start center" class="epi-info">
+        <div class="image-wrapper">
+            <img *ngIf="caEpi.epiUrl && caEpi.epiFileName" [src]="(caEpi.epiUrl + '?t=' + caEpi.epiFileName) | backendPath" alt="">
+            <img *ngIf="!caEpi.epiUrl && !caEpi.epiFileName" src="assets/no-image-placeholder.jpg" alt="">
+        </div>
+
+        <!-- TIPO -->
+        <div fxHide.lt-lg fxFlex="0 1 auto" fxLayoutAlign="start center" class="epi-type">
+            <span>
+                <b [mdTooltip]="caEpi.epiId?.epiType?.description">{{ caEpi.epiId?.epiType?.description | Limit:25 }}</b>
+            </span>
+        </div>
+
+        <!-- DESCRICAO -->
+        <div fxFlex="0 1 auto" fxLayoutAlign="center center">
+            <span fxHide.lt-lg> | </span>
+            <span class="epi-description">
+                <b [mdTooltip]="caEpi.epiId?.description">{{ caEpi.epiId?.description }}</b>
+            </span>
+            <span> | </span>
+        </div>
+
+        <!-- TAMANHO -->
+        <div fxFlex="0 1 auto" fxLayoutAlign="center center">
+            <span fxHide.lt-md> Tamanho
+                <b>{{ caEpi.size }}</b>
+            </span>
+            <span> | </span>
+        </div>
+
+        <!-- CA -->
+        <div fxFlex="0 1 auto" fxLayoutAlign="center center">
+            <span>
+                <b fxHide.gt-sm>CA {{ caEpi.ca?.ca }}</b>
+                <b fxHide.lt-md>CA{{ caEpi.ca?.ca }}</b>
+            </span>
+            <span> | </span>
+        </div>
+
+        <!-- VENCIMENTO -->
+        <div fxFlex.lt-md="0 3 110px" fxFlex="0 1 auto" fxLayoutAlign="center center" class="due-date">
+            <span> Vencimento
+                <b [ngClass]="{'expired': caEpi.ca.due_date < now}">{{ caEpi.ca.due_date | date: 'dd/MM/yyyy' }}</b>
+            </span>
+            <span> | </span>
+        </div>
+
+        <!-- QUANTIDADE -->
+        <div fxFlex="0 1 auto" fxLayoutAlign="center center">
+            <span>
+                <b>{{ caEpi.quantity }} unidades</b>
+            </span>
+        </div>
+    </div>
+    <div fxLayoutAlign="end center" class="tools">
+        <md-icon ngClass.lt-md="slim" fxLayout fxLayoutAlign="center center" (click)="toEditEpi()">edit</md-icon>
+
+        <md-icon ngClass.lt-md="slim" fxLayout fxLayoutAlign="center center" (click)="toDeleteCaEpi()">delete</md-icon>
+    </div>
+</safety-list-item>

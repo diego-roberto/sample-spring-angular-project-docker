@@ -1,0 +1,24 @@
+@import '../../../../../../../scss/components/color.scss';
+
+img {
+    padding-right: 1%;
+}
+
+.grid-column {
+    padding: 0 10px;
+    max-width: 560px;
+    margin-bottom: 0px !important;
+}
+
+.grid-row {
+    margin-bottom: 10px !important;
+}
+
+span {
+    font-size: 14px;
+}
+
+h4 {
+    word-break:break-all;
+    text-align: justify;
+}

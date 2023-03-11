@@ -1,0 +1,100 @@
+<form [formGroup]="eventReportItemForm" fxFlex="100">
+  <safety-dialog>
+    <safety-dialog-header>
+      Eventos da Catraca
+    </safety-dialog-header>
+
+    <safety-dialog-content fxLayout="column">
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar Obra
+      </md-card-subtitle>
+      <md-select id="event-report-type" formControlName="constructions" fxFlex="100"
+        [(ngModel)]="reportRequest.constructionName">
+        <md-option *ngFor="let construction of constructions" [value]="construction">
+          {{ construction }}
+        </md-option>
+      </md-select>
+
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar Tipo de Contratação
+      </md-card-subtitle>
+      <md-select id="contract-type" formControlName="contractType" fxFlex="100" [(ngModel)]="reportRequest.contractType"
+        (change)="onChangeContractType()">
+        <md-option *ngFor="let ct of contractTypes" [value]="ct">
+          {{ ct }}
+        </md-option>
+      </md-select>
+
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Status do Trabalhador
+      </md-card-subtitle>
+      <md-select id="worker-status" formControlName="workerStatus" fxFlex="100" [(ngModel)]="reportRequest.workerStatus">
+        <md-option *ngFor="let st of workerStatu" [value]="st">
+          {{ st }}
+        </md-option>
+      </md-select>
+
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar o Formato do Relatório
+      </md-card-subtitle>
+      <md-select id="report-type" formControlName="reportType" fxFlex="100" [(ngModel)]="reportRequest.reportType">
+        <md-option *ngFor="let rt of reportTypes" [value]="rt">
+          {{ rt }}
+        </md-option>
+      </md-select>
+
+      <div fxLayout="column" [class.hide]="!this.showSuppliers()">
+        <md-card-subtitle fxFlex=" 100" fxLayoutAlign="start center">
+          Selecionar Fornecedores
+        </md-card-subtitle>
+        <md-select id="contract-type" formControlName="suppliers" fxFlex="100" multiple
+          [(ngModel)]="reportRequest.companies">
+          <md-checkbox (change)="checkAllSuppliers($event)" checked="true">
+            Selecionar todas
+          </md-checkbox>
+          <md-option *ngFor="let supplier of suppliers" [value]="supplier">
+            {{ supplier }}
+          </md-option>
+        </md-select>
+      </div>
+
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar o Período
+      </md-card-subtitle>
+      <div fxlayout="row" fxLayout.lt-md="column" fxLayoutGap="2em">
+        <md-input-container fxFlex="100">
+          <input required mdInput [(ngModel)]="reportRequest.initialDate" dateMask="99/99/9999"
+            formControlName="initialDate" [mdDatepicker]="initialDateDatePicker" placeholder="data início">
+          <button mdSuffix [mdDatepickerToggle]="initialDateDatePicker"></button>
+          <md-datepicker #initialDateDatePicker></md-datepicker>
+          <md-error *ngIf="hasErrorForm('initialDate', 'initialAfterfinalDate')">data maior que a data final.
+          </md-error>
+          <md-error *ngIf="hasErrorFormAndTouched('initialDate', 'beforeToday')">data maior que a data atual.
+          </md-error>
+          <md-error *ngIf="hasErrorFormAndTouched('initialDate', 'invalid')">data inválida.</md-error>
+          <md-error
+            *ngIf="hasErrorFormAndTouched('initialDate', 'required') && !hasErrorFormAndTouched('initialDate', 'invalid')">
+            campo obrigatório.</md-error>
+        </md-input-container>
+
+        <md-input-container fxFlex="100">
+          <input required mdInput [(ngModel)]="reportRequest.finalDate" dateMask="99/99/9999"
+            formControlName="finalDate" [mdDatepicker]="finalDateDatePicker" placeholder="data fim">
+          <button mdSuffix [mdDatepickerToggle]="finalDateDatePicker"></button>
+          <md-datepicker #finalDateDatePicker></md-datepicker>
+          <md-error *ngIf="hasErrorFormAndTouched('finalDate', 'beforeToday')">data maior que a data atual.</md-error>
+          <md-error *ngIf="hasErrorFormAndTouched('finalDate', 'invalid')">data inválida.</md-error>
+          <md-error
+            *ngIf="hasErrorFormAndTouched('finalDate', 'required') && !hasErrorFormAndTouched('finalDate', 'invalid')">
+            campo obrigatório.</md-error>
+        </md-input-container>
+      </div>
+    </safety-dialog-content>
+
+    <safety-dialog-actions>
+      <button md-button class="button-red" [disabled]="eventReportItemForm.invalid || this.loading"
+        (click)="doPrintReport()" [class.spinner]="this.loading">Gerar
+        Relatório</button>
+    </safety-dialog-actions>
+  </safety-dialog>
+</form>

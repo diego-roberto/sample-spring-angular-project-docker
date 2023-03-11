@@ -1,0 +1,57 @@
+
+<div class="container">
+<safety-card  #constructionModulesCard >
+    
+  <safety-card-header>Replicar nas Empresas </safety-card-header>
+  <safety-card-content>
+    <form [formGroup]="checklistReplicateFormGroup"  novalidate>
+ 
+      <div  fxLayout.gt-sm="row" fxLayout.lt-md="column">
+          <div fxFlex.gt-sm="45" fxFlex.lt-md="100" fxLayout.lt-md="row" fxLayout.gt-sm="column">
+              <div class="workers-selection">
+    
+                  <section class="left-side-selection">
+                      
+                    
+    
+                      <table>
+                          <tr class="bordered" >
+                              <thead>
+                                
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let interest of listChecklistReplicateProccess; let i = index">
+                                  <div fxLayout>
+                                      <md-checkbox class="" [checked]="interest.checked"
+                                      (change)="onChange($event)" [value]="interest.companyId">{{interest.companyName}}
+                                      <span class="horizontal-divider" fxHide.xs fxHide.sm>|</span>
+                                      <span class="address"  >{{ interest.statusName || 'Não Replicado' }}</span>
+                                      <span class="horizontal-divider" fxHide.xs fxHide.sm>|</span>
+                                      <span class="address" *ngIf="interest.status ==='COMPLETED'" > Última atualização em: {{ interest.createdAt | date:'dd/MM/yyyy HH:mm:ss'  }}</span>
+                                    
+                                    </md-checkbox>
+                                      
+                                     
+                                  </div>
+                                 
+                                 
+                              </tr>
+                              </tbody>
+                          </tr>
+      
+                      </table>
+    
+                    </section>
+              </div>
+          </div>
+    
+        
+       
+      </div>
+      <div class="form-bottom" >
+          <button md-raised-button class="button-default" [disabled]="!isValidForm()" (click)="replicate()">SALVAR</button>
+      </div>
+    </form>
+  </safety-card-content>
+</safety-card>
+</div>

@@ -1,0 +1,62 @@
+<safety-dialog>
+    <safety-dialog-header>
+        {{title}}
+    </safety-dialog-header>
+    <safety-dialog-content>
+        <epi-delivery-return-stages [totalSteps]="totalStep" [currentStep]="step" [title]="stepTitle" (backStep)="previousStep()"></epi-delivery-return-stages>
+        <div class="info-column" fxLayout="column">
+            <div class="info-row" fxLayout="row" fxLayoutAlign="start center" [formGroup]="epiDeliveryReturnForm">
+                <md-input-container class="workerInput">
+                    <input mdInput type="text" formControlName="worker" maxlength="50" required placeholder="Trabalhador" [(ngModel)]="worker"
+                        value="worker.name" [mdAutocomplete]="auto" *ngIf="step === 1">
+                    <input mdInput *ngIf="step > 1" [value]="worker.name + ' | ' + worker.cbos.title" placeholder="Trabalhador" disabled>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.worker.hasError('required')">campo obrigatório.</md-error>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.worker.hasError('invalid') && !epiDeliveryReturnForm.controls.worker.hasError('required')">trabalhador inválido.</md-error>
+                </md-input-container>
+                <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">
+                    <md-option *ngFor="let option of filteredOptions | async" (onSelectionChange)="workerSelected(option, $event)" [value]="option">
+                        {{ option.name }}
+                    </md-option>
+                </md-autocomplete>
+
+                <!-- DEVOLUCAO -->
+                <md-input-container class="dateInput" *ngIf="showReturnDate">
+                    <input mdInput [(ngModel)]="returnDate" dateMask="99/99/9999" formControlName="returnDate" [mdDatepicker]="picker" placeholder="Data Devolução"
+                        required [max]="tomorrow" validateOnBlur>
+                    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                    <md-datepicker #picker></md-datepicker>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.returnDate.hasError('invalid') || epiDeliveryReturnForm.controls.returnDate.hasError('mdDatepickerMax')">data inválida.</md-error>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.returnDate.hasError('required') && !epiDeliveryReturnForm.controls.returnDate.hasError('invalid')">campo obrigatório.</md-error>
+                </md-input-container>
+                <md-input-container class="dateInput" *ngIf="showReturnDisabledDate">
+                    <input mdInput [value]="returnDate | date: 'dd/MM/yyyy'" placeholder="Data Devolução" disabled>
+                    <button mdSuffix mdDatepickerToggle disabled></button>
+                </md-input-container>
+
+                <!-- ENTREGA -->
+                <md-input-container class="dateInput" *ngIf="showDeliveryDate">
+                    <input mdInput [(ngModel)]="deliveryDate" dateMask="99/99/9999" formControlName="deliveryDate" [mdDatepicker]="picker" placeholder="Data Entrega"
+                        required [max]="tomorrow" validateOnBlur>
+                    <button mdSuffix [mdDatepickerToggle]="picker"></button>
+                    <md-datepicker #picker></md-datepicker>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.deliveryDate.hasError('invalid') || epiDeliveryReturnForm.controls.deliveryDate.hasError('mdDatepickerMax')">data inválida.</md-error>
+                    <md-error *ngIf="epiDeliveryReturnForm.controls.deliveryDate.hasError('required') && !epiDeliveryReturnForm.controls.deliveryDate.hasError('invalid')">campo obrigatório.</md-error>
+                </md-input-container>
+                <md-input-container class="dateInput" *ngIf="showDeliveryDisabledDate">
+                    <input mdInput [value]="deliveryDate | date: 'dd/MM/yyyy'" placeholder="Data Entrega" disabled>
+                    <button mdSuffix mdDatepickerToggle disabled></button>
+                </md-input-container>
+            </div>
+        </div>
+        <div [ngSwitch]="stage">
+            <epi-return-form *ngSwitchCase="'r'" (episChange)="onReturnEpisChange($event)" (addedIndividualEquipmentListChange)="onReturnIndividualEquipmentListChange($event)" [workerSubject]="workerSubject" [individualEquipmentWorkerSubject]="individualEquipmentWorkerSubject" [filteredEpis]="loanedCaEpis" [addedEpis]="this.quantityComponentData.return" [individualEquipment]="loanedIndividualEquipmentList" [addedIndividualEquipment]="quantityComponentData.returnIndividualEquipmentList"></epi-return-form>
+            <epi-delivery-form *ngSwitchCase="'d'" (episChange)="onDeliveryEpisChange($event)" (addedIndividualEquipmentListChange)="onDeliveryIndividualEquipmentListChange($event)" [addedEpis]="this.quantityComponentData.deliver" [addedIndividualEquipment]="quantityComponentData.deliveryIndividualEquipmentList"></epi-delivery-form>
+            <epi-quantity-form *ngSwitchCase="'q'" [(data)]="quantityComponentData" (statusChange)="onQuantityFormStatusChange($event)"></epi-quantity-form>
+            <epi-confirm-form #epiConfirmForm *ngSwitchCase="'c'" [worker]="worker" [episData]="quantityComponentData"></epi-confirm-form>
+        </div>
+    </safety-dialog-content>
+    <safety-dialog-actions>
+        <button md-button class="button-default" *ngIf="step > 1" (click)="previousStep()" [disabled]="onSaveDisable">Voltar</button>
+        <button md-button [ngClass]="step < totalStep ? 'button-default' : 'button-red'" (click)="nextStep()" [disabled]="isNextDisabled() ">{{buttonText}}</button>
+    </safety-dialog-actions>
+</safety-dialog>

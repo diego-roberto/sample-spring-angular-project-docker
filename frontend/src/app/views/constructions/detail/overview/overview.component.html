@@ -1,0 +1,98 @@
+<div class="body-content overview" fxLayout.gt-xs="row">
+    <div fxLayout.xs="column">
+        <div fxLayout.xs="row" class="row">
+            <div id="floorsSumaryOverview" *ngIf="construction.sectors.length > 0" class="floor-summary floor-summary-size">
+                <floors-summary class="floor-summary-size" [sectors]="construction.sectors" (requestConstructionRedirect)="redirectToConstruction()"
+                    scrollContainerId="floorsSumaryOverview">
+                </floors-summary>
+            </div>
+            <md-card *ngIf="construction.sectors.length === 0">
+                <md-card-content>
+                    <p>Não existem setores</p>
+                </md-card-content>
+            </md-card>
+            <div fxLayout.gt-md="column" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column"
+            *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_OVERVIEW_SHOW_CARD_WORKERS'])"
+            >
+              <div fxLayout.xs="row" class="row">
+                  <div flex-order.xs="3" class="constructions-status">
+                    <constructions-status status="4"></constructions-status>
+                  </div>
+
+                  <div flex-order.xs="4" class="workers">
+                      <workers-overview [results]=workers.results [total]=workers.total></workers-overview>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+        <div fxLayout.xs="row" class="row">
+          <div fxLayout.gt-md="column" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column"
+          *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_OVERVIEW_SHOW_CARD_LAST_ALERTS_MONITORING'])"
+          >
+                <safety-card class="last-alerts" [noPadding]="true" toggleDisable>
+                    <safety-card-header>
+                        <span>Últimos Alertas de Monitoramento</span>
+                    </safety-card-header>
+                    <safety-card-content>
+                        <section-list [sections]=lastAlerts></section-list>
+                    </safety-card-content>
+                </safety-card>
+          </div>
+        </div>
+
+        <div fxLayout.xs="row" class="row">
+            <div fxLayout.gt-sm="column" fxLayout.sm="column" fxLayout.xs="column"
+            *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_OVERVIEW_SHOW_CARD_FORTHCOMINGMATURITIES'])"
+            >
+                  <safety-card class="forthcoming-maturities" [noPadding]="true" toggleDisable>
+                      <safety-card-header>
+                          <span>Próximos Vencimentos</span>
+                      </safety-card-header>
+                      <safety-card-content>
+                          <filtered-section-list *ngIf="forthcomingMaturities.length > 0" [sections]=forthcomingMaturities></filtered-section-list>
+                          <p *ngIf="forthcomingMaturities.length === 0">Não existem vencimentos</p>
+                      </safety-card-content>
+                  </safety-card>
+              </div>
+          </div>
+
+          <div fxLayout.xs="row" class="row">
+              <div fxLayout.gt-sm="column" fxLayout.sm="column" fxLayout.xs="column"
+              *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_OVERVIEW_SHOW_CARD_TRAININGS'])"
+              >
+                  <div flex-order.xs="6">
+                      <safety-card class="forthcoming-trainings" [noPadding]="true" toggleDisable>
+                          <safety-card-header>
+                              <span>Próximas Capacitações</span>
+                          </safety-card-header>
+                          <safety-card-content>
+                              <div *ngIf="!loadingForthcomingTrainings">
+                                  <section-list *ngIf="forthcomingTrainings.length > 0" [sections]=forthcomingTrainings></section-list>
+                                  <p *ngIf="forthcomingTrainings.length === 0">Não existem capacitações agendadas</p>
+                              </div>
+                              <md-spinner *ngIf="loadingForthcomingTrainings" class="in-component"></md-spinner>
+                          </safety-card-content>
+                      </safety-card>
+                  </div>
+              </div>
+              <div fxLayout.gt-sm="column" fxLayout.sm="column" fxLayout.xs="column"
+              *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_OVERVIEW_SHOW_CARD_TASKS'])"
+              >
+                  <div flex-order.xs="6">
+                      <safety-card class="tasks" [noPadding]="true" toggleDisable>
+                          <safety-card-header>
+                              <span>Tarefas</span>
+                          </safety-card-header>
+                          <safety-card-content>
+                              <checklist-cell [addTask]="changeTask"></checklist-cell>
+                          </safety-card-content>
+                      </safety-card>
+                  </div>
+              </div>
+          </div>
+    </div>
+</div>
+
+
+<safety-fab-monitoring></safety-fab-monitoring>

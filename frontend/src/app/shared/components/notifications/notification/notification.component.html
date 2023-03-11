@@ -1,0 +1,40 @@
+<div md-line fxLayout fxLayoutAlign="space-between center">
+    <md-expansion-panel class="notification-line" [class.read]="notification.checked" (opened)="read()">
+        <md-expansion-panel-header class="not-read">
+            <md-panel-title>
+                <span class="type">{{notification.notificationType?.name | uppercase}}</span>
+            </md-panel-title>
+            <md-panel-description>
+                <span class="floor">{{notification.floor?.name | uppercase}}</span>
+            </md-panel-description>
+        </md-expansion-panel-header>
+
+        <div md-line fxLayout fxLayoutAlign="left center">
+            <p fxFlex class="notification-message">
+                <span *ngIf="notification?.notificationType?.id === 2">Atenção!<br /><br /></span>
+                
+                <span [innerHTML]="notification.description"></span>
+                <!-- TAREFAS -->
+                <a class="pointer" *ngIf="notification?.notificationType?.id === 9" (click)="redirectTask(notification.notificationTask)">Visualize aqui</a>
+                <!-- OCORRENCIAS -->
+                <a class="pointer" *ngIf="notification?.notificationType?.id === 2" (click)="redirectOccurrence(notification.notificationOccurrence)">Visualize aqui</a>
+            </p>
+        </div>
+        
+        <div *ngIf="getExhibitionDate(notification) != null" class="notification-time"> Vencimento: {{ getExhibitionDate(notification) | date:'dd/MM/yyyy' | uppercase }}
+        </div>
+
+        <br/>
+        <div md-line fxLayout fxLayoutAlign="space-between center">
+            <div fxLayout fxLayoutAlign="left center">
+                <img md-list-avatar class="avatar" src="assets/avatar_m.png" />
+                <div class="notification-user-name">{{ currentUser.name }}</div>
+            </div>
+            <div>
+                <div class="notification-time">
+                    {{ notification.createdAt | date:'dd MMM yy | hh:mm' | uppercase }}
+                </div>
+            </div>
+        </div>
+    </md-expansion-panel>
+</div>

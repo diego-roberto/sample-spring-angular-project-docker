@@ -1,0 +1,33 @@
+[{
+    "grok": {
+      "field": "message",
+      "patterns": [
+        "(?<timestamp>%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{TIME}) \\[%{DATA:thread}\\] %{LOGLEVEL:level} %{DATA:class} -%{GREEDYDATA:log_message}%{SPACE}(?m)%{GREEDYDATA:log_stacktrace}?"
+      ]
+    }
+  },
+  {
+    "date": {
+      "field": "timestamp",
+      "formats": [
+        "yyyy-MM-dd HH:mm:ss.SSS"
+      ],
+      "timezone": "America/Sao_Paulo",
+      "ignore_failure": true
+    }
+  },
+  {
+    "remove": {
+      "field": "timestamp",
+      "ignore_failure": true
+    }
+  },
+  {
+    "append": {
+      "field": "event.dataset",
+      "value": [
+        "backend"
+      ]
+    }
+  }
+]

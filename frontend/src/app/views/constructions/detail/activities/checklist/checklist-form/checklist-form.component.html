@@ -1,0 +1,163 @@
+<div class="container">
+  <md-spinner
+    *ngIf="isLoadingActive('doCheckChecklistToEdit')"
+    color="warn"
+  ></md-spinner>
+
+  <div>
+    <button md-raised-button class="button-default mat-button" style="bottom: 10px;" (click)="goBack()">Voltar</button>
+  </div>
+  
+  <safety-card
+    [toggleDisable]="true"
+    *ngIf="!isLoadingActive('doCheckChecklistToEdit')"
+  >
+  <safety-card-header>Checklist</safety-card-header>
+  
+  <safety-card-content>
+    <form [formGroup]="checklistForm" fxLayout="column" fxLayoutGap="1em">
+      <div
+      fxFlex="100"
+          fxLayout="row"
+          fxLayoutWrap
+          fxLayoutAlign="space-between stretch"
+          fxLayoutGap="1em"
+        >
+          <md-input-container fxFlex.lt-md="100" fxFlex.gt-sm="58">
+            <input
+              mdInput
+              placeholder="Título do checklist"
+              [(ngModel)]="checklist.name"
+              formControlName="checklistTitle"
+              name="checklistTitle"
+              required
+              trimText
+            />
+            <md-error
+              *ngIf="checklistForm.controls.checklistTitle.hasError('required')"
+              >Campo Obrigatório.</md-error
+            >
+            <md-error
+              *ngIf="
+                !checklistForm.controls.checklistTitle.hasError('required') &&
+                checklistForm.controls.checklistTitle.hasError('maxlength')
+              "
+              >Máximo de {{ checklistTitleMaxLength }} caracteres.</md-error
+            >
+          </md-input-container>
+
+          <div
+            fxFlex.lt-md="48"
+            fxFlex.gt-sm="28"
+            fxFlexOrder.lt-md="2"
+            fxFlexOrder.gt-sm="1"
+            fxLayout="column"
+            fxLayoutGap="1em"
+          >
+            <md-form-field fxFlex="100">
+              <md-select
+                [(ngModel)]="checklist.status.id"
+                placeholder="Estado do checklist"
+                formControlName="checklistStatus"
+                name="checklistStatus"
+              >
+                <md-option
+                  *ngFor="let checklistStatus of checklistStatusList"
+                  [value]="checklistStatus.id"
+                >
+                  {{ checklistStatus.status }}
+                </md-option>
+              </md-select>
+            </md-form-field>
+
+            <div
+              id="checklist-status-hint"
+              *ngIf="checklist.status.id !== undefined"
+              fxFlex="100"
+            >
+              <p>{{ checklistStatusHintMap?.get(checklist.status?.id) }}</p>
+            </div>
+          </div>
+          <div
+            fxFlex.gt-sm="28"
+            fxFlex.lt-md="48"
+            fxFlexOrder.lt-md="1"
+            fxFlexOrder.gt-sm="2"
+          >
+            <md-checkbox formControlName="checklistGeneratesActionPlan"
+              >Gera Plano de Ação</md-checkbox
+            >
+          </div>
+          <md-input-container fxFlex.gt-sm="48" fxFlex.lt-md="100">
+            <textarea
+              mdInput
+              placeholder="Introdução"
+              [(ngModel)]="checklist.introduction"
+              formControlName="introduction"
+              name="introduction"
+              [maxlength]="checklistInroductionMaxLength"
+              trimText
+            ></textarea>
+            <md-hint align="end"
+              >{{
+                checklist.introduction ? checklist.introduction.length : 0
+              }}
+              / {{ checklistInroductionMaxLength }}</md-hint
+            >
+            <md-error
+              *ngIf="checklistForm.controls.introduction.hasError('required')"
+              >Campo Obrigatório.</md-error
+            >
+            <md-error
+              *ngIf="
+                !checklistForm.controls.introduction.hasError('required') &&
+                checklistForm.controls.introduction.hasError('maxlength')
+              "
+              >Máximo de
+              {{ checklistInroductionMaxLength }} caracteres.</md-error
+            >
+          </md-input-container>
+        </div>
+        <safety-categorized-list
+          (added)="addChecklistSessionHandler($event)"
+          [newCategoryLabel]="'Adicione uma nova seção ao checklist'"
+          safetyAutofocus
+        >
+          <div
+            *ngFor="
+              let session of checklist.checklistSessions;
+              let index = index
+            "
+          >
+            <safety-categorized-list-item
+              [name]="session.session"
+              [maxLength]="200"
+              [index]="index"
+              [deletable]="!sessionRequired()"
+              visualType="icon"
+              (edited)="editChecklistSessionHandle($event)"
+              (removed)="removeChecklistSessionHandle($event)"
+            >
+              <checklist-session-form
+                [checklistSession]="session"
+                [required]="sessionRequired()"
+                [checklistGeneratesActionPlan]="checklist.generatesActionPlan"
+                [(checklistQuestionOnEdit)]="checklistQuestionOnEdit"
+                (addForm)="doAddChecklistSessionForm($event, index)"
+              ></checklist-session-form>
+            </safety-categorized-list-item>
+          </div>
+        </safety-categorized-list>
+        <div fxLayoutAlign="end center">
+          <button
+            md-raised-button
+            class="button-red"
+            (click)="doSaveChecklist()"
+          >
+            SALVAR
+          </button>
+        </div>
+      </form>
+    </safety-card-content>
+  </safety-card>
+</div>

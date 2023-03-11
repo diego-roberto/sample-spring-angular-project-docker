@@ -1,0 +1,39 @@
+<safety-list-item [bulkEditable]="false">
+    <div fxLayout fxFlex fxLayoutAlign="start center" class="construction-site-info">
+        <a (click)="changeConstruction(construction.id)">  
+            <div class="image-wrapper" fxLayout fxLayoutAlign="center center">
+                <img [src]="getLogoUrl()" alt="">
+            </div>
+        </a>
+        <a href="javascript:void(0)" (click)="changeConstruction(construction.id)">
+            <md-icon class="safety-icn-{{ statusIcon }}-svg status-icon" [ngClass]="status" fxLayout fxLayoutAlign="center center"></md-icon>
+        </a>
+        <a href="javascript:void(0)" (click)="changeConstruction(construction.id)">
+            <div>
+                <span class="title" fxHide.xs fxHide.sm [mdTooltip]="construction?.name">{{ construction.name | Limit: 30 }}</span>
+                <span class="title" fxHide fxShow.sm [mdTooltip]="construction?.name">{{ construction.name | Limit: 10 }}</span>
+                <span class="horizontal-divider" fxHide.xs fxHide.sm>|</span>
+                <span class="address" [mdTooltip]="construction?.addressStreet" fxHide.xs fxHide.sm>{{ construction.addressStreet || 'Nenhum' | Limit: 30 }}</span>
+                <span class="horizontal-divider" fxHide.xs fxHide.sm>|</span>
+                <span class="sponsor" [mdTooltip]="construction.responsibleEngineer?.name" fxHide.xs fxHide.sm>Responsável: {{ construction.responsibleEngineer ? (construction.responsibleEngineer.name | Limit: 30) :
+                    'Nenhum' }}
+                </span>
+            </div>
+        </a>
+    </div>
+    <div fxLayout fxLayoutAlign="end center" class="tools">
+        <md-icon *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_EDIT_CONSTRUCTION','COMPANY_CONSTRUCTIONS_SETUP_MODULES'],{constructions:[construction.id]}) && (hasModule(2) || hasModule(3))" fxLayout fxLayoutAlign="center center" (click)="toPrintEquipments.emit(construction)" mdTooltip="Relatório de manutenção de máquinas e equipamentos" name="printEquipments" >assignment</md-icon>
+        <summary  [construction]="construction"  [alerts]="constructionCount?.alerts" [cones]="constructionCount?.cones" [workers]="constructionCount?.workers" [notificationCount]="constructionCount?.notifications">
+        </summary>
+        
+        <button md-icon-button (click)="this.openTotem()"  *ngIf="permissionService.hasSomePermission([              
+        'TOTEM_WORKERS_LIST'],{constructions:[construction.id]})">
+            <img src="assets/totem.svg" mdTooltip="Acessar Totem" alt="Acessar Totem" style="max-height: 35px">
+        </button>
+         
+        <md-icon *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_EDIT_CONSTRUCTION','COMPANY_CONSTRUCTIONS_SETUP_MODULES'],{constructions:[construction.id]})" fxLayout fxLayoutAlign="center center" (click)="toEdit.emit(construction)" mdTooltip="Editar" name="editConstruction">edit</md-icon>
+
+        <md-icon *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_EDIT_CONSTRUCTION','COMPANY_CONSTRUCTIONS_SETUP_MODULES'],{constructions:[construction.id]})" fxLayout fxLayoutAlign="center center" (click)="delete.emit(construction)" mdTooltip="Excluir" name="deleteConstruction">delete</md-icon>
+
+    </div>
+</safety-list-item>

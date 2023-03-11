@@ -1,0 +1,26 @@
+:host {
+
+    md-tab-group /deep/ {
+        md-tab-body > div {
+            transform: unset !important;
+        }
+    }
+}
+
+.body-content {
+    padding: 0 20px 0 0;
+}
+
+.button-default {
+    background-color: #A1ABB0;
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 599px) {
+    :host {
+        margin-right: 0px;
+    }
+}

@@ -1,0 +1,37 @@
+<form [formGroup]="supplierContactForm" (ngSubmit)="save()">
+    <div class="form-content grid-container">
+        <div class="grid-column">
+            <div class="grid-row">
+                <md-input-container>
+                    <input mdInput placeholder="Nome" [(ngModel)]="supplierContact.name" name="name" formControlName="name" trimText>
+                    <md-error *ngIf="supplierContactForm.controls.name.hasError('maxlength')">Máximo de {{ nameMaxLength }} caracteres.</md-error>
+                </md-input-container>
+
+                <md-input-container>
+                    <input mdInput placeholder="Cargo" [(ngModel)]="supplierContact.role" name="role" formControlName="role" trimText>
+                    <md-error *ngIf="supplierContactForm.controls.role.hasError('maxlength')">Máximo de {{ roleMaxLength }} caracteres.</md-error>
+                </md-input-container>
+            </div>
+
+            <div class="grid-row">
+                <md-input-container>
+                    <input mdInput placeholder="Telefone" [textMask]="{mask: phoneFaxMask}" [(ngModel)]="supplierContact.phone" name="phone" formControlName="phone">
+                </md-input-container>
+
+                <md-input-container>
+                    <input mdInput placeholder="Celular" [textMask]="{mask: phoneFaxMask}" [(ngModel)]="supplierContact.celphone" name="celphone" formControlName="celphone">
+                </md-input-container>
+
+                <md-input-container>
+                    <input id="email" mdInput placeholder="E-mail" type="email" [(ngModel)]="supplierContact.email" name="email" [email]="supplierContact.email && supplierContact.email !== ''" formControlName="email" trimText>
+                    <md-error *ngIf="supplierContactForm.controls.email.hasError('email')">Formato inválido.</md-error>
+                    <md-error *ngIf="supplierContactForm.controls.email.hasError('maxlength')">Máximo de {{ emailMaxLength }} caracteres.</md-error>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-bottom">
+        <button md-raised-button class="button-default" [disabled]="!supplierContactForm.valid">SALVAR E CONTINUAR</button>
+    </div>
+</form>

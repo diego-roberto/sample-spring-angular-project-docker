@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="separator"></div>
+
+  <div class="section-area">
+    <input
+      *ngIf="editing"
+      [maxlength]="maxLength"
+      [(ngModel)]="category"
+      safetyAutofocus
+      (keyup.enter)="submit(category)"
+      (focusout)="submit(category)"
+      (keyup.esc)="editing = false"
+    />
+
+    <span
+      *ngIf="!editing && category.length === 0"
+      class="new"
+      (click)="startEditing()"
+    >
+      {{ newCategoryLabel || "ADICIONE O TÍTULO DA SEÇÃO" }}
+    </span>
+
+    <span *ngIf="!editing && category.length > 0" (click)="startEditing()">
+      {{ category }}
+    </span>
+  </div>
+
+  <div class="separator"></div>
+
+  <button
+    md-icon-button
+    mdTooltip="Excluir"
+    *ngIf="deletable && visualType === 'icon'"
+    (click)="removeCategory()"
+  >
+    <md-icon>delete</md-icon>
+  </button>
+  <a
+    *ngIf="deletable && visualType !== 'icon'"
+    class="remove"
+    (click)="removeCategory()"
+    >Excluir</a
+  >
+</div>

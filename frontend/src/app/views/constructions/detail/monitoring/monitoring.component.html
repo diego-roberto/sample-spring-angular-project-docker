@@ -1,0 +1,59 @@
+<div *ngIf="loading">
+    <md-spinner class="warn"></md-spinner>
+</div>
+
+<md-tab-group *ngIf="!loading && hasSomeFloor(sectorsForMonitoring)" (selectedIndexChange)="selectedIndexChange($event)" [selectedIndex]="selectedIndex" #tabGroup>
+    <md-tab id="tab4" label="Monitorar">
+        <area-monitoring
+            (requestConstructionRedirect)="redirect()"
+            [icons]="icons"
+            [sectors]="sectorsForMonitoring" 
+            [sectorsEvents]="sectorsEvents">
+        </area-monitoring>
+    </md-tab>
+    <md-tab id="tab5" label="Mapear Áreas">
+        <area-mapping
+            [icons]="icons"
+            [sectors]="sectorsForMapping" 
+            [sectorsEvents]="sectorsEvents"
+            (requestConstructionRedirect)="redirect()"
+            (requestRemoveMarker)="requestRemoveMarker($event)"
+            (requestNewMarker)="requestNewMarker($event)"
+            (requestPositionUpdate)="requestPositionUpdate($event)">
+        </area-mapping>
+    </md-tab>
+    <md-tab id="tab6" label="Acompanhar sensores">
+        <cone-management-list 
+            (startMonitoring)="changeTab()"
+            (requestEditCone)="requestEditCone($event)"    
+            (requestRemoveCone)="requestRemoveMarker($event)"
+            [active]="selectedIndex === 2"
+            [sectors]="sectorsForManagement"
+            [sectorsEvents]="sectorsEvents">
+        </cone-management-list>
+    </md-tab>
+</md-tab-group>
+
+<div *ngIf="!loading && (sectorsForMonitoring.length === 0 || !hasSomeFloor(sectorsForMonitoring))">
+    <div class="body-content">
+        <div fxFlex fxLayout="column" fxLayoutAlign="space-around center">
+            <div fxFlex class="hello" *ngIf="sectorsForMonitoring.length > 0">
+                <p>Você não tem pavimentos cadastrados, cadastre um
+                    <b>novo pavimento.</b>
+                </p>
+            </div>
+            <div fxFlex class="hello" *ngIf="sectorsForMonitoring.length === 0">
+                <p>Você não tem setores cadastrados, cadastre um
+                    <b>novo setor.</b>
+                </p>
+            </div>
+            <div fxFlex>
+                <a class="start" md-raised-button type="button" name="button" (click)="redirect()">
+                    <span>Cadastrar</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<safety-fab-monitoring></safety-fab-monitoring>

@@ -1,0 +1,172 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }} - {{ currentCompany.companyName }}
+  </safety-dialog-header>
+
+  <safety-dialog-content>
+    <form
+      #f="ngForm"
+      [formGroup]="userForm"
+      novalidate
+      enctype="multipart/form-data"
+    >
+      <div class="form-content grid-container">
+        <div class="grid-column">
+
+          <div
+            class="grid-row"
+            style="margin-bottom: 0px;"
+          >
+            <md-input-container class="half">
+              <input
+                mdInput
+                placeholder="Nome"
+                maxlength="60"
+                [disableControl]="managements.user.id"
+                formControlName="name"
+                [(ngModel)]="managements.user.name"
+                required
+                trimText
+              >
+              <md-error *ngIf="userForm.controls.name.hasError('required')">Campo Obrigatório.</md-error>
+              <md-error *ngIf="!userForm.controls.name.hasError('required') && userForm.controls.name.hasError('name')">
+                Nome Inválido.</md-error>
+            </md-input-container>
+          </div>
+
+          <div class="grid-row">
+            <md-input-container class="half">
+              <input
+                mdInput
+                placeholder="E-mail"
+                (focusout)="verifyEmailAlreadyExists()"
+                [disableControl]="managements.user.id"
+                maxlength="60"
+                formControlName="email"
+                [(ngModel)]="managements.user.email"
+                required
+                trimText
+              >
+              <md-error *ngIf="userForm.controls.email.hasError('required')">Campo Obrigatório.</md-error>
+              <md-error
+                *ngIf="!userForm.controls.email.hasError('required') && userForm.controls.email.hasError('email')"
+              >
+                E-mail Inválido.</md-error>
+            </md-input-container>
+          </div>
+
+          <div
+            class="grid-row"
+            *ngIf="workers.length > 0"
+          >
+            <md-select
+              placeholder="Trabalhador"
+              [(ngModel)]="managements.workerId"
+              [ngModelOptions]="{standalone: true}"
+              (change)="onWorkerChange()"
+            >
+              <md-option
+                *ngFor="let worker of workers"
+                [mdTooltip]="worker.name"
+                matTooltipPosition="right"
+                [value]="worker.id"
+              >
+                {{ worker.name }} </md-option>
+            </md-select>
+          </div>
+
+          <div
+            class="grid-row"
+            *ngIf="companyProfiles.length > 0"
+          >
+            <md-select
+              placeholder="Perfil Empresa"
+              [(ngModel)]="selectedCompanyProfiles"
+              [ngModelOptions]="{standalone: true}"
+              multiple
+            >
+              <md-option
+                *ngFor="let userProfile of companyProfiles"
+                [mdTooltip]="userProfile.name"
+                matTooltipPosition="right"
+                [value]="userProfile.id"
+              >
+                {{ userProfile.name }}</md-option>
+            </md-select>
+          </div>
+
+          <div
+            *ngIf="profiles"
+            style="margin-top: 0; margin-bottom: 30px; align-items: baseline;"
+          >
+            <safety-dialog-actions>
+              <button
+                md-button
+                class="button-red"
+                (click)="viewCompanyUser()"
+              >Visualizar Empresas</button>
+            </safety-dialog-actions>
+          </div>
+
+          <div
+            class="global-notification"
+            *ngIf="globalNotificationProfiles.length > 0"
+          >
+            <span>OBRAS - DEFINIÇÕES GLOBAIS DE NOTIFICAÇÕES</span>
+
+            <div *ngFor="let profile of globalNotificationProfiles; let i = index">
+              <md-checkbox
+                #checkGlobal
+                [checked]="profile.checked"
+                (change)="onChangeGlobalNotificationProfile(checkGlobal,profile,i)"
+              >{{profile.name}}
+              </md-checkbox>
+            </div>
+          </div>
+
+          <div
+            class="grid-row"
+            *ngIf="constructionsProfiles.length > 0"
+          >
+            <md-accordion>
+              <md-expansion-panel *ngFor="let constructionProfiles of constructionsProfiles">
+                <md-expansion-panel-header>
+                  <md-panel-title>
+                    Obra: {{constructionProfiles.construction.name}}
+                  </md-panel-title>
+
+                  <md-panel-description>
+                  </md-panel-description>
+                </md-expansion-panel-header>
+
+                <md-form-field>
+                  <div *ngFor="let profile of constructionProfiles.profiles; let i = index">
+                    <md-checkbox
+                      #tgchk
+                      [checked]="profile.checked"
+                      (change)="onChange(tgchk,profile,constructionProfiles,i)"
+                      [value]="constructionProfiles.construction.id +'-'+profile.id"
+                    >{{profile.name}}
+                    </md-checkbox>
+                  </div>
+
+                  <md-error *ngIf="messageErrorConstructionProfile[constructionProfiles.construction.id]">
+                    {{messageErrorConstructionProfile[constructionProfiles.construction.id]}}</md-error>
+                </md-form-field>
+              </md-expansion-panel>
+            </md-accordion>
+          </div>
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+
+  <safety-dialog-actions>
+    <button
+      md-button
+      class="button-red"
+      (click)="saveManagements()"
+      [disabled]="!isValid()"
+    >{{mode === 'create' ? 'Cadastrar' : 'Alterar'}}</button>
+  </safety-dialog-actions>
+</safety-dialog>

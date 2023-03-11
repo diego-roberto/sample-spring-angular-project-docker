@@ -1,0 +1,70 @@
+<form [formGroup]="taskForm">
+  <div class="md-dialog-content">
+    <div class="grid-container" [formGroup]="taskForm">
+      <div class="grid-column">
+        <div class="grid-row">
+          <md-input-container>
+            <input mdInput formControlName="title" maxlength="100" placeholder="título da tarefa" name="taskTitle"
+              [(ngModel)]="task.title" required trimText>
+            <md-error *ngIf="taskForm.controls.title.hasError('textAnNumber')">campo inválido.</md-error>
+            <md-error
+              *ngIf="taskForm.controls.title.hasError('required') && !taskForm.controls.title.hasError('textAnNumber')">
+              campo obrigatório.</md-error>
+          </md-input-container>
+        </div>
+        <div class="grid-row">
+          <md-input-container>
+            <input mdInput dateMask="99/99/9999" formControlName="date" [mdDatepicker]="picker"
+              placeholder="PRAZO DE EXECUÇÃO" [(ngModel)]="task.deadline" required validateOnBlur>
+            <button mdSuffix [disabled]="isSaving" [mdDatepickerToggle]="picker"></button>
+            <md-datepicker #picker></md-datepicker>
+            <md-error *ngIf="taskForm.controls.date.hasError('invalid')">data inválida.</md-error>
+            <md-error
+              *ngIf="taskForm.controls.date.hasError('required') && !taskForm.controls.date.hasError('invalid')">campo
+              obrigatório.</md-error>
+          </md-input-container>
+        </div>
+
+        <div class="grid-row">
+          <div class="checkbox-container">
+            <md-checkbox formControlName="responsibleIsUserSystem" (change)="changeHasResponsible()"
+              [(ngModel)]="task.responsibleIsUserSystem">
+            </md-checkbox>
+            <span>
+              Usuário do sistema
+            </span>
+          </div>
+
+          <md-input-container *ngIf="!this.taskForm.controls.responsibleIsUserSystem.value" class="no-margin">
+            <input mdInput type="text" formControlName="responsible" maxlength="50" required class="inputAutocomplete"
+              placeholder="responsável pela execução" [(ngModel)]="responsibleInput" value="responsibleInput">
+            <md-error *ngIf="taskForm.controls.responsible.hasError('required')">campo obrigatório</md-error>
+          </md-input-container>
+
+          <div *ngIf="this.taskForm.controls.responsibleIsUserSystem.value" class="md-select-container">
+            <md-select required placeholder="responsável pela execução" [(ngModel)]="task.responsible"
+              formControlName="responsible">
+              <md-option *ngFor="let option of responsibles" [value]="option" (click)="process(option)">
+                {{ option.name }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+
+        <div class="grid-row">
+          <md-input-container>
+            <textarea mdInput formControlName="description" [maxlength]="taskDetailsMaxLength"
+              placeholder="detalhes da tarefa" name="taskDetails" [(ngModel)]="task.description" rows="4" required
+              trimText></textarea>
+            <md-hint align="end">{{ task.description ? task.description.length : 0 }} / {{ taskDetailsMaxLength }}
+            </md-hint>
+            <md-error>campo obrigatório</md-error>
+          </md-input-container>
+        </div>
+        <div class="grid-row">
+          <tasks-attachment-files [editable]="!isSaving" [task]="task"></tasks-attachment-files>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

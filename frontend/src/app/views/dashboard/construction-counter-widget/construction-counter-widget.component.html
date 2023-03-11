@@ -1,0 +1,45 @@
+<md-card style="padding: 8px !important;">
+    <md-card-content>
+            <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutWrap >
+
+
+
+                    <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"  >
+                            <div class="ccw grandtotal" fxLayout="column" fxFlex="100" >
+                                    <div class="counter-item">
+                                        <span class="total-counter">{{ granTotal }}</span>
+                                        <span class="total-label">QUANTIDADE DE OBRAS</span>
+                                    </div>
+                                </div>
+                    </div>
+                    <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"  >
+                            <div class="ccw" fxLayout="column" fxFlex="100" >
+                                    <div class="counter-item">
+                                        <span class="total-counter total-running">{{ totalRunning }}</span>
+                                        <span class="total-label">EM ANDAMENTO</span>
+                                    </div>
+                                </div>
+                    </div>
+                    <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"  >
+                            <div class="ccw" fxLayout="column" fxFlex="100" >
+                                    <div class="counter-item">
+                                        <span class="total-counter total-stopped">{{ totalStopped }}</span>
+                                        <span class="total-label">PARALISADAS</span>
+                                    </div>
+                            </div>
+
+                    </div>
+                    <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="50"  >
+                            <div class="ccw" fxLayout="column" fxFlex="100" >
+                                    <div class="counter-item" >
+                                        <span class="total-counter total-finished">{{ totalFinished }}</span>
+                                        <span class="total-label">FINALIZADAS</span>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+
+
+
+    </md-card-content>
+</md-card>

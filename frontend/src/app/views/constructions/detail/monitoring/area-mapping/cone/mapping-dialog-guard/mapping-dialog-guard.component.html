@@ -1,0 +1,54 @@
+<safety-dialog topBarDisable>
+    <safety-dialog-header>
+        mapear
+        <button class="close" (click)="close()" md-icon-button>
+            <md-icon>clear</md-icon>
+        </button>
+    </safety-dialog-header>
+    <safety-dialog-content>
+        <div class="danger-msg" *ngIf="!loadingFilters && current === 3 && hasSomeUnableWorker()">
+            <img src="assets/icon/myconstructionsite/danger.png" alt="" class="font-unable-worker-alert danger-icon"> Você autorizou o acesso a esta área de risco para trabalhadores que não atendem aos requisitos mínimos estipulados
+            pelo Seif.
+        </div>
+        <div *ngIf="loadingCone || loadingRisks" fxLayout="column" fxLayoutAlign="center center">
+            <md-spinner class="in-component"></md-spinner>
+        </div>
+        <div *ngIf="!loadingCone && !loadingRisks">
+                <div>
+                    <mat-slide-toggle (change)="alteraConeInteligente($event)" [(ngModel)]="coneInteligente">guarda-corpo inteligente</mat-slide-toggle>
+                </div>
+                <span><br/><br/></span>
+                <div *ngIf="coneInteligente">
+                    
+                    <span class="sensor-identification-title">Identificação do sensor</span>
+                    <div fxLayout="column" fxLayoutAlign="space-around stretch" style="width: 396px">
+                        <md-input-container fxFlex>
+                            <input mdInput placeholder="Título" [(ngModel)]="cone.title" maxlength="100">
+                        </md-input-container>
+                        
+                        
+                        <md-select placeholder="ID do Sensor" name="identification" [ngModelOptions]="{standalone: true}" [(ngModel)]="cone.identification" >
+                            <md-option *ngFor="let identification0 of identifications" 
+                            [mdTooltip]="identification0.identification" matTooltipPosition="right" 
+                            [value]="identification0.identification">{{identification0.identification | coneIdPipe}}</md-option>
+                        </md-select>
+                    </div>
+                    
+                    <span><br/></span>
+                    <mat-slide-toggle color="warn" (change)="alteraStatusGuard($event)" [(ngModel)]="cone.active">Ativo</mat-slide-toggle>&nbsp;&nbsp;
+
+                </div>
+
+        </div>
+
+    </safety-dialog-content>
+    
+    <safety-dialog-actions>
+        <button md-button class="button-default" (click)="finish()">Salvar</button>
+        <!--<button *nfIf="current === 2" [disabled]="">Próximo</button>
+        <button md-button class="button-default" (click)="updateStepStage('next')" *ngIf="currentStageStep < 3" [disabled]="(currentStageStep === 1 && !validSensor) || (currentStageStep === 2 && !validRisk)">{{actionButton}}</button>
+        <button md-button class="button-default" [disabled]="data?.view" (click)="finishConeMapping()" *ngIf="currentStageStep == 3 && finishBtn">{{actionButton}}</button>
+        <button md-button class="button-default" (click)="permissionCancel()" *ngIf="currentStageStep == 3 && validBtn">CANCELAR</button>
+        <button md-button class="button-default" (click)="permissionConfirm()" *ngIf="currentStageStep == 3 && validBtn">CONFIRMAR</button> -->
+    </safety-dialog-actions>
+</safety-dialog>

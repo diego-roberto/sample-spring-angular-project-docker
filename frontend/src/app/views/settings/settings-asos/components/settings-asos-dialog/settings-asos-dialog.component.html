@@ -1,0 +1,32 @@
+<safety-dialog>
+  <safety-dialog-header>
+    Cadastro de ASO
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form [formGroup]="asoForm">
+      <div class="form-content grid-container">
+        <div class="grid-column">
+          <div class="grid-row">
+            <md-input-container class="half">
+              <input mdInput placeholder="Nome da ASO" maxlength="130" formControlName="name"
+                required >
+                <md-error *ngIf="asoForm.controls.name.hasError('required')">Campo Obrigatório.</md-error>
+                <md-error *ngIf="!asoForm.controls.name.hasError('required') && asoForm.controls.name.hasError('name')">Nome Inválido.</md-error>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <button
+      md-button
+      class="button-red"
+      [class.spinner]="loading"
+      [disabled]="!asoForm.valid || loading"
+      (click)="save()"
+    >
+      SALVAR
+    </button>
+  </safety-dialog-actions>
+</safety-dialog>

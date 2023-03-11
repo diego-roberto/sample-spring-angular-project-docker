@@ -1,0 +1,23 @@
+@import '../../../../../scss/components/color.scss';
+
+p {
+    margin: initial;
+}
+
+.supplier-documentation-empty {
+    color: $inactive;
+}
+
+.supplier-documentation-late {
+    color: $grapefruit;
+}
+
+.supplier-documentation-shelved {
+    * {
+        color: $inactive;
+    }
+
+    md-chip span {
+        color: $greyish-light;
+    }
+}

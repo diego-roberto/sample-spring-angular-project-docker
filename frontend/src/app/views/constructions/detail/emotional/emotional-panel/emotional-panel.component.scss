@@ -1,0 +1,38 @@
+md-tab-group {
+    height: calc(100vh - 5em);
+    overflow: auto;
+}
+
+.line-spacer {
+    margin-top: 10px;
+}
+
+.inRigth {
+    display: flex;
+    justify-content: center;
+
+    md-input-container{
+        padding-left: 10px;
+    }
+
+    div {
+        padding-left: 10px;
+    }
+}
+
+.column-spacer {
+    margin: 10px 20px;
+}
+
+p {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: center;
+    color: #999999;
+    padding: 1em;
+    margin: 0;
+
+    b {
+        font-weight: 900;
+    }
+}

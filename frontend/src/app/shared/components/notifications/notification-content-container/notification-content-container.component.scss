@@ -1,0 +1,9 @@
+:host {
+    & /deep/ .mat-sidenav-container {
+        background-color: inherit;
+    }
+}
+
+md-sidenav {
+    overflow: hidden;
+}

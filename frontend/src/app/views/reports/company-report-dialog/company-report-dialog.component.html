@@ -1,0 +1,39 @@
+<form [formGroup]="companyReportForm" fxFlex="100">
+
+  <safety-dialog>
+    <safety-dialog-header>
+      Gerar Relatório
+    </safety-dialog-header>
+
+    <safety-dialog-content fxLayout="column" class="safety-dialog-content">
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar empresas
+      </md-card-subtitle>
+
+      <md-select id="company-report-type" formControlName="company" fxFlex="100" multiple
+        [(ngModel)]="reportRequest.company">
+        <md-option *ngFor="let company of companies" [value]="company">
+          {{company}}
+        </md-option>
+      </md-select>
+
+      <md-card-subtitle fxFlex="100" fxLayoutAlign="start center">
+        Selecionar status das obras
+      </md-card-subtitle>
+
+      <md-select id="company-report-type" formControlName="constructionStatus"
+        [(ngModel)]="reportRequest.constructionStatus" fxFlex="100" multiple>
+        <md-option *ngFor="let status of constructionStatus" [value]="status">
+          {{status}}
+        </md-option>
+      </md-select>
+    </safety-dialog-content>
+
+    <safety-dialog-actions>
+      <button md-button class="button-red" [class.spinner]="this.loading"
+        [disabled]="companyReportForm.invalid || this.loading" (click)="printReport()">
+        Gerar Relatório
+      </button>
+    </safety-dialog-actions>
+  </safety-dialog>
+</form>

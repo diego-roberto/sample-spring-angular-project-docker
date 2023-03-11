@@ -1,0 +1,59 @@
+<div fxLayout="column" fxFlex="100">
+    <div fxLayout="column" fxFlex="initial" class="notifications" fxLayoutGap="1em">
+        <h3 fxFlex="100" class="notifications-title">
+            <span>Notificações</span>
+            <span class="notifications-count" *ngIf="numberOfNotReadNotifications > 0">({{numberOfNotReadNotifications}} Não Lidas)</span>
+        </h3>
+
+        <md-select fxFlex="100" [ngModel]="typeFilter" (ngModelChange)="filterNotifications($event, true)">
+            <md-option [value]="0">Todas</md-option>
+            <md-option *ngFor="let type of notificationTypes" [value]="type.id">{{ type.name }}</md-option>
+        </md-select>
+
+        <div fxLayout="row" fxFlex="100" fxLayoutAlign="end center">
+            <div fxLayout="row" fxFlex="fill" fxLayoutGap="2%" [@slideFilterDate]="activeFilterDate" [@fadeInFilterDate]="activeFilterDate"
+                [fxHide]="! activeFilterDate">
+                <md-input-container fxFlex="49">
+                    <span mdPrefix>{{ 'DE: ' }}</span>
+
+                    <input mdInput dateMask="99/99/9999" [mdDatepicker]="initialPicker" [ngModel]="initialDate" (ngModelChange)="setInitialDate($event)"
+                        validateOnBlur>
+
+                        <button mdSuffix [mdDatepickerToggle]="initialPicker"></button>
+                    <md-datepicker #initialPicker></md-datepicker>
+
+                </md-input-container>
+
+                <md-input-container fxFlex="49">
+                    <span mdPrefix>{{ 'ATÉ: ' }}</span>
+                    <input mdInput dateMask="99/99/9999" [mdDatepicker]="finalPicker" (ngModelChange)="onFinalDateChange($event)" [ngModel]="finalDate"
+                        [disabled]="!initialDate" [min]="finalMin" validateOnBlur>
+                    <button mdSuffix [mdDatepickerToggle]="finalPicker" [disabled]="!initialDate"></button>
+                    <md-datepicker #finalPicker></md-datepicker>
+                </md-input-container>
+            </div>
+
+            <div fxLayout="row" fxFlex="nogrow" class="filter-date-icon">
+                <button md-icon-button fxFlex="initial" type="button" [@fadeOutFilterDate]="activeFilterDate" (click)="toggleActiveFilterDate()"
+                    [fxHide]="activeFilterDate">
+                    <md-icon>today</md-icon>
+                </button>
+
+                <button md-icon-button fxFlex="initial" type="button" [@fadeInFilterDate]="activeFilterDate" (click)="toggleActiveFilterDate()"
+                    [fxHide]="! activeFilterDate">
+                    <md-icon>close</md-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <md-divider></md-divider>
+
+    <md-list fxLayout="column" class="notification-list">
+        <virtual-scroll [items]="allfilteredNotifications" (update)="scrollNotifications = $event">
+            <notification-component md-list-item fxLayout="column" fxLayoutAlign="space-around" [notification]="notification" [index]="i"
+                (loaded)="checkLoading($event)" (readNotification)="read($event)" (requestClose)="requestClose.emit()" *ngFor="let notification of scrollNotifications; let i = index">
+            </notification-component>
+        </virtual-scroll>
+    </md-list>
+</div>

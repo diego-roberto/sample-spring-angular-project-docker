@@ -1,0 +1,38 @@
+<form [formGroup]="checklistQuestionForm" fxLayout.lt-md="column" fxLayout.gt-sm="row" fxLayoutWrap fxLayoutGap.gt-sm="2%">
+  <md-input-container fxFlex.gt-sm="48" fxFlex.lt-md="100">
+    <textarea mdInput placeholder="Descritivo da questão" [(ngModel)]="checklistQuestion.title"
+      formControlName="questionTitle" name="questionTitle" [maxlength]="questionTitleMaxLength" required trimText></textarea>
+    <md-hint align="end">{{ checklistQuestion.title ? checklistQuestion.title.length : 0 }} / {{ questionTitleMaxLength }}</md-hint>
+    <md-error *ngIf="checklistQuestionForm.controls.questionTitle.hasError('required')">Campo Obrigatório.</md-error>
+    <md-error *ngIf="!checklistQuestionForm.controls.questionTitle.hasError('required') && checklistQuestionForm.controls.questionTitle.hasError('maxlength')">Máximo de {{ checklistTitleMaxLength }} caracteres.</md-error>
+  </md-input-container>
+
+  <md-input-container fxFlex.gt-sm="48" fxFlex.lt-md="100">
+    <textarea mdInput placeholder="Ajuda para a resposta" [(ngModel)]="checklistQuestion.help" formControlName="questionHelp" name="questionHelp" [maxlength]="questionHelpMaxLength" trimText></textarea>
+    <md-hint align="end">{{ checklistQuestion.help ? checklistQuestion.help.length : 0 }} / {{ questionHelpMaxLength }}</md-hint>
+  </md-input-container>
+
+  <md-input-container fxFlex.gt-sm="48" fxFlex.lt-md="100" *ngIf="checklistGeneratesActionPlan">
+    <textarea mdInput placeholder="Ação para o plano de ação" [(ngModel)]="checklistQuestion.baseActionPlan" formControlName="questionBaseActionPlan" name="questionBaseActionPlan"
+      [maxlength]="questionBaseActionPlanMaxLength" required trimText></textarea>
+    <md-hint align="end">{{ checklistQuestion.baseActionPlan ? checklistQuestion.baseActionPlan.length : 0 }} / {{ questionBaseActionPlanMaxLength }}</md-hint>
+    <md-error *ngIf="checklistQuestionForm.controls.questionBaseActionPlan.hasError('required')">Campo Obrigatório.</md-error>
+  </md-input-container>
+
+  <div fxFlex.gt-sm="48" fxFlex.lt-md="100" fxLayout="row" fxLayoutAlign="start center" *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_EDIT_QUESTION_EMBARGO']) ">
+    <md-form-field class="margin-right">
+      <md-select [(ngModel)]="questionRuleIdentifierSelected" (change)="questionRuleIdentifierSelectionChangeHandler($event)" placeholder="Infração" formControlName="questionRuleIdentifier" name="questionRuleIdentifier">
+        <md-option></md-option>
+        <md-option *ngFor="let questionRuleIdentifier of questionRuleIdentifierList" [value]="questionRuleIdentifier">
+          {{ questionRuleIdentifier }}
+        </md-option>
+      </md-select>
+    </md-form-field>
+
+    <section>
+      <md-checkbox [checked]="isEmbargoChecked()" (change)="embargoChangeHandler($event)" class="margin-right">Embargo</md-checkbox>
+      <md-checkbox [checked]="isMoreFiscalizedChecked()" (change)="moreFiscalizedChangeHandler($event)" [disabled]="! isMoreFiscalizedEnabled()">Mais fiscalizadas</md-checkbox>
+    </section>
+  </div>
+
+</form>

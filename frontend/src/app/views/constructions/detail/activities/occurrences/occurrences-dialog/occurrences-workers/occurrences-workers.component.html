@@ -1,0 +1,58 @@
+<div fxLayout.gt-sm="row" fxLayout.lt-md="column">
+  <div fxFlex.lt-md="100" fxFlex.gt-sm="45" fxLayout="column" fxLayoutAlign="end none">
+    <h6>Selecione os trabalhadores</h6>
+
+    <md-input-container>
+      <md-icon mdPrefix>search</md-icon>
+      <input mdInput #filter (input)="doFilterWorkers(filter.value)" placeholder="Buscar por nome, CPF ou função">
+      <md-icon mdSuffix (click)="doClearFilterWorkers()">clear</md-icon>
+    </md-input-container>
+
+    <md-list>
+      <virtual-scroll #workersVirtualScroll [items]="companyWorkersFiltered" [childHeight]="50" (update)="workersVirtualScrollItems = $event">
+        <md-list-item *ngFor="let worker of workersVirtualScrollItems">
+          <md-checkbox (change)="setSelectedToAdd(worker)" [disabled]="limitSelectionReached() && ! selectedToAdd.includes(worker)" [checked]="selectedToAdd.includes(worker)"></md-checkbox>
+          <div>
+            <p class="bolder">{{ worker.name }}</p>
+            <p>{{ worker.cbos?.title }} -
+            {{ worker.cpf | cpfMask }}</p>
+          </div>
+        </md-list-item>
+      </virtual-scroll>
+    </md-list>
+  </div>
+
+  <div fxLayout.lt-md="row" fxLayout.gt-sm="column" class="button-group" fxLayoutAlign="end none">
+      <button md-button [disabled]="isDoAddDisabled()" (click)="doAdd()">
+          <md-icon fxHide.lt-md fxShow.gt-sm>keyboard_arrow_right</md-icon>
+          <md-icon fxHide.gt-sm fxShow.lt-md>keyboard_arrow_down</md-icon>
+      </button>
+      <button md-button [disabled]="isDoRemoveDisabled()" (click)="doRemove()">
+          <md-icon fxHide.lt-md fxShow.gt-sm>keyboard_arrow_left</md-icon>
+          <md-icon fxHide.gt-sm fxShow.lt-md>keyboard_arrow_up</md-icon>
+      </button>
+  </div>
+
+  <div fxFlex.lt-md="100" fxFlex.gt-sm="45" fxLayout="column" fxLayoutAlign="end none">
+    <h6>Trabalhadores <span class="red-text-highlighted">selecionados</span> ({{ occurrence.workers ? occurrence.workers.length : 0 }} / {{ limitSelection }})</h6>
+
+    <md-list>
+      <virtual-scroll #workersSelectedVirtualScroll [items]="occurrenceWorkersFiltered" [childHeight]="50" (update)="workersSelectedVirtualScrollItems = $event">
+        <div class="info-empty-box" *ngIf="workersSelectedVirtualScrollItems.length === 0" fxLayout="column" fxLayoutAlign="end center">
+          <p><b>Nenhum item selecionado!</b></p>
+          <p>Selecione os trabalhadores e </p>
+          <p>clique na seta ao lado para</p>
+          <p>adicionar os trabalhadores.</p> 
+        </div>
+        <md-list-item *ngFor="let worker of workersSelectedVirtualScrollItems">
+          <md-checkbox (change)="setSelectedToRemove(worker)" [checked]="selectedToRemove.includes(worker)"></md-checkbox>
+          <div>
+            <p class="bolder">{{ worker.name }}</p>
+            <p>{{ worker.cbos?.title }} -
+            {{ worker.cpf | cpfMask }}</p>
+          </div>
+        </md-list-item>      
+      </virtual-scroll>
+    </md-list>
+  </div>
+</div>

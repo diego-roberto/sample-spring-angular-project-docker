@@ -1,0 +1,76 @@
+<form [formGroup]="supplierForm" (ngSubmit)="save()" novalidate enctype="multipart/form-data">
+  <div class="form-content grid-container">
+    <div class="grid-column">
+      <div class="grid-row">
+        <drop-file class="half" (fileChanged)="onSelectFile($event)" (fileRemoved)="onRemoveFile()" [image]="supplier.logoUrl | backendPath"></drop-file>
+
+        <div class="grid-column-75">
+          <div class="grid-row">
+            <md-input-container>
+              <input mdInput placeholder="CNPJ" [textMask]="{ mask: cnpjMask }" formControlName="cnpj" [(ngModel)]="supplier.cnpj" name="cnpj"
+                required (blur)="onBlurCnpj()" [reactiveFormControlDisabled]="isEditionMode()" trimText>
+              <md-error *ngIf="supplierForm.controls.cnpj.hasError('required')">Campo Obrigatório.</md-error>
+              <md-error *ngIf="!supplierForm.controls.cnpj.hasError('required') && supplierForm.controls.cnpj.hasError('cnpj')">CNPJ Inválido.</md-error>
+            </md-input-container>
+
+            <md-input-container>
+              <input mdInput placeholder="RAZÃO SOCIAL" [(ngModel)]="supplier.corporateName" formControlName="corporateName" name="corporateName" trimText>
+              <md-error *ngIf="supplierForm.controls.corporateName.hasError('maxlength')">Máximo de {{ corporateNameMaxLength }} caracteres.</md-error>
+            </md-input-container>
+
+            <md-input-container>
+              <input mdInput placeholder="NOME FANTASIA" [(ngModel)]="supplier.traddingName" formControlName="traddingName" name="traddingName" required trimText>
+              <md-error *ngIf="supplierForm.controls.traddingName.hasError('required')">Campo Obrigatório.</md-error>
+              <md-error *ngIf="!supplierForm.controls.traddingName.hasError('required') && supplierForm.controls.traddingName.hasError('maxlength')">Máximo de {{ traddingNameMaxLength }} caracteres.</md-error>
+            </md-input-container>
+          </div>
+
+          <div class="grid-row">
+            <cnae-picker #cnaePicker [(cnaeCode)]="supplier.cnae.code" class="half" (onSearch)="onCnaeSearch($event)"
+              name="cnaeCode"></cnae-picker>
+
+            <md-input-container>
+              <input mdInput placeholder="DESCRIÇÃO CNAE" [(ngModel)]="supplier.cnae.description" formControlName="cnaeDescription" name="cnaeDescription">
+            </md-input-container>
+
+            <cep-picker [(cep)]="supplier.cep" class="half" (onSearch)="onCepSearch($event)" formControlName="cep" name="cep"></cep-picker>
+          </div>
+
+          <div class="grid-row">
+            <md-input-container>
+              <input mdInput placeholder="Cidade / Estado" [(ngModel)]="supplier.addressStreet" formControlName="addressStreet" name="addressStreet">
+              <md-error *ngIf="supplierForm.controls.addressStreet.hasError('maxlength')">Máximo de {{ addressStreetMaxLength }} caracteres.</md-error>
+            </md-input-container>
+
+            <md-input-container>
+              <input mdInput placeholder="NUMERO" [(ngModel)]="supplier.addressNumber" formControlName="addressNumber" name="addressNumber" trimText>
+              <md-error *ngIf="supplierForm.controls.addressNumber.hasError('maxlength')">Máximo de {{ addressNumberMaxLength }} caracteres.</md-error>
+            </md-input-container>
+
+            <md-input-container>
+              <input mdInput placeholder="COMPLEMENTO" [(ngModel)]="supplier.addressComplement" formControlName="addressComplement" name="addressComplement" trimText>
+              <md-error *ngIf="supplierForm.controls.addressComplement.hasError('maxlength')">Máximo de {{ addressComplementMaxLength }} caracteres.</md-error>
+            </md-input-container>
+          </div>
+
+          <div class="grid-row" *ngIf="isSupplierUrlDomainOnEdit()">
+            <md-input-container class.gt-sm="url-input-field">
+              <input mdInput placeholder="URL" [(ngModel)]="supplier.urlDomain" formControlName="urlDomain" name="urlDomain" (blur)="setSupplierUrlDomainOnEdit(false)" [focus]="focusOnUrlInputField" trimText>
+              <md-error *ngIf="supplierForm.controls.urlDomain.hasError('maxlength')">Máximo de {{ urlDomainMaxLength }} caracteres.</md-error>
+            </md-input-container>
+          </div>
+          <div *ngIf="! isSupplierUrlDomainOnEdit()">
+              <a [href]="normalizeUrlDomainProtocol(supplier.urlDomain)" target="_blank">{{ supplier.urlDomain }}</a>
+              <div class="edit-url-domain-icon">
+                  <md-icon fxLayout fxLayoutAlign="center center" (click)="setSupplierUrlDomainOnEdit(true)" mdTooltip="Editar" mdTooltipPosition="below">edit</md-icon>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-bottom">
+    <button md-raised-button class="button-default" [disabled]="!supplierForm.valid">SALVAR E CONTINUAR</button>
+  </div>
+</form>

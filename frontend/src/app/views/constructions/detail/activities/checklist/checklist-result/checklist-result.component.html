@@ -1,0 +1,35 @@
+<safety-card #checklistResultCard toggleDisable>
+    
+    <safety-card-header>{{ checklist.name }}</safety-card-header>
+    
+    <safety-card-content>
+
+        <div *ngIf="onPrinting">
+            <md-spinner color="warn"></md-spinner>
+        </div>
+
+        <div *ngIf="!onPrinting">
+            <checklist-result-general *ngIf="step == 0" [checklistInfos]="checklistInfos" [checklist]="checklist"></checklist-result-general>
+
+            <checklist-result-construction *ngIf="step == 1" [construction]="construction" [checklistInfos]="checklistInfos"></checklist-result-construction>
+
+            <checklist-result-evaluation *ngIf="step == 2" [checklistPenalty]="checklistPenalty" [resultSessions]="resultSessions" [answersSessionsCount]="answersSessionsCount"
+                [answersCount]="answersCount" [savedAnswer]="savedAnswer" [checklist]="checklist"></checklist-result-evaluation>
+
+            <checklist-result-detailed-evaluation *ngIf="step == 3" [checklistPenalty]="checklistPenalty" [checklistPossibleAnswers]="checklistPossibleAnswers"
+                [resultSessions]="resultSessions" [savedAnswer]="savedAnswer"></checklist-result-detailed-evaluation>
+
+            <checklist-result-considerations *ngIf="step == 4" [checklistInfos]="checklistInfos"></checklist-result-considerations>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <button md-button class="button-red no-overlay" [disabled]="previousStepEnabled()" (click)="previousStep()">Voltar</button>
+            <button md-button *ngIf="step < 4" class="button-red no-overlay" [disabled]="onPrinting" (click)="nextStep()">Avançar</button>
+            <button md-button *ngIf="step == 4" class="button-red no-overlay" [disabled]="onPrinting" (click)="printConfirmation()">Concluir</button>
+            <button md-button *ngIf="isGenerateActionPlanEnabled()" class="button-red no-overlay" [disabled]="onPrinting" 
+                (click)="generateActionPlanConfirmation()">{{ generateActionPlanButtonLabel }}</button>
+        </div>
+        
+    </safety-card-content>
+
+</safety-card>

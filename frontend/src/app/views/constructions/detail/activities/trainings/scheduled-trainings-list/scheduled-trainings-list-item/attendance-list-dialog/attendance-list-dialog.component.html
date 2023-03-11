@@ -1,0 +1,67 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ 'Lista de presença' | Limit: 30 }}
+  </safety-dialog-header>
+
+  <safety-dialog-content>
+    <div fxLayout="column">
+      <div fxLayout="row" class="info-row">
+        <div fxFlex>
+          <p class="bolder">Capacitação Selecionada</p>
+          <p>{{ training.trainingTitle }}</p>
+        </div>
+      </div>
+
+      <div fxLayout="row" class="info-row">
+        <div fxFlex="25">
+          <p class="bolder">Data</p>
+          <p>{{ training.scheduledBegin | date: 'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div fxFlex="25">
+          <p class="bolder">Horário</p>
+          <p>{{ training.scheduledTime | date: 'HH:mm' }}</p>
+        </div>
+
+        <div fxFlex="50">
+          <p class="bolder">Local</p>
+          <p>{{ training.place }}</p>
+        </div>
+      </div>
+
+      <div fxLayout="row" class="info-row">
+        <div fxFlex>
+          <p class="bolder">Responsável</p>
+          <p>{{ training.ministerNames }}</p>
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex="100">
+          <p class="bolder">Selecione os trabalhadores presentes</p>
+
+          <md-input-container style="width: 100% !important; display: block !important">
+            <md-icon mdPrefix>search</md-icon>
+            <input mdInput #filter (input)="doFilterAttendaceList(filter.value)">
+            <md-icon mdSuffix (click)="doClearFilterAttendaceList()">clear</md-icon>
+          </md-input-container>
+
+          <md-list class="attendance-list">
+            <md-list-item class="attendance-list-item" *ngFor="let attendance of attendanceFilteredList">
+              <md-checkbox (change)="toggleAttendanceSelection(attendance)" [checked]="attendanceMap.get(attendance)" [disabled]="toggleAttendanceSelectionDisabled()"></md-checkbox>
+              <div>
+                <p class="bolder">{{ attendance.worker.name }}</p>
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </div>
+    </div>
+  </safety-dialog-content>
+
+  <safety-dialog-actions>
+    
+    <button md-button class="button-default" (click)="doPrint()">Imprimir</button>
+    <button md-button class="button-red" (click)="doSave(false)">Salvar</button>
+  </safety-dialog-actions>
+</safety-dialog>

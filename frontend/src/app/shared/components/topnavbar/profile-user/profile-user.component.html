@@ -1,0 +1,65 @@
+<safety-dialog>
+  <safety-dialog-header>
+    MEUS DADOS
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form [formGroup]="userForm" id="formBasicData" name="formBasicData" novalidate class="dialog-content">
+      <div class="grid-column ">
+        <div *ngIf="!onChangePassword" fxLayout="row" fxLayoutWrap>
+          <div fxFlex="30" fxLayout="row" fxLayoutAlign="center">
+            <drop-file [image]="getAvatar()" (fileChanged)="getImgFile($event)" (fileRemoved)="fileRemoved()">
+            </drop-file>
+          </div>
+          <div fxFlex="70" fxLayout="column wrap">
+            <p class="" style="margin-top:0"><strong>Nome:</strong> {{ currentUser.name }}</p>
+            <p class="name" style="margin-top:0"><strong>Usuário:</strong> {{ currentUser.email }}</p>
+            <a class="password-recovery-link" (click)="doChangePassword()">Alterar a senha</a>
+            <p class="" style="margin-top:10px" *ngIf="managementsList.length == 1"><strong>Empresa:</strong></p>
+            <p class="" style="margin-top:10px" *ngIf="managementsList.length > 1"><strong>Empresas:</strong></p>
+            <ul style="margin-top:0;">
+              <li *ngFor="let m of managementsList" style="margin-top:0; margin-bottom: 10px; list-style: none;">
+                - {{ m.company.fakeName }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="onChangePassword" fxLayout="column" fxFlex="100" [formGroup]="userPasswordChangeForm">
+          <md-input-container>
+            <input type="password" #password mdInput placeholder="Digite sua senha" name="password"
+              formControlName="password">
+            <md-error *ngIf="userPasswordChangeForm.controls.password.hasError('required')">campo obrigatório.
+            </md-error>
+          </md-input-container>
+          <md-input-container>
+            <input type="password" #newPassword mdInput placeholder="Digite sua nova senha" name="newPassword"
+              formControlName="newPassword">
+            <md-error *ngIf="userPasswordChangeForm.controls.newPassword.hasError('required')">campo obrigatório.
+            </md-error>
+            <md-error
+              *ngIf="userPasswordChangeForm.controls.newPassword.hasError('minlength') || userPasswordChangeForm.controls.newPassword.hasError('maxlength')">
+              a senha deve conter entre {{ passwordMinLength }} e {{ passwordMaxLength }} caracteres.</md-error>
+            <md-error
+              *ngIf="userPasswordChangeForm.controls.newPassword.hasError('invalid') && !userPasswordChangeForm.controls.newPassword.hasError('required')">
+              Senha inválida.</md-error>
+          </md-input-container>
+          <md-input-container>
+            <input type="password" #newPasswordConfirm mdInput placeholder="Confirme sua nova senha"
+              name="newPasswordConfirm" formControlName="newPasswordConfirm">
+            <md-error *ngIf="userPasswordChangeForm.controls.newPasswordConfirm.hasError('mismatch')">Senhas diferentes.
+            </md-error>
+            <md-error *ngIf="userPasswordChangeForm.controls.newPasswordConfirm.hasError('required')">campo obrigatório.
+            </md-error>
+            <md-error
+              *ngIf="userPasswordChangeForm.controls.newPasswordConfirm.hasError('invalid') && !userPasswordChangeForm.controls.newPasswordConfirm.hasError('required')">
+              Senha inválida.</md-error>
+          </md-input-container>
+          <a class="password-recovery-link" (click)="doCancelChangePassword()">Voltar</a>
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+
+  <safety-dialog-actions>
+    <button md-button class="button-red" [disabled]="!isValid()" (click)="save()">Salvar</button>
+  </safety-dialog-actions>
+</safety-dialog>

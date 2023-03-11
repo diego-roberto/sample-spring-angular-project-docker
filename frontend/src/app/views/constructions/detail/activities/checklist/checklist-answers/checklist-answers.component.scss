@@ -1,0 +1,150 @@
+@import '../../../../../../../scss/components/color.scss';
+
+:host {
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.list-content {
+    margin-bottom: 80px;
+}
+
+*:focus {
+    outline: none;
+}
+
+.list-wrapper {
+    margin: 0 15px;
+
+    & > div {
+        margin: 16px 0;
+    }
+}
+
+.order {
+    min-width: 150px;
+
+    & /deep/ {
+        .mat-select-placeholder,
+        .mat-select-value {
+            color:          $warm-grey-four;
+            font-size:      10px;
+            font-weight:    900;
+            line-height:    1.4;
+            letter-spacing: 0.5px;
+            text-align:     left;
+        }
+
+        .mat-select-underline {
+            display: none !important;
+        }
+    }
+}
+
+.checklist-item {
+    margin-bottom: 20px !important;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2em;
+    width: 100%;
+  
+    .separator {
+      background-color: $light-gray;
+      height: 1px;
+      flex: 1;
+      flex-grow: 1;
+    }
+  
+    .section-area {
+      width: 280px;
+    }
+
+    span {
+        width: 100%;
+        display: block;
+        color: black;
+        font-size: 1em;
+        font-weight: 900;
+        text-align: center;
+      
+        &.new {
+          color: $light-gray;
+        }
+    }
+}
+
+.list-wrapper {
+    .body-content {
+        padding: 0;
+    }
+}
+
+.list {
+    max-height: 560px !important;
+    .label {
+        display: inline-block;
+        margin-top: 5px;
+
+        .group-title {
+            border: 1px solid #999999;
+            color: #999999;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            padding: 5px 15px 5px 15px;
+
+            &.warning {
+                border-color: #ff4c4c;
+                color: #ff4c4c;
+            }
+        }
+    }
+
+    .line {
+        height: 20px;
+        width: 1px;
+        opacity: 0.7;
+        background-color: #9b9b9b;
+        margin-left: 30px;
+        margin-top: 7px;
+    }
+}
+
+.filters {
+    display: flex;
+    margin-bottom: 50px;
+
+    .chip {
+        background-color: transparent;
+        color: #3c3c3c;
+        border: 2px solid #3c3c3c;
+        border-radius: 0;
+        margin-right: 12px !important;
+        cursor: pointer;
+
+        &.active {
+            background-color: #3c3c3c;
+            color: white;
+        }
+
+        span {
+            font-size: 10.5px;
+            font-weight: 900;
+            line-height: 1.75;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+.filter {
+    margin: 20px 35px 20px 35px;
+}
+
+.list-container {
+    margin: 20px 35px 20px 35px;
+}

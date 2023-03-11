@@ -1,0 +1,85 @@
+<span>2 - Riscos relacionados</span>
+<div fxLayout="column" fxLayoutAlign="space-around stretch" style="width: 550px">
+    <form fxFlex [formGroup]="formRisks">
+        <div *ngFor="let risk of risks; index as i" formArrayName="risks">
+            <div [formGroupName]="i">
+                <div class="container-risk">
+                    <div fxLayout="column">
+                        <div *ngIf="!viewMode" fxFlex="15" fxLayout fxLayoutAlign="end center">
+                            <button md-icon-button (click)="removeRisk(i)">
+                                <md-icon>clear</md-icon>
+                            </button>
+                        </div>
+                        <div *ngIf="viewMode" fxFlex="15px" fxLayout></div>
+                        <div fxFlex="85" fxLayout fxLayout.lt-md="column">
+                            <div fxFlex="65" fxLayout="column" fxLayoutAlign="space-between stretch">
+                                <div fxFlex class="risk-select-paddings">
+                                    <md-select 
+                                        formControlName="riskType" 
+                                        placeholder="Tipo De Risco" 
+                                        floatPlaceholder="never" 
+                                        [ngModel]="risk.riskType?.id"
+                                        (ngModelChange)="riskTypeChange($event, i)" 
+                                        [mdTooltip]="risk.riskType?.name">
+                                        <md-option *ngFor="let riskType of riskTypes" [mdTooltip]="riskType.name" matTooltipPosition="right" [value]="riskType.id">{{riskType.name}}</md-option>
+                                    </md-select>
+                                    <md-error *ngIf="riskForm(i).controls.riskFactor.touched && riskForm(i).controls.riskType.hasError('required')">Campo Obrigatório.</md-error>
+                                </div>
+
+                                <div fxFlex class="risk-select-paddings">
+                                    <md-select 
+                                        formControlName="riskFactor" 
+                                        placeholder="Fator De Risco" 
+                                        floatPlaceholder="never" 
+                                        [ngModel]="risk.riskFactor?.id"
+                                        (ngModelChange)="riskFactorChange($event, i)" 
+                                        [mdTooltip]="risk.riskFactor?.name">
+                                        <md-option *ngFor="let riskFactor of filterItemsByType(risk)" [mdTooltip]="riskFactor.name" matTooltipPosition="right" [value]="riskFactor.id">{{riskFactor.name}}</md-option>
+                                    </md-select>
+                                    <md-error *ngIf="riskForm(i).controls.riskFactor.touched && riskForm(i).controls.riskFactor.hasError('required')">Campo Obrigatório.</md-error>
+                                </div>
+
+                                <div fxFlex class="risk-select-paddings">
+                                    <md-select 
+                                        formControlName="levelType" 
+                                        placeholder="Grau" 
+                                        floatPlaceholder="never" 
+                                        [(ngModel)]="risk.level">
+                                        <md-option *ngFor="let levelType of levelTypes" [value]="levelType.id">{{levelType.value}}</md-option>
+                                    </md-select>
+                                    <md-error *ngIf="riskForm(i).controls.levelType.touched && riskForm(i).controls.levelType.hasError('required')">Campo Obrigatório.</md-error>
+                                </div>
+                            </div>
+
+                            <div fxFlex="35" fxLayout="column" fxLayoutAlign="space-around center">
+                                <p class="risk-description">{{risk.riskType?.name}}</p>
+                                <div>
+                                    <ul class="type no-margin-no-padding">
+                                        <li [ngClass]="{'biological': risk.riskType?.id == 1, 'erghonomic': risk.riskType?.id == 2 || risk.riskType?.id == 3 || risk.riskType?.id == 4, 'physical': risk.riskType?.id == 5, 'accident': risk.riskType?.id == 6, 'chemical': risk.riskType?.id == 8 }">
+                                            <ul class="size no-margin-no-padding">
+                                                <li *ngIf="!viewMode" class="low"    style="cursor: pointer" (click)="risk.level = 1" [ngClass]="{'active': risk.level === 1}"></li>
+                                                <li *ngIf="!viewMode" class="medium" style="cursor: pointer" (click)="risk.level = 2" [ngClass]="{'active': risk.level === 2}"></li>
+                                                <li *ngIf="!viewMode" class="high"   style="cursor: pointer" (click)="risk.level = 3" [ngClass]="{'active': risk.level === 3}"></li>
+
+                                                <li *ngIf="viewMode" class="low"    [ngClass]="{'active': risk.level === 1}"></li>
+                                                <li *ngIf="viewMode" class="medium" [ngClass]="{'active': risk.level === 2}"></li>
+                                                <li *ngIf="viewMode" class="high"   [ngClass]="{'active': risk.level === 3}"></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="risk-description">{{levelDescription(risk.level)}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div fxFlex="150px" id="add-risk" *ngIf="!viewMode" class="container-risk" (click)="addRisk()"
+        fxLayout="column" fxLayoutAlign="center center">
+        <md-icon>add</md-icon>
+        <span class="font-add-risk">adicionar risco</span>
+    </div>
+</div>    

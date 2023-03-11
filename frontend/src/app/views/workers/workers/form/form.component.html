@@ -1,0 +1,35 @@
+<div class="body-content">
+    
+    <div>
+        <a md-raised-button class="button-default mat-button" routerLink="/workers/">Voltar</a>
+    </div>
+
+    <safety-card #datailsCard>
+        <safety-card-header>dados do trabalhador</safety-card-header>
+        <safety-card-content>
+            <worker-details-form (savedWorkerDetails)="onDetailsSaved($event)"></worker-details-form>
+        </safety-card-content>
+    </safety-card>
+
+    <safety-card #qualificationsCard>
+        <safety-card-header>habilitações</safety-card-header>
+        <safety-card-content>
+            <worker-qualifications-form (savedWorkerQualifications)="onQualificationsSaved($event)" [qualities]="qualities"></worker-qualifications-form>
+        </safety-card-content>
+    </safety-card>
+
+    <safety-card #securityCard>
+        <safety-card-header>dados de segurança do trabalho</safety-card-header>
+        <safety-card-content>
+            <security-works-form (savedWorkerSecurity)="onSecuritySaved($event)"></security-works-form>
+        </safety-card-content>
+    </safety-card>
+
+    <safety-card #healthCard>
+        <safety-card-header>dados de saúde</safety-card-header>
+        <safety-card-content>
+            <worker-health-form (savedWorkerHealth)="onHealthSaved($event)">
+            </worker-health-form>
+        </safety-card-content>
+    </safety-card>
+</div>

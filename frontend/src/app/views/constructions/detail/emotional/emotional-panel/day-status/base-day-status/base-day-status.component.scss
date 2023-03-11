@@ -1,0 +1,39 @@
+$grapefruit: #ff4c4c;
+$topaz: #13afcb;
+$green: #00a77e;
+$yellow: #f3c032;
+$cinza: #999999;
+
+  a {color: $cinza;}
+  a.text-Irritado {color: $grapefruit;}
+  a.text-Triste {color: $topaz;}
+  a.text-Contente {color: $green;}
+  a.text-Empolgado {color: $yellow;}
+
+
+.emoticon {
+
+  img {
+    display: block;
+    margin: auto;
+    max-width: 31px;
+    max-height: 31px;
+  }
+
+  a {
+    font-size: 0.8em;
+    display: block;
+    margin-bottom: baseline;
+    margin: 1em 0;
+  }
+
+  h1 {
+      font-size: 30px;
+      font-weight: 300;
+      line-height: 0.57;
+      text-align: center;
+      color: #3c3c3c;
+  }
+
+  text-align: center;
+}

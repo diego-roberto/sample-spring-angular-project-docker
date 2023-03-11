@@ -1,0 +1,137 @@
+@import '../../../../../scss/components/color.scss';
+
+:host {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.top-actionbar {
+    padding: 20px 0;
+    margin:  5px;
+    height: 80px;
+}
+
+.slim-actionbar {
+    margin-bottom: 20px;
+}
+
+.listTemplate {
+    width: 100%;
+    height: 100%;
+}
+
+.list-wrapper {
+    & > div {
+        & > div {
+            margin: 16px 0;
+        }
+    }
+}
+
+md-chip {
+    padding:        5px 0px !important;
+    margin:         0 5px !important;
+    border-radius:  0 !important;
+    font-size:      10px !important;
+    font-weight:    900 !important;
+    line-height:    1.4;
+    letter-spacing: 0.5px;
+    text-align:     left;
+    outline:        none;
+    cursor:         pointer;
+    width: 90px;
+
+    &.small-chip {
+        width: 75px;
+    }
+}
+
+.order {
+    min-width: 10px;
+
+    & /deep/ {
+        .mat-select-placeholder,
+        .mat-select-value {
+            color:          $warm-grey-four;
+            font-size:      10px;
+            font-weight:    900;
+            line-height:    1.4;
+            letter-spacing: 0.5px;
+            text-align:     left;
+        }
+
+        .mat-select-underline {
+            display: none !important;
+        }
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2em;
+    width: 100%;
+
+    .separator {
+      background-color: $light-gray;
+      height: 1px;
+      flex: 1;
+      flex-grow: 1;
+    }
+
+    .section-area {
+      width: 280px;
+    }
+}
+
+span {
+    width: 100%;
+    display: block;
+    color: black;
+    font-size: 1em;
+    font-weight: 900;
+    text-align: center;
+
+    &.new {
+      color: $light-gray;
+    }
+}
+
+.body-content {
+    height: 100vh;
+}
+
+.line {
+    display: inline !important;
+    margin: 20px 0 20px 0 !important;
+}
+.card-line {
+    margin: 20px 0 20px 0 !important;
+}
+
+workers-line-detail {
+    margin: 0 0 20px 0 !important;
+}
+
+
+.card-container {
+    display: inline-flex;
+    overflow: hidden;
+    vertical-align: top;
+    border: 0;
+    margin: 0px;
+    width: 142px;
+    height: 220px;
+}
+
+.filter-button {
+  bottom: 3px;
+  left: 5px;
+}
+
+.clean-button {
+  background-color: #37a2e1;
+  bottom: 3px;
+  left: 3px;
+}

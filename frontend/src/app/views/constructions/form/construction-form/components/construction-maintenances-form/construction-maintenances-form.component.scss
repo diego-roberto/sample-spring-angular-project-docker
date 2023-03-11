@@ -1,0 +1,87 @@
+@import '../../../../../../../scss/components/color';
+
+.new-equipment {
+  width: 50%;
+  height: 46px;
+  background-color: #edeff0;
+  border: dashed 2px #e0e4e5;
+  font-size: 10px;
+  font-weight: bold;
+  color: $greyish-brown;
+  cursor: pointer;
+}
+
+.add-icon {
+  padding: 0 17px 0 15px;
+  width: 15px;
+  height: none;
+}
+
+ul {
+  li {
+    margin-top: 20px;
+  }
+
+  li:first-child {
+    margin-top: 0;
+  }
+
+  list-style-type: none;
+}
+
+.equipment-category {
+  display: block !important;
+}
+
+.equipments {
+
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  input:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.drop-down {
+  position: absolute !important;
+}
+
+md-input-container {
+  margin-top: 0 !important;
+  top: -9px;
+}
+
+md-slide-toggle {
+  min-width: 83px;
+}
+
+.delete {
+  margin-bottom: 20px !important;
+}
+
+span, md-checkbox, md-input-container, md-slide-toggle, a, .equipment-type, .clock-icn {
+  margin: 0 0 0 5%;
+}
+
+@media screen and (max-width: 1279px) {
+  md-checkbox {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .equipment-type, .last-maintenance {
+    margin: 0;
+  }
+
+  .equipment-type, .identification {
+    margin: 7% 0 0 0;
+  }
+
+  .new-equipment {
+    width: 100%
+  }
+}

@@ -1,0 +1,40 @@
+
+.toggle-children {
+    height: 0px;
+    width: 3px;
+    background-size: contain;
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: none;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #f00;
+
+}
+
+tree-node span{
+    color: #707070;
+    font-size: 13px;
+}
+
+.node-wrapper{
+    line-height: 47px; 
+}
+
+tree-viewport{
+    box-shadow: -1px 4px 5px 0px rgba(175,175,175,1);
+-webkit-box-shadow: -1px 4px 5px 0px rgba(175,175,175,1);
+-moz-box-shadow: -1px 4px 5px 0px rgba(175,175,175,1);
+}
+
+.node-content-wrapper-active{
+    background: #F5F5F5 !important;
+    box-shadow: none;
+}
+
+.node-content-wrapper{
+    width: 100%;
+}

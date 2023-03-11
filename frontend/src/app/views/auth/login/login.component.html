@@ -1,0 +1,115 @@
+<div *ngIf="termAcceptance" class="body-content">
+    <div class="main-container" fxLayout.gt-xs="row" fxLayout.lt-sm="column">
+
+        <entrance-page fxLayout.gt-xs="column" fxLayout.lt-sm="row" class="title-container"></entrance-page>
+
+        <div fxLayout.gt-xs="column" fxLayout.lt-sm="row" fxLayoutAlign="center center" class="card-container">
+            <md-card>
+                <div class="card-title">
+                    <h2>
+                        <b>Seif</b>
+                    </h2>
+                    <h5>Olá, {{currentUser.name}}!</h5>
+                    <h5>Para continuar você deve concordar com os Termos de Uso</h5>
+                </div>
+
+                <form [formGroup]="termAcceptanceForm" novalidate>
+                    <div *ngIf="!firstStep">
+                        <div fxLayout="row" fxLayoutGap="8px" class="terms-of-use">
+                            <md-checkbox name="termOfUseAccept" formControlName="termOfUseAccept"></md-checkbox>
+                            <div>
+                                Li e concordo com o <a href="{{termEnvPath}}" target="_blank">termo de uso</a> do sistema SEIF
+                            </div>
+                            
+                        </div> 
+                        <button fxLayout.lt-md="row" fxFlexOrder.lt-md="-1" md-button class="button-red" (click)="redirectTermAccept()"
+                            [disabled]="disableTermButton()" name="btnSubmitTermOfUse">ACEITAR</button>
+                    </div>
+                </form>
+            </md-card>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="firstStep && !termAcceptance" class="body-content">
+    <div class="main-container" fxLayout.gt-xs="row" fxLayout.lt-sm="column">
+
+        <entrance-page fxLayout.gt-xs="column" fxLayout.lt-sm="row" class="title-container"></entrance-page>
+
+        <div fxLayout.gt-xs="column" fxLayout.lt-sm="row" fxLayoutAlign="center center" class="card-container">
+            <md-card>
+                <div class="card-title">
+                    <h2>
+                        <b>Seif</b>
+                    </h2>
+                    <h5>Olá, {{currentUser.name}}!</h5>
+                    <h5>Selecione abaixo qual empresa você deseja visualizar</h5>
+                </div>
+
+
+                <form [formGroup]="companyForm" novalidate>
+                    <div *ngIf="firstStep">
+                        <md-select class="managements-list" placeholder="Selecione Sua Empresa" [(ngModel)]="management" formControlName="company" name="company" (click)="cleanSearch()">
+
+                          <input name="searchCompany" formControlName="searchCompany" [(ngModel)]="searchCompany" type="search"
+                          class="header-searchbox" placeholder="nome da empresa" (click)="cleanSelection()"/>
+
+
+                            <md-option *ngFor="let m of managementsList | myfilter:searchCompany" [value]="m">
+                                {{ m.company.fakeName }}
+                            </md-option>
+                        </md-select>
+
+                        <button name="selectCompany" fxLayout.lt-md="row" fxFlexOrder.lt-md="-1" md-button class="button-red select-company" (click)="redirectCompany()"
+                            [disabled]="disableLogin()" name="btnSubmitCompany">SELECIONAR</button>
+                    </div>
+                </form>
+            </md-card>
+        </div>
+
+    </div>
+</div>
+
+
+<div *ngIf="!firstStep && !termAcceptance" class="body-content">
+    <div class="main-container" fxLayout.gt-xs="row" fxLayout.lt-sm="column">
+
+        <entrance-page fxLayout.gt-xs="column" fxLayout.lt-sm="row" class="title-container"></entrance-page>
+
+        <div fxLayout.gt-xs="column" fxLayout.lt-sm="row" fxLayoutAlign="center center" class="card-container">
+            <md-card>
+                <div class="card-title">
+                    <h2>
+                        <b>Seif</b>
+                    </h2>
+                    <h5>LOGIN</h5>
+                </div>
+
+                <box-message type="error" title="Erro!" message={{this.error}}></box-message>
+
+                <form [formGroup]="loginForm" novalidate>
+
+                    <div class="form-fields">
+                        <md-input-container>
+                            <input name="loginEmail" class="email" mdInput placeholder="E-MAIL" [(ngModel)]="model.email" formControlName="email" required>
+                            <md-error>Digite o e-mail em formato correto</md-error>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <input name="loginPassword" type="password" mdInput placeholder="SENHA" [(ngModel)]="model.password" formControlName="password" required maxlength="8">
+                            <md-error>Digite a senha</md-error>
+                        </md-input-container>
+                    </div>
+
+                    <div class="form-bottom" fxLayoutAlign="space-between center" fxLayout="row" fxLayout.lt-md="column">
+                        <a fxLayout.lt-md="row" fxFlexOrder.lt-md="1" routerLink="/send-recover" name="sendRecorver">?ESQUECEU SUA SENHA</a>
+                        <button name="login" fxLayout.lt-md="row" fxFlexOrder.lt-md="-1" md-button class="button-red" (click)="login()" [disabled]="disableLogin()">ENTRAR</button>
+                    </div>
+                </form>
+            </md-card>
+        </div>
+
+    </div>
+</div>
+
+

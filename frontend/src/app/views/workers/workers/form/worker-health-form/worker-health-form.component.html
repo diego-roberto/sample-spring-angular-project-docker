@@ -1,0 +1,134 @@
+<form [formGroup]="healthForm" id="healthForm">
+  <div fxLayoutAlign="start center" style="height: 90px" fxLayoutGap="7px" ngClass.lt-md="header-spacing">
+    <div fxFlex="calc(26% - 7px)">
+      <md-select name="bloodType" formControlName="bloodType" [(ngModel)]="model.bloodType"
+        placeholder="Tipo Sanguíneo">
+        <md-option *ngFor="let bloodType of bloodTypes" [mdTooltip]="bloodType.viewValue" [value]="bloodType.value">
+          {{ bloodType.viewValue }}
+        </md-option>
+      </md-select>
+    </div>
+    <md-input-container fxFlex="calc(37% - 7px)">
+      <input mdInput placeholder="Alergias" maxlength="50" formControlName="allergies" [(ngModel)]="model.allergies"
+        trimText>
+      <md-error *ngIf="healthForm.controls.allergies.hasError('onlytext')">Permitido apenas letras ou separadores
+      </md-error>
+    </md-input-container>
+    <md-input-container fxFlex="calc(37% - 7px)">
+      <input mdInput placeholder="Doenças Preexistentes" maxlength="50" formControlName="diseases"
+        [(ngModel)]="model.diseases" trimText>
+      <md-error *ngIf="healthForm.controls.diseases.hasError('onlytext')">Permitido apenas letras ou separadores
+      </md-error>
+    </md-input-container>
+  </div>
+
+  <div *ngFor="let aso of model.asos; index as i" formArrayName="asos" style="height: 70px"
+    ngClass.lt-md="bottom-spacing">
+    <div fxFlex fxLayoutAlign="start center" [formGroupName]="i">
+      <div fxFlex fxLayoutAlign="space-between center" fxLayout.lt-md="column"
+        fxLayoutAlign.lt-md="space-between none start">
+        <div fxLayoutAlign="center center">
+          <img *ngIf="due(aso) && !aso.shelved" src="assets/activities/tasks/ic-time-late.svg" mdTooltip="atrasado" alt="Atrasado">
+          <span *ngIf="!due(aso) || aso.shelved" style="margin-left: 25px;"></span>
+        </div>
+
+        <div fxFlex="15" fxFlexOffset="1">
+          <md-select required formControlName="asoType" placeholder="aso" [(ngModel)]="aso.asoType.id"
+            (change)="disableAble(i)">
+            <md-option *ngFor="let asoType of asoTypesList" [mdTooltip]="asoType.name" [value]="asoType.id">
+              {{ asoType.name }}
+            </md-option>
+          </md-select>
+          <md-error *ngIf="getFormGroup(i).controls.asoType.hasError('invalidAdmission')">Admissão precisa ter demissão
+            correspondente</md-error>
+        </div>
+
+
+        <div multiple *ngIf="!disabledAble(aso)" fxFlex="15" fxFlexOffset="1"  md-tooltip="{{ showNameOfNrTypesAso(aso) }}">
+          <md-select multiple formControlName="nrType" required placeholder="apto para" [(ngModel)]="aso.asoNrIds">
+            <md-option *ngFor="let nrType of nrTypesList" [mdTooltip]="nrType.name" [value]="nrType.id">
+              {{ nrType.name }}
+            </md-option>
+          </md-select>
+        </div>
+
+        <div fxFlex="70">
+          <div fxFlex="35" fxFlex.lt-md>
+            <md-input-container fxFlex="50" fxFlexOffset.gt-sm="4" *ngIf="isTypeSelected(i)">
+              <input mdInput required formControlName="realizationDate" [(ngModel)]="aso.realizationDate"
+                dateMask="99/99/9999" placeholder="Data realização" [mdDatepicker]="realizationDatePicker"
+                validateOnBlur>
+              <button mdSuffix [mdDatepickerToggle]="realizationDatePicker"
+                [disabled]="getFormGroup(i).controls.realizationDate.disabled"></button>
+              <md-datepicker #realizationDatePicker></md-datepicker>
+              <md-error
+                *ngIf="getFormGroup(i).controls.realizationDate.hasError('required') && !getFormGroup(i).controls.realizationDate.hasError('invalid')">
+                campo obrigatório.</md-error>
+              <md-error *ngIf="getFormGroup(i).controls.realizationDate.hasError('afterToday')">Data maior que hoje.
+              </md-error>
+              <md-error *ngIf="getFormGroup(i).controls.realizationDate.hasError('invalid')">Data Inválida.</md-error>
+            </md-input-container>
+
+            <md-input-container fxFlex="50" fxFlexOffset="4" *ngIf="isTypeSelected(i)">
+              <input mdInput required formControlName="nextDate" [(ngModel)]="aso.nextDate" dateMask="99/99/9999"
+                [placeholder]="nextDateDescription(i)" [mdDatepicker]="nextDatePicker" validateOnBlur>
+              <button mdSuffix [mdDatepickerToggle]="nextDatePicker"
+                [disabled]="getFormGroup(i).controls.nextDate.disabled"></button>
+              <md-datepicker #nextDatePicker></md-datepicker>
+              <md-error
+                *ngIf="getFormGroup(i).controls.nextDate.hasError('required') && !getFormGroup(i).controls.nextDate.hasError('invalid')">
+                campo obrigatório.</md-error>
+              <md-error *ngIf="getFormGroup(i).controls.nextDate.hasError('invalid')">Data Inválida.</md-error>
+              <md-error
+                *ngIf="!getFormGroup(i).controls.realizationDate.hasError('smallerThanToday') && getFormGroup(i).controls.nextDate.hasError('invalidRange') && aso.asoType !== 1">
+                {{nextDateDescription(i)}} menor ou igual que data de realização</md-error>
+              <md-error
+                *ngIf="!getFormGroup(i).controls.realizationDate.hasError('smallerThanToday') && getFormGroup(i).controls.nextDate.hasError('invalidRange') && aso.asoType === 1">
+                {{nextDateDescription(i)}} menor que data de realização</md-error>
+            </md-input-container>
+          </div>
+
+          <div fxFlex="65">
+            <md-radio-group fxFlex="30" fxFlexOffset="2" fxFlex.lt-md="50" formControlName="able" [(ngModel)]="aso.able"
+              [disabled]="aso.shelved">
+              <p *ngIf="!disabledAble(aso)" class="situacao"
+                [class.suffixDisabled]="getFormGroup(i).controls.able.disabled">SITUAÇÃO</p>
+              <md-radio-button *ngIf="!disabledAble(aso)" class="aptoButton" fxFlex="45" fxFlex.lt-md="calc(50% + 1px)"
+                [value]="true">Apto</md-radio-button>
+              <md-radio-button *ngIf="!disabledAble(aso)" class="aptoButton" fxFlex="50" fxFlex.lt-md="50"
+                [value]="false">Inapto</md-radio-button>
+            </md-radio-group>
+
+            <md-checkbox fxFlex="36" class="arquivar" formControlName="shelved" [checked]="aso.shelved"
+              (change)="aso.shelved = !aso.shelved">Arquivar</md-checkbox>
+
+            <div fxFlex="33" fxLayoutAlign="end center end">
+              <input-file showFileName="true" showClear="true" (clear)="clearFile(aso)"
+                (undoClear)="undoClear(aso, $event)" [accept]="'image/png, image/jpeg, application/pdf'"
+                [fileUrl]="model.asos[i].attachmentUrl" [fileName]="model.asos[i].attachmentFilename"
+                [downloadable]="model.asos[i].attachmentUrl && model.asos[i].attachmentFilename && !model.asos[i].attachment"
+                (onFileSelect)="onFileSelect($event, i)">
+              </input-file>
+
+              <button md-icon-button (click)="removeAso(i)" [disabled]="isCreating() || model.integration">
+                <md-icon>delete</md-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-top: 20px;">
+    <div *ngIf="!model.integration" class="new-aso" (click)="addAso()" fxLayout="row" fxLayoutAlign="start center">
+      <md-icon class="add-icon">add</md-icon>
+      <span>ADICIONE UM NOVO ASO</span>
+    </div>
+  </div>
+
+  <div class="form-bottom">
+    <button md-raised-button class="button-default" (click)="save()"
+      [disabled]="isCreating() || !healthForm.valid">Salvar e continuar</button>
+  </div>
+</form>

@@ -1,0 +1,40 @@
+<form [formGroup]="managersForm" class="full-width" (ngSubmit)="save()" enctype="multipart/form-data">
+    <div class="form-content">
+        <section>
+            <md-input-container>
+                <input mdInput placeholder="RESPONSÁVEL PELA OBRA (ENG. CIVIL)" name="engineerName" maxlength="50" formControlName="engineerName" [(ngModel)]="model.responsibleEngineer.name"
+                    required trimText>
+                <md-error *ngIf="managersForm.controls.engineerName.hasError('required')">Campo Obrigatório.</md-error>
+            </md-input-container>
+            <md-input-container class="half">
+                <input mdInput placeholder="TELEFONE" name="engineerPhone" formControlName="engineerPhone" [textMask]="{ mask: phoneMask, guide: false }" [(ngModel)]="model.responsibleEngineer.phone">
+                <md-error>Campo Inválido.</md-error>
+            </md-input-container>
+            <md-input-container class="half">
+                <input mdInput placeholder="E-MAIL" name="engineerEmail" maxlength="60" formControlName="engineerEmail" [(ngModel)]="model.responsibleEngineer.email"
+                    required trimText>
+                <md-error *ngIf="managersForm.controls.engineerEmail.hasError('required')">Campo Obrigatório.</md-error>
+                <md-error *ngIf="!managersForm.controls.engineerEmail.hasError('required') && managersForm.controls.engineerEmail.hasError('email')">E-mail Inválido.</md-error>
+            </md-input-container>
+        </section>
+        <section>
+            <md-input-container>
+                <input mdInput placeholder="RESPONSÁVEL PELA OBRA (SEGURANÇA DO TRABALHO)" name="safetyName" maxlength="50" formControlName="safetyName" [(ngModel)]="model.responsibleSafety.name"
+                    [required]="requiredResponsibleSafety()" trimText>
+                <md-error *ngIf="requiredResponsibleSafety()">Campo Obrigatório.</md-error>
+            </md-input-container>
+            <md-input-container class="half">
+                <input mdInput placeholder="TELEFONE" name="safetyPhone" formControlName="safetyPhone" [textMask]="{ mask: phoneMask, guide: false }" [(ngModel)]="model.responsibleSafety.phone">
+                <md-error>Campo Inválido.</md-error>
+            </md-input-container>
+            <md-input-container class="half">
+                <input mdInput placeholder="E-MAIL" name="safetyEmail" maxlength="60" formControlName="safetyEmail" [(ngModel)]="model.responsibleSafety.email"
+                    [required]="requiredResponsibleSafety()" trimText>
+                <md-error *ngIf="safetyEmailValidator()">{{ emailValidator }}</md-error>
+            </md-input-container>
+        </section>
+    </div>
+    <div class="form-bottom">
+        <button md-raised-button class="button-default" [disabled]="isCreating() || managersForm.invalid || disableEnableButton()" name="btnSalveAndContinue">Salvar e continuar</button>
+    </div>
+</form>

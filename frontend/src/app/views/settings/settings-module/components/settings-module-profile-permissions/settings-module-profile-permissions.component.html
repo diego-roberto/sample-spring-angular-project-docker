@@ -1,0 +1,40 @@
+<div class="body-content">
+    <div>
+        <a md-raised-button class="button-default mat-button" routerLink="/settings/profile/">Voltar</a>
+    </div>
+    <p>{{userProfile.name}}</p>
+    <safety-card>
+        <safety-card-header>Permissões globais</safety-card-header>
+        <safety-card-content>
+           <settings-module-profile-global-permissions [profileId]="profileId"></settings-module-profile-global-permissions>
+          </safety-card-content>
+    </safety-card>
+  <div class="list-wrapper">
+      <div *ngFor="let module of modulesList">
+            <safety-card>
+                    <safety-card-header>{{module.name }}</safety-card-header>
+                    <safety-card-content>
+                       <settings-module-profiles-pemissions-dialog [moduleId]="module.id" [profileId]="profileId"></settings-module-profiles-pemissions-dialog>
+                      </safety-card-content>
+                </safety-card>
+      
+       
+      </div>
+  </div>
+
+  <fab-speed-dial #myFab *ngIf="permissionService.hasSomePermission(['COMPANY_SUPPLIERS_CREATE'])" [direction]="'up'" [animationMode]="'fling'" [fixed]="false" (mouseenter)="myFab.open = true"
+      (mouseleave)="myFab.open = false">
+      <fab-trigger [spin]="true">
+          <button md-fab>
+              <md-icon>add</md-icon>
+          </button>
+      </fab-trigger>
+
+      <fab-actions>
+          <button md-mini-fab *ngIf="permissionService.hasSomePermission(['COMPANY_SUPPLIERS_CREATE'])" mdTooltip="Adicionar Módulo" mdTooltipPosition="before"  (click)="openModuleDialog()">
+              <i class="safety-icn-gerenciamento-svg"></i>
+          </button>
+         
+      </fab-actions>
+  </fab-speed-dial>
+</div>

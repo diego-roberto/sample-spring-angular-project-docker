@@ -1,0 +1,45 @@
+<safety-card #checklistResultConstructionCard toggleDisable topBarDisable>
+    <safety-card-header>{{ title }}</safety-card-header>
+    <safety-card-content>
+        <form [formGroup]="constructionForm">
+            <div fxLayout='row' fxLayoutAlign="space-between center">
+                <md-input-container fxFlex="75">
+                    <input mdInput placeholder="Nome" maxlength="50" uppercase [ngModel]="checklistInfos.constructionInfo.name" formControlName="name">
+                </md-input-container>
+
+                <md-input-container fxFlex="23">
+                    <input mdInput placeholder="CEI" maxlength="50" uppercase [textMask]="{ mask: ceiMask }" [ngModel]="checklistInfos.constructionInfo.cei"
+                        formControlName="cei">
+                </md-input-container>
+            </div>
+
+            <div fxLayout='row' fxLayoutAlign="space-between center">
+                <md-input-container fxFlex="100">
+                    <input mdInput placeholder="Endereço" uppercase maxlength="50" [ngModel]="checklistInfos.constructionInfo.address" formControlName="address">
+                </md-input-container>
+            </div>
+
+            <div fxLayout='row' fxLayoutAlign="space-between center">
+                <md-input-container fxFlex="75">
+                    <input mdInput placeholder="Contato" uppercase maxlength="50" [ngModel]="checklistInfos.constructionInfo.contact" formControlName="contact">
+                </md-input-container>
+
+                <md-input-container fxFlex="23">
+                    <input mdInput placeholder="Telefone" maxlength="50" [textMask]="{ mask: phoneMask, guide: false }" [ngModel]="checklistInfos.constructionInfo.phone"
+                        formControlName="phone">
+                </md-input-container>
+            </div>
+
+            <div fxLayout='row' fxLayoutAlign="space-between center">
+                <md-input-container fxFlex="75">
+                    <input mdInput placeholder="E-Mail" uppercase maxlength="50" [ngModel]="checklistInfos.constructionInfo.email" formControlName="email">
+                </md-input-container>
+
+                <md-input-container fxFlex="23">
+                    <input mdInput placeholder="Total de Trabalhadores na Obra" maxlength="50" [ngModel]="checklistInfos.constructionInfo.numWorks"
+                        formControlName="numWorkers">
+                </md-input-container>
+            </div>
+        </form>
+    </safety-card-content>
+</safety-card>

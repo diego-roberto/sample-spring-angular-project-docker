@@ -1,0 +1,199 @@
+<div class="body-content">
+  <safety-card #instructionsCard>
+    <safety-card-header>PLANILHA MODELO E INSTRUÇÕES</safety-card-header>
+    <safety-card-content>
+
+      <div class="grid-container">
+        <div class="grid-column">
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-1.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">1.</span>
+                Baixe a planilha modelo
+              </strong>
+              <span class="instruction-obs">
+                Com a planilha modelo você poderá preencher os dados dos trabalhadores mais facilmente.
+              </span>
+              <div class="download-sheet">
+                  <a href="{{ downloadUrl | backendPath }}" download md-raised-button class="button-red mat-warn">planilha modelo</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-2.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">2.</span>
+                Não inclua pontuação em números
+              </strong>
+              <span class="instruction-obs">
+                Nos campos <strong>CPF</strong>, <strong>NIT</strong>, <strong>CTPS</strong>, <strong>CEP</strong>, <strong>CBO</strong> e <strong>CNPJ Terceiro</strong>, preencha somente com números.
+              </span>
+              <span class="instruction-obs">
+                Os pontos de separação não podem ser incluidos.
+              </span>
+              <span class="instruction-obs">
+                Além disso, garanta que os campos tenham a <strong>formatação de texto</strong> para não excluírem os números zeros do início.
+              </span>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-3.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">3.</span>
+                Datas devem estar no formato dd/mm/aaaa
+              </strong>
+              <span class="instruction-obs">
+                Nos campos <strong>Data de Nascimento</strong> e <strong>Data de Admissão</strong> a data deverá estar no formato dd/mm/aaaa.
+              </span>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-4.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">4.</span>
+                Endereço deve ser completo
+              </strong>
+              <span class="instruction-obs">
+                No campo Endereço, rua, bairro, cidade e estado são obrigatórios.
+              </span>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-5.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">5.</span>
+                CNPJ Terceiro apenas se for trabalhador terceiro
+              </strong>
+              <span class="instruction-obs">
+                O CNPJ Terceiro deve ser preenchido somente se o trabalhador for terceiro.
+              </span>
+              <span class="instruction-obs">
+                <strong>Importante: é necessário cadastrar primeiramente o fornecedor para importar os trabalhadores terceiros.</strong>
+              </span>
+            </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="grid-column-25 instruction-img-content">
+              <img class="instruction-img" src="/assets/workers/workers-upload-6.png" />
+            </div>
+            <div class="grid-column-75">
+              <strong class="instruction-title">
+                <span class="instruction-number">6.</span>
+                Preste atenção especialmente no preenchimento destes campos
+              </strong>
+              <span class="instruction-obs">
+                <strong>Data de admissão</strong>*: Caso já exista um trabalhador cadastrado com o mesmo CPF, a data de admissão do novo cadastro deve ser maior.
+              </span>
+              <span class="instruction-obs">
+                <strong>Tipo de contratação</strong>*: Não aceitará o tipo próprio quando a empresa possuir integração
+              </span>
+              <span class="instruction-obs">
+                <strong>Cargo</strong>*: Somente nomenclaturas de CBO disponíveis no site do governo federal
+              </span>
+              <span class="instruction-obs">
+                <strong>Status</strong>: Somente aceita Ativo/Inativo
+              </span>
+              <span class="instruction-obs">
+                <strong>Função</strong>: Nomenclatura interna da empresa
+              </span>
+              <span class="instruction-obs">
+                O sistema não diferencia letras maiúsculas de minúsculas
+              </span>
+              <span class="instruction-obs">
+                <strong>* campos obrigatórios</strong>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </safety-card-content>
+  </safety-card>
+
+  <safety-card #datailsCard>
+    <safety-card-header>Fazer upload da planilha</safety-card-header>
+    <safety-card-content>
+
+      <div class="grid-row">
+        <div class="grid-column-75">
+          <strong class="instruction-title">
+            Após preencher a planilha modelo corretamente, faça o upload da planilha
+          </strong>
+          <span class="instruction-obs">
+            O upload só tera sucesso se todos os dados estiverem preenchidos corretamente. Em caso de erro, revise as instruções e os dados.
+          </span>
+        </div>
+      </div>
+
+      <form id="formBasicData" name="formBasicData" novalidate>
+
+        <div>
+          <!-- ICONES -->
+          <div>
+            <div class="upload-content">
+              <input-file #inputFile (onFileSelect)="onFileSelect($event)"
+                [accept]="'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'" showFileName="true"
+                showClear="true" (clear)="clearFile()" [fileName]="theFile?.name"
+                buttonText="Upload da planilha" contentAlign="">
+              </input-file>
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="messageSuccess" fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutWrap>
+          <!-- ICONES -->
+          <div fxFlex>
+            <div *ngFor="let message of messageSuccess" class="">
+              <p>
+                {{message}}
+              </p>
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="messageError" fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutWrap>
+          <!-- ICONES -->
+          <div fxFlex>
+            <div *ngFor="let error of messageError" class="">
+              <p>
+                {{error.message}}
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+
+    </safety-card-content>
+  </safety-card>
+  <div class="form-bottom">
+    <md-spinner *ngIf="loading" color="warn"></md-spinner>
+    <a href="#/workers" md-raised-button class="button-default btn-cancel">Cancelar</a>
+    <button *ngIf="!loading" md-raised-button class="button-default mat-warn" (click)="confirmUpload()"
+
+[disabled]="!theFile">Importar dados</button>
+  </div>
+</div>

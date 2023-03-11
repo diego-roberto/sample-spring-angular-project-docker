@@ -1,0 +1,27 @@
+<div class="filter">
+  <search
+    fxFlexOrder.lt-md="1"
+    (applyFilter)="filterByText()"
+    (onTextChange)="onSearchValueChange($event)"
+    [(value)]="searchValue"
+  ></search>
+</div>
+
+<div class="list-container">
+  <div
+    class="checklist-item"
+    *ngFor="let checklist of checklistsFilteredList; let i = index"
+  >
+    <checklists-line-detail
+      fxFlex
+      fxLayout
+      fxLayoutAlign="space-between center"
+      [checklist]="checklist"
+      [lastChecklistAnswer]="getLastChecklistAnswer(checklist.id)"
+      (verifyChecklist)="emitVerifyChecklistAnswer($event)"
+      (activeQuestions)="emitActiveQuestions($event)"
+      (activeResultList)="emitActiveResultList($event)"
+    >
+    </checklists-line-detail>
+  </div>
+</div>

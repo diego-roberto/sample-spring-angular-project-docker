@@ -1,0 +1,196 @@
+*:focus {
+    outline: none;
+}
+
+.list-container {
+    margin: 20px 35px 20px 35px;
+}
+
+.list {
+    .label {
+        display: inline-block;
+        margin-top: 5px;
+
+        .group-title {
+            border: 1px solid #999999;
+            color: #999999;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            padding: 5px 15px 5px 15px;
+
+            &.warning {
+                border-color: #ff4c4c;
+                color: #ff4c4c;
+            }
+        }
+    }
+
+    .line {
+        height: 20px;
+        width: 1px;
+        opacity: 0.7;
+        background-color: #9b9b9b;
+        margin-left: 30px;
+        margin-top: 7px;
+    }
+
+    ul {
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 8px 20px 8px 20px; 
+            box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.05);
+            margin: 0 9px 9px 0;
+            &:hover {
+                box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.3);
+            }
+
+            &.late {
+                border: 1px solid #ff4c4c;
+                border-left-width: 9px;
+                padding-left: 11px;
+            }
+
+            &.checked {
+                height: 47px;
+                &.late {
+                    background-color: rgba(255, 76, 76, 0.2);
+                    opacity: 0.5;
+                }
+
+                &.ending {
+                    border: 1px solid #EADD67;
+                    background-color: rgba(234, 221, 103, 0.2);
+                    opacity: 0.5;
+                }
+
+                &.in-time {
+                    border: 1px solid #64BF73;
+                    background-color: rgba(100, 191, 115, 0.2);
+                    opacity: 0.5;
+                }
+
+                .buttons {
+                    display: none;
+                }
+
+                
+            }
+
+            .infos {
+                display: flex;
+                align-items: center;
+
+                span {
+                    font-size: 14px;
+                }
+
+                .title {
+                    margin-left: 5px;
+                }
+
+                .date {
+                    margin-left: 30px;
+                    margin-right: 5px;
+                    font-weight: 300;
+                    color: #3c3c3c;
+                }
+
+                img {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+
+            .buttons {
+                display: flex;
+                align-items: center;
+
+                img {
+                    display: none;
+                    height: 16px;
+                    width: 16px;
+                    object-fit: contain;
+                    margin: 8px;
+
+                    &.bigger {
+                        display: inline-flex;
+                        height: 28px;
+                        width: 28px;
+                    }
+                }
+            }
+        }
+
+        li:hover{
+            .buttons {
+                img {
+                    display: inline-flex;
+                }
+            }
+        }
+    }
+}
+
+.filters {
+    display: flex;
+    margin: 20px 35px 20px 35px;
+
+    .chip {
+        background-color: transparent;
+        color: #3c3c3c;
+        border: 2px solid #3c3c3c;
+        border-radius: 0;
+        margin-right: 12px !important;
+        cursor: pointer;
+
+        &.active {
+            background-color: #3c3c3c;
+            color: white;
+        }
+
+        span {
+            font-size: 10.5px;
+            font-weight: 900;
+            line-height: 1.75;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+md-spinner.list {
+    position: unset !important;
+    height: 80px;
+    margin-top: 20px;
+}
+
+div{
+    button{
+        md-icon{
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 499px) {
+    .filters {
+        .main-chip {
+            span {
+                font-size: 8px !important;
+            }
+        }
+    }
+}
+
+.qualific {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: auto;
+    max-width: 22vw;
+}

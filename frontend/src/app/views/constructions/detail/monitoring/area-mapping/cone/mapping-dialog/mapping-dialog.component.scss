@@ -1,0 +1,44 @@
+@import '../../../../../../../../scss/components/color.scss';
+
+.danger-icon {
+    width: 20px;
+}
+.danger-msg {
+    margin: 10px 0 10px 0;
+    color: $grapefruit;
+}
+img {
+    max-width: 100%;
+}
+
+.final-action {
+    background-color: #e9eced !important;
+}
+button.close {   
+    float: right;    
+    opacity: 0.4;
+    background: transparent;
+    border: 0;
+    outline: 0;    
+    text-decoration: none;
+    -webkit-appearance: none;
+
+    &:hover, &:focus {
+        opacity: 0.8;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .mat-icon {
+        color: $grapefruit;
+    }
+}
+
+md-spinner.in-component {
+    transform: translateX(-50%) translateY(0%);
+}
+
+.font-unable-worker-alert {
+    font-size: 14px;
+    font-weight: bold;
+}

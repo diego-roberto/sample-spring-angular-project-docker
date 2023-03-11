@@ -1,0 +1,54 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }}
+  </safety-dialog-header>
+  <safety-dialog-content>
+      <div class="grid-container">
+        <div class="grid-column">
+            
+            <div #filePreview class="grid-row" *ngIf="files?.length > 0">
+                <table>
+                    <tr>
+                        <th>
+                            Nome do Arquivo
+                        </th>
+                        <th>
+                            Ação
+                        </th>
+                    </tr>
+                    <tr *ngFor="let file of files; let filesIndex = index">
+                        <td>
+                            {{file?.resourceFile.name}}
+                        </td>
+                        <td>
+                            <a md-icon-button (click)="removeFile(fileIndex)">
+                                <md-icon>delete</md-icon>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    
+            <div #fileDrop class="grid-row">
+                <drop-file [showPreview]="false" [editable]="true" [supportedFileTypes]="supportedFileTypes" [multiple]="true" 
+                  (fileChanged)="addFile($event)" class="half grid-row-last">
+    
+                    <img src="/assets/plus.svg" alt="" />
+                    <div>
+                        <span>
+                            <b>Adicionar arquivos</b>
+                        </span>
+                        <span>Para adicionar arraste ou
+                            <a>clique aqui</a>
+                        </span>
+                    </div>
+                </drop-file>
+            </div>
+        </div>
+    </div>
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <md-spinner color="warn" *ngIf="loading"></md-spinner>
+    <button md-button class="button-red" [disabled]="files?.length == 0 || loading" (click)="save()">SALVAR</button>
+  </safety-dialog-actions>
+</safety-dialog>

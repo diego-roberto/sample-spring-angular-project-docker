@@ -1,0 +1,43 @@
+<safety-card #checklistResultDetailedEvaluationCard toggleDisable topBarDisable>
+    <safety-card-header>{{ title }}</safety-card-header>
+    <safety-card-content>
+        <div fxLayout="column" *ngFor="let session of sessions; index as i">
+            <div class="section-title" fxLayout="row">
+                {{ session.session }}
+            </div>
+
+            <div *ngFor="let question of session.checklistQuestions; index as j">
+                <div class="question">
+                    <div class="question-title" fxLayout="row">
+                        {{ questionIndexes.get(question.id) }} - {{ question.title }}
+                    </div>
+                    <div fxLayout="row">
+                        <div class="possible-answer">
+                            <div *ngIf="questionAnswerRelation.get(question.id)"
+                                [ngClass]="{'yes': questionAnswerRelation.get(question.id).id == 1, 'no': questionAnswerRelation.get(question.id).id == 2, 'partially': questionAnswerRelation.get(question.id).id == 3, 'notApply': questionAnswerRelation.get(question.id).id == 4 }">
+                                {{ questionAnswerRelation.get(question.id).answer }}
+                            </div>
+                            <div *ngIf="! questionAnswerRelation.get(question.id)"
+                                [ngClass]="{ 'unanswered': true }">
+                                Não respondido
+                            </div>
+                        </div>
+                        <div class="value" fxFlex="30" fxLayout="column" fxLayoutAlign="center start">
+                            {{ checklistPenalty.sessionsPenalty[i].questionsPenalty[j].penalty | currency:'BRL':true:'1.2-2' }}
+                        </div>
+                    </div>
+                    <div class="observation" fxLayout="row" *ngIf="mapQuestionAnswerObservation.get(question.id) !== null">
+                        <div fxLayout="column">
+                            <div class="observation-title" fxLayout="row">
+                                Observações
+                            </div>
+                            <div fxLayout="row">
+                                {{ mapQuestionAnswerObservation.get(question.id) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </safety-card-content>
+</safety-card>

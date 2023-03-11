@@ -1,0 +1,44 @@
+
+button {
+    md-icon {  
+        color:rgb(19, 141, 39);
+    }
+    color:rgb(19, 141, 39);
+}
+
+.list-item {
+    margin-bottom: 10px;
+}
+
+md-toolbar {
+    height: 10px;
+}
+
+md-card {
+    margin-top: 25px;
+}
+
+.qualific {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: auto;
+}
+
+.infos {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    .data {
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #3c3c3c;  
+    }
+
+    .long {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

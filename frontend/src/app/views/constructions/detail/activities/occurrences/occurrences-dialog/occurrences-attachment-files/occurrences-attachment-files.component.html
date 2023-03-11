@@ -1,0 +1,36 @@
+<div class="grid-container">
+    <div class="grid-column">
+        
+        <div #filePreview class="grid-row" *ngIf="occurrence?.files?.length > 0">
+            <div class="files-list">
+                <span *ngFor="let file of occurrence.files; let fileIndex = index" class="file">
+                    <drop-file class="attachedFile" 
+                        (fileRemoved)="removeFile(fileIndex)"
+                        [editable]="isEditableFile(file)"
+                        [showPreview]="true"
+                        [image]="file.filePath">
+                    </drop-file>
+                </span>
+            </div>
+        </div>
+
+        <div #fileDrop class="grid-row" *ngIf="! limitSelectionReached()">
+            <drop-file [showPreview]="false" [editable]="! disabled" [supportedFileTypes]="supportedFileTypes" [multiple]="true" 
+              (fileChanged)="addFile($event)" class="half grid-row-last">
+
+                <img src="/assets/plus.svg" alt="" />
+                <div>
+                    <span>
+                        <b>Adicionar imagens</b>
+                    </span>
+                    <span>Para adicionar arraste ou
+                        <a>clique aqui</a>
+                    </span>
+                    <span class="info">
+                        <b>MÁXIMO DE CINCO ARQUIVOS.</b>
+                    </span>
+                </div>
+            </drop-file>
+        </div>
+    </div>
+</div>

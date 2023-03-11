@@ -1,0 +1,108 @@
+@import '../../../../../../../../scss/components/color.scss';
+
+.divider {
+    border-left: 1px solid $cool-grey;
+    height: 50%;
+}
+
+#training-container{
+    padding: 1em;
+
+    p {
+        margin: 0;
+    }
+
+    &.past {
+        p {
+            color: $cool-grey;
+        }
+    }
+
+}
+
+#training-state {
+    display: inline-block;
+    text-align: center;
+    margin-right: 0.75em;
+}
+
+#training-date {
+    display: inline-block;
+    text-align: center;
+    margin-right: 1em;
+
+    #month-day {
+        font-size: 2em;
+    }
+
+    .present {
+        font-weight: bold;
+        color: $grapefruit;
+    }
+}
+
+#training-info {
+    display: inline-block;
+
+    .bold-info {
+        font-weight: bold;
+    }
+
+    #exhibition-mode {
+        color: $grapefruit;
+    }
+}
+
+#training-category {
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+}
+
+#training-lecture {
+    display: inline-block;
+    text-align: center;
+    p {
+        color: $cool-grey;
+    }
+}
+
+#training-participants {
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+    p {
+        color: $cool-grey;
+    }
+}
+
+#training-button {
+    display: inline-block;
+    font-weight: bold;
+    text-align: right;
+    p {
+        color: $cool-grey;
+    }
+}
+
+#past-state {
+    color: $green-blue;
+}
+
+#present-state {
+    display: inline-block;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 0.25em 0.75em;
+
+    background-color: $grapefruit;
+    color: #FFFFFF;
+}
+
+#future-state {
+    color: $cool-grey;
+}
+
+.link {
+    cursor: pointer;
+}

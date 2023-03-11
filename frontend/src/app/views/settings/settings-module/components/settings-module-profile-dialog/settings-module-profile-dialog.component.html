@@ -1,0 +1,26 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }}
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form  [formGroup]="moduleForm"   >
+      <div class="form-content grid-container">
+        <div class="grid-column">
+     
+ 
+          <div class="grid-row" >
+            <md-select placeholder="Módulo" formControlName="module"  >
+              <md-option *ngFor="let module of modules" [mdTooltip]="module.name" matTooltipPosition="right" [value]="module.id">
+                {{ module.name }} </md-option>
+            </md-select>
+          </div>
+       
+          
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <button md-button class="button-red" [disabled]="!moduleForm.valid" (click)="save()" >ADICIONAR</button>
+  </safety-dialog-actions>
+</safety-dialog>

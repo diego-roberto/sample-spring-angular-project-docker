@@ -1,0 +1,62 @@
+@mixin max-width($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+
+
+.form-content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  section {
+    flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    flex-basis: 48%;
+    justify-content: space-between;
+
+    * {
+      flex-basis: 100%;
+
+      &.half {
+        flex-basis: 48%;
+      }
+
+      &.quarter {
+        flex-basis: 24%;
+      }
+
+      &.fifth {
+        flex-basis: 19%;
+      }
+
+      @include max-width(992px) {
+        &.half {
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+
+  @include max-width(992px) {
+    section {
+      flex-basis: 100%;
+    }
+  }
+}
+
+.form-bottom {
+  flex-basis: 100%;
+  display: flex;
+  direction: rtl;
+  margin-top: 30px;
+
+  button {
+    background-color: #a1abb0;
+    color: white;
+    font-weight: normal;
+  }
+}

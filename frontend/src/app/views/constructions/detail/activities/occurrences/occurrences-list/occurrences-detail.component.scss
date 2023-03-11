@@ -1,0 +1,71 @@
+@import '../../../../../../../scss/components/color.scss';
+
+.detailDialogHeader {
+    img {
+        vertical-align: middle;
+    }
+
+    span {
+        margin-left: 5px;
+    }
+}
+
+.grid-column {
+    padding: 0 10px;
+    max-width: 560px;
+    margin-bottom: 0px !important;
+}
+
+.mat-card-avatar {
+    img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+
+    span {
+        vertical-align: super;
+    }
+
+}
+
+.attachedFile {
+    width: 143px !important;
+    height: 77px !important;
+    object-fit: contain;
+    background-color: $cool-grey;
+    margin-left: 0px;
+    margin-right: 25px;
+}
+
+.files-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    .file {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        position: relative;
+
+        drop-file {
+          flex-grow: 1;
+        }
+
+        md-input-container {
+            flex-shrink: 0;
+        }
+
+        padding: 20px;
+        max-width: 143px;
+        height: 120px;
+    }
+}
+
+.red-button {
+  background-color: red !important;
+}

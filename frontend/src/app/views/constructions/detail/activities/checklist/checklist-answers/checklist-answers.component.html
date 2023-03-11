@@ -1,0 +1,26 @@
+<div class="filter">
+    <safety-card [isHidden]="true">
+        <safety-card-header>{{checklist.name}}</safety-card-header>
+        <safety-card-content>
+            <span *ngIf="checklistAnswers.length > 1">Existem um total de {{checklistAnswers.length}} respostas em andamento para serem continuadas.</span>
+            <span *ngIf="checklistAnswers.length == 1">Existe uma resposta em andamento para ser continuada.</span>
+            <span *ngIf="checklistAnswers.length == 0">Não existe nenhuma resposta em andamento para ser continuada.</span>
+        </safety-card-content>
+    </safety-card>
+</div>
+
+
+<div class="list-container">
+    <div class="checklist-item" *ngFor="let checklistAnswer of checklistAnswers; let i = index">
+        <checklist-line-answer fxFlex fxLayout fxLayoutAlign="space-between center" 
+            [checklistAnswer]="checklistAnswer"
+            (activeQuestions)="emitActiveQuestions($event)" >
+        </checklist-line-answer>
+    </div>
+</div>
+
+<div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <button md-button class="button-default" (click)="backChecklist($event)" >Voltar</button>
+    </div>
+</div>

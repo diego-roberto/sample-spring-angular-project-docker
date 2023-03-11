@@ -1,0 +1,32 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }}
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form [formGroup]="qualitiesForm">
+      <div class="form-content grid-container">
+        <div class="grid-column">
+          <div class="grid-row">
+            <md-input-container class="half">
+              <input mdInput placeholder="Nome da Habilitação" maxlength="130" formControlName="name"
+                required >
+                <md-error *ngIf="qualitiesForm.controls.name.hasError('required')">Campo Obrigatório.</md-error>
+                <md-error *ngIf="!qualitiesForm.controls.name.hasError('required') && qualitiesForm.controls.name.hasError('name')">Nome Inválido.</md-error>
+            </md-input-container>
+          </div>
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <button
+      md-button
+      class="button-red"
+      [class.spinner]="loading"
+      [disabled]="!qualitiesForm.valid || loading"
+      (click)="save()"
+    >
+      SALVAR
+    </button>
+  </safety-dialog-actions>
+</safety-dialog>

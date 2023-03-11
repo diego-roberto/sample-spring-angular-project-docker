@@ -1,0 +1,30 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ title }}
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <form   [formGroup]="degreeForm" >
+      <div class="form-content grid-container">
+        <div class="grid-column">
+
+          <div class="grid-row">
+            <md-input-container class="half">
+              <input mdInput placeholder="Nome da Escolaridade" maxlength="60" formControlName="name"
+                required >
+                <md-error *ngIf="degreeForm.controls.name.hasError('required')">Campo Obrigatório.</md-error>
+                <md-error *ngIf="!degreeForm.controls.name.hasError('required') && degreeForm.controls.name.hasError('name')">Nome Inválido.</md-error>
+
+            </md-input-container>
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </form>
+  </safety-dialog-content>
+  <safety-dialog-actions>
+    <button md-button class="button-red" [disabled]="!degreeForm.valid" (click)="save()">SALVAR</button>
+  </safety-dialog-actions>
+</safety-dialog>

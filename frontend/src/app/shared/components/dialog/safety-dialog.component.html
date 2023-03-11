@@ -1,0 +1,20 @@
+<md-dialog-container fxLayout="column">
+    <md-toolbar [ngClass]="{'noTopBar': topBarDisabled}">
+        <h1 [fxFlex] md-dialog-title>
+            <ng-content select="safety-dialog-header"></ng-content>
+        </h1>
+        <button class="close" (click)="closeDialog()" md-icon-button *ngIf="!topBarDisabled">
+            <md-icon>clear</md-icon>
+        </button>
+    </md-toolbar>
+
+    <md-dialog-content class="body-content">
+        <ng-content select="safety-dialog-content"></ng-content>
+    </md-dialog-content>
+
+    <md-toolbar fxLayout="row" fxLayoutAlign="center center" *ngIf="!actionsDisabled" [ngClass]="{'noTopBar': bottomBarDisabled}">
+        <md-dialog-actions>
+            <ng-content select="safety-dialog-actions"></ng-content>
+        </md-dialog-actions>
+    </md-toolbar>
+</md-dialog-container>

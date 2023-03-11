@@ -1,0 +1,52 @@
+$low-size: 5px;
+$medium-size: 7px;
+$high-size: 9px;
+
+$risk-size-map: (
+    (low, 5px),
+    (medium, 7px),
+    (high, 9px)
+);
+
+$risk-type-map: (
+    (chemical, #ff001a),
+    (accident, #0671ba),
+    (erghonomic, #feff57),
+    (biological, #99663c),
+    (physical, #00b05d)
+);
+
+$risk-types: ('chemical', 'accident', 'erghonomic', 'biological', 'physical');
+$risk-colors: (#ff001a, #0671ba, #feff57, #99663c, #00b05d);
+
+.size {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    li {
+        margin: 0 2px;
+        list-style-type: none !important;
+        border-radius: 50%;
+        background-color: #e6e9eb;
+        @each $label, $size in $risk-size-map {
+            &.#{ $label } {
+                height: $size;
+                width: $size;
+            }
+        }
+    }
+}
+
+.type {
+    & > li {
+        margin-bottom: 3px;
+        list-style-type: none !important;
+    }
+
+    @each $type, $color in $risk-type-map {
+        .#{ $type } .size li.active {
+            background-color: $color !important;
+        }
+    }
+}

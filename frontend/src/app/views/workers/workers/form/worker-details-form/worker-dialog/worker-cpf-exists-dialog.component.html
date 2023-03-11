@@ -1,0 +1,38 @@
+<safety-dialog actionsDisable topBarDisable>
+    <safety-dialog-header>
+        Atenção
+    </safety-dialog-header>
+    <safety-dialog-content>
+        <h2>
+          Já existe um trabalhador ativo com o CPF informado!
+        </h2>
+
+        <span *ngIf="sameCompany">
+          Não será possível cadastrar um novo, já que
+          este trabalhador <br/> está vinculado a mesma empresa.
+        </span>
+
+        <span *ngIf="!sameCompany">
+          Ao escolher a opção "cadastrar novo", o trabalhador existente será inativado.
+        </span>
+
+        <div>
+          <p>
+            <b>
+              Trabalhador existente:
+            </b>
+            <br/>
+            - NOME: {{name}}
+            <br/>
+            - CPF: {{cpf | cpfMask}}
+          </p>
+        </div>
+
+        <md-dialog-actions>
+            <div class="button-container">
+                <button class="button-link" md-button (click)="proceedEditing()" type="button" name="button">{{confirmLabel}}</button>
+                <button class="button-link" md-button (click)="proceedWithoutEditing()" type="button" name="button">{{cancelLabel}}</button>
+            </div>
+        </md-dialog-actions>
+    </safety-dialog-content>
+</safety-dialog>

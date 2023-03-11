@@ -1,0 +1,13 @@
+<safety-dialog>
+    <safety-dialog-header>
+        {{ title }}
+    </safety-dialog-header>
+    <safety-dialog-content>
+        <p><b>Deseja remover esta obra?</b></p>
+        <p>Você não tera mais acesso a ela.</p>
+    </safety-dialog-content>
+    <safety-dialog-actions>
+        <button md-button class="button-default"  (click)="removed(false)" md-dialog-close>Fechar</button>
+        <button md-button class="button-red" (click)="removed(true)" md-dialog-close>Excluir</button>
+    </safety-dialog-actions>
+</safety-dialog>

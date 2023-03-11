@@ -1,0 +1,34 @@
+<li *ngIf="isWrongAccess()" class="alert-tab-item">
+  <div class="icon danger"></div>
+  <span class="message">
+    <strong>Alerta!</strong>
+    <a href="#">{{ alert.worker }}</a>
+    acessou área de risco monitorada pelo pelo
+    <a href="#">{{ alert.cone }}</a>
+    | <strong class="time">{{ alert.time }}</strong>
+  </span>
+
+</li>
+
+<li *ngIf="isWorkerLowBattery()" class="alert-tab-item">
+  <div class="icon danger"></div>
+  <span *ngIf="isWorkerLowBattery()" class="message">
+    <strong>Bateria baixa.</strong>
+    O sensor pessoal do
+    <a href="#">{{ alert.worker }}</a>
+    está com bateria abaixo de 30%
+    | <strong class="time">{{ alert.time }}</strong>
+  </span>
+</li>
+
+<li *ngIf="isConeLowBattery()" class="alert-tab-item">
+  <div class="icon cone"></div>
+  <span class="message">
+    <strong>Bateria baixa.</strong>
+    <a href="#">{{ alert.cone }}</a>
+    está com bateria abaixo de 30%
+    | <strong class="time">{{ alert.time }}</strong>
+  </span>
+</li>
+
+  

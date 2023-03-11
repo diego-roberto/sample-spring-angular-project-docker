@@ -1,0 +1,12 @@
+@import '../../../../../scss/components/color';
+
+#add-new-supplier-documentation {
+    padding: 1em;
+    margin-top: 1em;
+    background-color: #edeff0;
+    border: dashed 2px #e0e4e5;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: $greyish-brown;
+    cursor: pointer;
+}

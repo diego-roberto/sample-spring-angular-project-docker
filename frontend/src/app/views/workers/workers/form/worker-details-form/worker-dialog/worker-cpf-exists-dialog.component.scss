@@ -1,0 +1,30 @@
+@import './../../../../../../../scss/components/color.scss';
+
+.button-container {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 10px 0;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.button-link {
+  font-weight: bold;
+
+  color: $greyish-brown;
+
+  &:hover {
+    color: $grapefruit;
+  }
+}
+
+h2 {
+  font-size: 18px;
+}
+
+span {
+  color: #666;
+}

@@ -1,0 +1,41 @@
+
+<safety-card-content>
+	<div class="worker-info" *ngIf="false">
+		<div>
+			Tipo sanguíneo: {{ worker.bloodType && this.bloodTypes.get(worker.bloodType) || "Sem dados cadastrados" }}
+			<span>|</span>
+			Alergia: {{ worker.allergies && worker.allergies || "Sem dados cadastrados" }}
+			<span>|</span>
+			Doenças: {{ worker.diseases && worker.diseases || "Sem dados cadastrados" }}
+		</div>
+		<div>Exames: </div>
+		<div *ngFor="let aso of worker.aso" class="exams">
+			<span>{{ this.asoTypes.get(aso.asoType) }}</span>
+			<span>Realização: {{ aso.realizationDate | date: 'dd/MM/yyyy'}}</span>
+			<span>Próximo exame: {{ aso.nextDate | date: 'dd/MM/yyyy'}}</span>
+		</div>
+		<div *ngIf="worker.aso?.length == 0">
+			Sem dados cadastrados
+		</div>
+	</div>
+	<div fxFlex fxLayout="column">
+		<div fxLayoutGap="10px" fxLayout.lt-lg="column">
+			<span>Tipo sanguíneo: {{ worker.bloodType && this.bloodTypes.get(worker.bloodType) || "Sem dados cadastrados" }}</span>
+			<span fxHide.lt-lg>|</span>
+			<span>Alergia: {{ worker.allergies && worker.allergies || "Sem dados cadastrados" }}</span>
+			<span fxHide.lt-lg>|</span>
+			<span>Doenças: {{ worker.diseases && worker.diseases || "Sem dados cadastrados" }}</span>
+		</div>
+		<div ngClass.lt-md="exams">
+			Exames:
+		</div>
+		<div *ngFor="let aso of worker.aso" fxLayoutGap.gt-sm="15px" fxFlexOffset="10px" fxLayout.lt-md="column" ngClass="exams">
+			<span>{{ aso.asoType.name }}<span *ngIf="aso.nrType?.name"> - {{aso.nrType.name}}</span></span>
+			<span ngClass.lt-md="exam">Realização: {{ aso.realizationDate | date: 'dd/MM/yyyy'}}</span>
+			<span ngClass.lt-md="exam"> {{ getDateLabel(aso) }}: {{ aso.nextDate | date: 'dd/MM/yyyy'}}</span>
+		</div>
+		<div *ngIf="worker.aso?.length == 0">
+			Sem dados cadastrados
+		</div>
+	</div>
+</safety-card-content>

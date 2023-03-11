@@ -1,0 +1,96 @@
+<form [formGroup]="securityForm" class="full-width"  id="securityForm" name="securityForm">
+    <div fxLayout.lt-md="column" fxLayoutAlign.lt-md="space-around" fxLayoutAlign="space-between center" fxLayoutGap="7px" fxFlex fxLayoutGap.lt-md="50px">
+        
+        <div fxFlex fxLayoutGap="7px">
+            <!-- - - - - - - - - - - - - - - -->
+            <!-- CIPEIRO (SIM OU NÃO)        -->
+            <!-- - - - - - - - - - - - - - - -->
+            <div fxFlex="calc(50% - 7px)">
+                <md-select 
+                    required 
+                    name="cipeiro" 
+                    formControlName="cipeiro" 
+                    [(ngModel)]="model.cipeiro"
+                    placeholder="Trabalhador é cipeiro?"
+                    (change)="disableCipeiroDependencies()">
+                    <md-option *ngFor="let cipeiro of cipeiros" [mdTooltip]="cipeiro.viewValue" [value]="cipeiro.value">{{ cipeiro.viewValue }}</md-option>
+                </md-select>
+                <md-error *ngIf="securityForm.controls.cipeiro.touched && securityForm.controls.cipeiro.hasError('required')">Campo Obrigatório.</md-error>
+            </div>
+    
+            <!-- - - - - - - - - - - - - - - -->
+            <!-- CARGO NA CIPA               -->
+            <!-- - - - - - - - - - - - - - - -->
+            <div fxFlex="calc(50% - 7px)">
+                <md-select 
+                        required name="laborsInCipa" formControlName="laborsInCipa" 
+                        [(ngModel)]="model.laborsInCipa" placeholder="Cargo na CIPA">
+                    <md-option *ngFor="let labor of laborsInCipa" [mdTooltip]="labor.viewValue" [value]="labor.value">{{ labor.viewValue }}</md-option>
+                </md-select>
+                <md-error *ngIf="securityForm.controls.laborsInCipa.touched && securityForm.controls.laborsInCipa.hasError('required')">Campo Obrigatório.</md-error>
+            </div>
+        </div>
+
+        <div fxFlex="59" fxLayoutGap="7px" fxLayoutAlign="none center">
+            <!-- - - - - - - - - - - - - - - -->
+            <!-- INICIO MANDATO              -->
+            <!-- - - - - - - - - - - - - - - -->
+            <div fxFlex="calc(30% - 7px)">
+                <md-input-container style="width: 100%">
+                    <input mdInput
+                        required 
+                        dateMask="99/99/9999"
+                        name="mandateBegin" 
+                        placeholder="Início mandato" 
+                        formControlName="mandateBegin" 
+                        [(ngModel)]="model.mandateBegin"
+                        [mdDatepicker]="beginPicker"
+                        validateOnBlur>
+                        <md-error *ngIf="securityForm.controls.mandateBegin.hasError('required')">Data Inválida.</md-error> 
+                        <md-error *ngIf="securityForm.controls.mandateBegin.hasError('invalidRange')">Data inicial maior ou igual a data final</md-error> 
+                        <button mdSuffix [mdDatepickerToggle]="beginPicker" [disabled]="securityForm.controls.mandateBegin.disabled"></button>
+                        <md-datepicker #beginPicker ></md-datepicker>
+                </md-input-container>
+            </div>
+
+            <!-- - - - - - - - - - - - - - - -->
+            <!-- FIM MANDATO                 -->
+            <!-- - - - - - - - - - - - - - - -->
+            <div fxFlex="calc(30% - 7px)">
+                <md-input-container style="width: 100%">
+                    <input mdInput 
+                        required    
+                        dateMask="99/99/9999"
+                        name="mandateEnd" 
+                        placeholder="Fim mandato" 
+                        formControlName="mandateEnd" 
+                        [(ngModel)]="model.mandateEnd"
+                        [mdDatepicker]="endPicker"
+                        validateOnBlur>
+                    <md-error *ngIf="securityForm.controls.mandateEnd.hasError('required')">Data Inválida.</md-error> 
+                    <md-error *ngIf="securityForm.controls.mandateEnd.hasError('invalidRange')">Data final menor ou igual a data inicial</md-error> 
+                    <button mdSuffix [mdDatepickerToggle]="endPicker" [disabled]="securityForm.controls.mandateEnd.disabled"></button>
+                    <md-datepicker #endPicker></md-datepicker>
+                </md-input-container>
+            </div>
+
+            <!-- - - - - - - - - - - - - - - -->
+            <!-- BRIGADISTA (SIM OU NÃO)     -->
+            <!-- - - - - - - - - - - - - - - -->
+            <div fxFlex="calc(30% - 7px)">
+                <md-select
+                    required 
+                    name="brigadistas" 
+                    formControlName="brigadistas" 
+                    placeholder="Trabalhador é brigadista?"
+                    [(ngModel)]="model.brigade">
+                    <md-option *ngFor="let brigadista of brigadistas" [mdTooltip]="brigadista.viewValue" [value]="brigadista.value">{{ brigadista.viewValue }}</md-option>
+                </md-select>
+                <md-error *ngIf="securityForm.controls.brigadistas.touched && securityForm.controls.brigadistas.hasError('required')">Campo Obrigatório.</md-error>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="form-bottom">
+    <button md-raised-button class="button-default" (click)="save()" [disabled]="!securityForm.valid || isCreating()">Salvar e continuar</button>
+</div>

@@ -1,0 +1,136 @@
+<div class="body-content">
+  <div>
+    <a md-raised-button class="button-default mat-button" routerLink="/settings/">Voltar</a>
+  </div>
+  <md-spinner *ngIf="isLoadingActive('save')" color="warn"></md-spinner>
+  <safety-card toggleDisable>
+    <safety-card-header>
+      <span>Integração</span>
+    </safety-card-header>
+    <safety-card-content>
+      <form [formGroup]="connectionsForm" novalidate>
+        <div class="form-content grid-container">
+          <div class="grid-column">
+
+            <div class="connection-item">
+              <strong>Empresa</strong>
+              <div class="grid-row">
+                <md-input-container>
+                  <input mdInput placeholder="EMPRESA" formControlName="company"
+                    [(ngModel)]="connections.company.empresa" name="company" required>
+                  <md-error *ngIf="connectionsForm.controls.company.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="CHAVE" formControlName="key" [(ngModel)]="connections.company.chave"
+                    name="key" maxlength="255" trimText required>
+                  <md-error *ngIf="connectionsForm.controls.key.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="PROCESSO" formControlName="process" name="process"
+                    [mdDatepicker]="processPicker" [(ngModel)]="connections.company.processamento" validateOnBlur
+                    required>
+                  <button mdSuffix [mdDatepickerToggle]="processPicker"></button>
+                  <md-datepicker #processPicker></md-datepicker>
+                  <md-error *ngIf="connectionsForm.controls.process.hasError('required')">Campo Obrigatório.</md-error>
+                </md-input-container>
+              </div>
+
+              <div *ngIf="connections.company.ultimoProcessamento" class="last-integration">
+                <md-icon class="info-icon">info</md-icon>
+                <span >
+                  Última integração: {{lastIntegrationCompany}}
+                </span>
+              </div>
+            </div>
+
+            <div class="connection-item">
+              <strong>Funcionário</strong>
+              <div class="grid-row">
+                <md-input-container>
+                  <input mdInput placeholder="EMPRESA" formControlName="employeeCompany"
+                    [(ngModel)]="connections.employee.empresa" name="employeeCompany" required>
+                  <md-error *ngIf="connectionsForm.controls.employeeCompany.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="CHAVE" formControlName="employeeKey"
+                    [(ngModel)]="connections.employee.chave" name="employeeKey" maxlength="255" trimText required>
+                  <md-error *ngIf="connectionsForm.controls.employeeKey.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="PROCESSO" formControlName="employeeProcess" name="employeeProcess"
+                    [mdDatepicker]="employeeProcessPicker" [(ngModel)]="connections.employee.processamento"
+                    validateOnBlur required>
+                  <button mdSuffix [mdDatepickerToggle]="employeeProcessPicker"></button>
+                  <md-datepicker #employeeProcessPicker></md-datepicker>
+                  <md-error *ngIf="connectionsForm.controls.employeeProcess.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+              </div>
+
+              <div *ngIf="connections.employee.ultimoProcessamento" class="last-integration">
+                <md-icon class="info-icon">info</md-icon>
+                <span class="last-integration">
+                  Última integração: {{lastIntegrationEmployee}}
+                </span>
+              </div>
+            </div>
+
+            <div class="connection-item">
+              <strong>Exame</strong>
+              <div class="grid-row">
+                <md-input-container>
+                  <input mdInput placeholder="EMPRESA" formControlName="examCompany"
+                    [(ngModel)]="connections.exam.empresa" name="examCompany" required>
+                  <md-error *ngIf="connectionsForm.controls.examCompany.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="CHAVE" formControlName="examKey" [(ngModel)]="connections.exam.chave"
+                    name="examKey" maxlength="255" trimText required>
+                  <md-error *ngIf="connectionsForm.controls.examKey.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+                <md-input-container>
+                  <input mdInput placeholder="PROCESSO" formControlName="examProcess" name="examProcess"
+                    [mdDatepicker]="examProcessPicker" [(ngModel)]="connections.exam.processamento" validateOnBlur
+                    required>
+                  <button mdSuffix [mdDatepickerToggle]="examProcessPicker"></button>
+                  <md-datepicker #examProcessPicker></md-datepicker>
+                  <md-error *ngIf="connectionsForm.controls.examProcess.hasError('required')">Campo Obrigatório.
+                  </md-error>
+                </md-input-container>
+
+              </div>
+              <div  *ngIf="connections.exam.ultimoProcessamento" class="last-integration">
+                <md-icon class="info-icon">info</md-icon>
+                <span class="last-integration">
+                  Última integração: {{lastIntegrationExam}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-bottom">
+          <button md-button class="button-red" [disabled]="connectionsForm.invalid || isLoadingActive('save')"
+            (click)="save()">salvar</button>
+
+          <md-checkbox class="active-checkbox" disableRipple="true" color="primary" formControlName="active"
+            [(ngModel)]="active" (ngModelChange)="onActive()">
+            <span class="checkbox-span">Ativo</span>
+          </md-checkbox>
+        </div>
+      </form>
+    </safety-card-content>
+  </safety-card>
+</div>

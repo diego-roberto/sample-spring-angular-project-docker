@@ -1,0 +1,92 @@
+<topnavbar-component fxLayout="row" fxLayoutWrap notification>
+
+    
+
+    <div title="{{ construction?.name }}" fxLayout="row" fxLayoutAlign="start start" class="constructionName" [mdMenuTriggerFor]="constructions">
+        <h1>{{ construction?.name }}</h1>
+        <md-icon class="arrow">arrow_drop_down</md-icon>
+    </div>
+
+    <nav md-tab-nav-bar fxLayout="row" fxLayoutAlign="space-around center">
+        <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_MONITORING',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_WORKERS',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_FORTHCOMINGMATURITIES',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_TRAININGS',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_LAST_ALERTS_MONITORING',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_STATUS',
+            'CONSTRUCTION_OVERVIEW_SHOW_CARD_TASKS'
+        ])"
+          
+            [routerLink]="'overview'" 
+            routerLinkActive #rlaOverview="routerLinkActive"
+            [active]="rlaOverview.isActive">
+            <span>Visão Geral </span>
+        </a>
+        <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+            'CONSTRUCTION_MONITORING_SHOW_CARD_CONSTRUCTION' ])"
+        
+            [routerLink]="'monitoring'" 
+            routerLinkActive #rlaMonitoring="routerLinkActive"
+            [active]="rlaMonitoring.isActive">
+            <span>Monitoramento </span>
+        </a>
+
+        <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+            'CONSTRUCTION_WORKERS_EMOTIONAL_PANEL_SHOW_INFORMATION' ])"
+        
+            [routerLink]="'emotional-profile'" 
+            routerLinkActive #rlaWorkers="routerLinkActive"
+            [active]="rlaWorkers.isActive">
+            <span>Trabalhadores </span>
+        </a>
+
+        <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+            'CONSTRUCTION_ACTIVITIES_CHECKLIST_LIST',
+            'CONSTRUCTION_ACTIVITIES_OCURRENCE_LIST',
+            'CONSTRUCTION_ACTIVITIES_TASK_LIST'
+            ])"
+        
+            [routerLink]="'activities'" 
+            routerLinkActive #rlaActivities="routerLinkActive"
+            [active]="rlaActivities.isActive">
+            <span>Atividades </span>
+        </a>
+
+        <!-- <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+                'COMPANY_USER_CREATE'
+            ])"
+        
+            [routerLink]="'reports'" 
+            routerLinkActive #rlaReports="routerLinkActive"
+            [active]="rlaReports.isActive">
+            <span>Relatórios </span>
+        </a> -->
+
+        <!-- <a md-tab-link
+            *ngIf="permissionService.hasSomePermission([              
+                'COMPANY_USER_CREATE'
+            ])"
+        
+            [routerLink]="'repositories'" 
+            routerLinkActive #rlaRepositories="routerLinkActive"
+            [active]="rlaRepositories.isActive">
+            <span>Documentos </span>
+        </a> -->
+
+    </nav>
+</topnavbar-component>
+
+<notification-sidenav-container fxFlex>
+    <router-outlet></router-outlet>
+</notification-sidenav-container>
+
+<md-menu #constructions="mdMenu" yPosition="below" [overlapTrigger]="false">
+    <constructions-dropdown (constructionId)="changeConstruction($event)"></constructions-dropdown>
+</md-menu>
+

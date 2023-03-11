@@ -1,0 +1,20 @@
+<div class="body-content">
+    <div fxFlex fxLayout="column" fxLayoutAlign="space-around center" *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_CREATE_CONSTRUCTION']); else cantCreateConstruction">
+        <div fxFlex class="hello">
+            <p>Olá, para iniciar cadastre uma <b>nova obra.</b></p>
+        </div>
+        <div fxFlex>
+            <a class="start" md-raised-button type="button" name="button" [routerLink]="['./new']">
+                <span>Cadastrar</span>
+            </a>
+        </div>
+    </div>
+
+    <ng-template #cantCreateConstruction>
+        <div class="hello">
+            <h4>Você não tem acesso a nenhuma obra! </h4>
+            <p>Aguarde o cadastro da sua obra para iniciar.</p>
+            <p>Ou entre em contato com o Administrador do SEIF em sua empresa e solicite o acesso! </p>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,57 @@
+<safety-dialog>
+    <safety-dialog-header>
+        {{ 'Gerar relatório' | Limit: 30 }}
+    </safety-dialog-header>
+
+    <safety-dialog-content>
+        <form [formGroup]="equipmentScheduleForm" >
+            <div fxLayout="column">
+                <p> Selecionar o período
+                </p>
+            </div>
+            <!--
+                -->
+            <div fxLayoutAlign="start center" style="height: 90px" fxLayoutGap="7px" ngClass.lt-md="header-spacing">
+                <div fxFlex="calc(15% - 7px)">  
+                    <md-input-container>
+                        <input mdInput 
+                            dateMask="99/99/9999" 
+                            formControlName="startDate" 
+                            [mdDatepicker]="beginPicker" 
+                            placeholder="Data Início" 
+                            [(ngModel)]="equipmentStartDate"
+                            required validateOnBlur >
+                        <button mdSuffix   [mdDatepickerToggle]="beginPicker"></button>
+                        <md-error *ngIf="hasErrorForm('startDate', 'invalid')">data inválida.</md-error>
+                        <md-error *ngIf="hasErrorForm('startDate', 'isbefore')">data superior a data fim.</md-error>
+                        <md-error *ngIf="hasErrorForm('startDate', 'isnecessary')">data fim não preenchida ou inválida.</md-error>
+                        <md-datepicker #beginPicker></md-datepicker>                    
+                    </md-input-container>
+                </div>
+                <div fxFlex="calc(15% - 7px)">  
+                    <md-input-container>
+                        <input mdInput 
+                            dateMask="99/99/9999" 
+                            formControlName="endDate" 
+                            [mdDatepicker]="endPicker" 
+                            placeholder="Data Fim" 
+                            [(ngModel)]="equipmentEndDate"
+                            required validateOnBlur >
+                        <button mdSuffix   [mdDatepickerToggle]="endPicker"></button>                            
+                        <md-error *ngIf="hasErrorForm('endDate', 'invalid')">data inválida.</md-error>
+                        <md-error *ngIf="hasErrorForm('endDate', 'isbefore')">data inferior a data início.</md-error>
+                        <md-error *ngIf="hasErrorForm('endDate', 'isnecessary')">data início não preenchida ou inválida.</md-error>
+                        <md-datepicker #endPicker></md-datepicker>                    
+                    </md-input-container>
+                </div>
+            </div>
+        </form>
+    </safety-dialog-content>
+
+    <safety-dialog-actions>
+        <button md-button class="button-default" md-dialog-close>fechar</button>
+        <button md-button class="button-red" (click)="verifyPrintEquipments()" [disabled]="hasPendingFields() || this.loading" 
+        [class.spinner]="this.loading">Gerar relatório</button>
+    </safety-dialog-actions>
+
+</safety-dialog>

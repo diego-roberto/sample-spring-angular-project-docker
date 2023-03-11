@@ -1,0 +1,147 @@
+@import '../../../../../../scss/components/color.scss';
+
+.mat-icon-card {
+    position: absolute;
+    left: 114px;
+    font-size: 16px;
+    padding: 3px;
+    background-color: #00bd87;
+    color: #fff;
+    height: 22px;
+    width: 22px;
+    box-sizing: border-box;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.mat-card-image {
+    width: 70px;
+}
+
+.mat-card-avatar {
+    margin-left: 33px;
+    margin-top: 30px !important;
+    margin-bottom: 10px;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #a1abb0;
+}
+
+.mat-card-content {
+    border-top: 1px solid #e8e8e8;
+    text-align: center;
+    font-size: 10px;
+    p {
+        margin-top: 5px;
+    }
+}
+
+.terceiro {
+    p {
+        margin-top: 0px;
+        margin-bottom: 3px;
+    }
+}
+
+p {
+    color:#5e5e5e;
+}
+
+.worker-card {
+    float: left;
+    width: 136px;
+    height: 220px;
+    padding: 0;
+    margin: 3px;
+}
+
+.flip-container {
+	perspective: 1000px;
+}
+
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+    transform: rotateY(-180deg);
+             -webkit-transform: rotateY(-180deg);
+             -moz-transform: rotateY(-180deg);
+             -o-transform: rotateY(-180deg);
+             -ms-transform: rotateY(-180deg);
+}
+
+.flip-container, .front, .back {
+	width: 136px;
+	height: 220px;
+}
+
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+	position: relative;
+}
+
+.front, .back {
+    background-color: #FFFFFF;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.front {
+	z-index: 2;
+	transform: rotateY(0deg);
+             -webkit-transform: rotateY(0deg);
+             -moz-transform: rotateY(0deg);
+             -o-transform: rotateY(0deg);
+             -ms-transform: rotateY(0deg);
+}
+
+.back {
+    transform: rotateY(180deg);
+             -webkit-transform: rotateY(180deg);
+             -moz-transform: rotateY(180deg);
+             -o-transform: rotateY(180deg);
+             -ms-transform: rotateY(180deg);
+}
+
+.backContent {
+    .top {
+        margin-top: 30px;
+    }
+    p {
+        margin-bottom: 20px;
+    }
+}
+
+.editRight {
+    position:absolute;
+    left:111px;
+}
+
+.tools {
+    padding: 0 10px;
+
+    & > md-icon {
+        color: $silver2;
+        cursor: pointer;
+        font-size: 20px;
+
+        &:hover {
+            color: black;
+        }
+    }
+}
+
+.image-wrapper {
+    background-size: cover;
+    height: 70px;
+    width: 70px;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        background-size: cover;
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+    }
+}

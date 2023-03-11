@@ -1,0 +1,38 @@
+<div class="drop-zone" ng2FileDrop [ng2FileDropSupportedFileTypes]="supportedFileTypes"
+  (ng2FileDropFileAccepted)="dragFileAccepted($event)" (ng2FileDropFileRejected)="dragFileRejected($event)" disabled
+  style="position: relative;">
+
+  <img (click)="showInput()" [src]="image" *ngIf="!loading && image && showPreview && !image.includes('video')"
+    disabled />
+
+  <md-spinner *ngIf="loading" [class]="!!image ? 'has-image' : 'empty'" class="in-component"></md-spinner>
+
+  <video (click)="showInput()" *ngIf="image && showPreview && image.includes('video')" controls width="100%" disabled>
+    <source [src]="image" [type]="type">
+  </video>
+
+  <div *ngIf="!loading && !image" (click)="showInput()" class="wrapper" disabled>
+    <div #ref>
+      <ng-content></ng-content>
+    </div>
+
+    <div *ngIf="ref.children.length == 0" class="placeholder">
+      <img src="/assets/ic-image.png" alt="" />
+    </div>
+  </div>
+
+  <a href="javascript:void(0)" (click)="removeImage()" class="remove">
+    <md-icon class="material-icons" *ngIf="image && editable">close</md-icon>
+  </a>
+
+  <a href="javascript:void(0)" (click)="viewImage()" [class]="editable ? 'view' : 'remove'">
+    <md-icon class="material-icons" *ngIf="image">visibility</md-icon>
+  </a>
+
+  <modal-gallery @easeInOut [modalImages]="[getViewGalleryImage()]" [description]="{customFullDescription: ' '}"
+    (close)="viewImage()" imagePointer="0" enableCloseOutside="true" *ngIf="showGallery">
+  </modal-gallery>
+</div>
+
+<input #fileInput type="file" [multiple]="multiple" (change)="onFileChange()"
+  [accept]="supportedFileTypes.join(', ')" />

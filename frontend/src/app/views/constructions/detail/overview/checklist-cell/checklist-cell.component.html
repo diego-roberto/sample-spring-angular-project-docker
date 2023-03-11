@@ -1,0 +1,34 @@
+<div>
+    <div *ngIf="!loading">
+        <ul *ngIf="tasks.length > 9" class="no-margin-no-padding">
+            <virtual-scroll [items]="tasks" (update)="scrollTasks = $event">
+                <li *ngFor="let task of scrollTasks">
+                    <md-checkbox *ngIf="!task.checked" [(ngModel)]="task.checked" (change)="check(task)"></md-checkbox>
+                    <img *ngIf="task.checked" src="assets/activities/tasks/check-tool.png">
+                    <span> {{ task.title | Limit: 25 }} </span>
+                    <span class="date">{{ task.deadline | date:'d' }}
+                        <p>{{ task.deadline | date:'MMM' }}</p>
+                    </span>
+                </li>
+            </virtual-scroll>
+        </ul>
+
+        <ul *ngIf="tasks.length > 0 && tasks.length < 10" class="no-margin-no-padding">
+            <li *ngFor="let task of tasks">
+                <md-checkbox *ngIf="!task.checked" [(ngModel)]="task.checked" (change)="check(task)"></md-checkbox>
+                <img *ngIf="task.checked" src="assets/activities/tasks/check-tool.png">
+                <span> {{ task.title | Limit: 25 }} </span>
+                <span class="date">{{ task.deadline | date:'d' }}
+                    <p>{{ task.deadline | date:'MMM' }}</p>
+                </span>
+            </li>
+        </ul>
+
+        <md-card *ngIf="tasks.length === 0">
+            <md-card-content>
+                <p class="not-exist">não existem tarefas</p>
+            </md-card-content>
+        </md-card>
+    </div>
+    <md-spinner *ngIf="loading" class="in-component"></md-spinner>
+</div>

@@ -1,0 +1,29 @@
+<safety-list-item fxFlex="100">
+    <div fxLayout fxFlex="fill" fxLayoutAlign="start center" class="supplier-info" (click)="openSupplierOverviewDialog()">
+        <div class="image-wrapper" fxLayout fxLayoutAlign="center center">
+            <img *ngIf="supplier.logoUrl" [src]="supplier.logoUrl | backendPath" alt="">
+            <img *ngIf="! supplier.logoUrl" src="assets/no-image-placeholder.jpg" alt="">
+        </div>
+
+        <span class="corporate-name">{{ supplier.corporateName ? supplier.corporateName : 'Sem Razão Social' }}</span>
+        <span class="horizontal-divider">|</span>
+        <span class="tradding-name">{{ supplier.traddingName ? supplier.traddingName : 'Sem Nome Fantasia' }}</span>
+        <span class="horizontal-divider" fxHide.lt-md>|</span>
+        <span class="cnpj" fxHide.lt-md>CNPJ: {{ supplier.cnpj | cnpjMask }}</span>
+        <span class="horizontal-divider" fxHide.lt-md>|</span>
+        <span class="sponsor" fxHide.lt-md>Responsável: {{ supplier.supplierResponsible?.name ? supplier.supplierResponsible?.name : 'Nenhum' }}</span>
+        <span class="horizontal-divider" *ngIf="supplier.supplierResponsible?.phone" fxHide.lt-md>|</span>
+        <span class="phone" *ngIf="supplier.supplierResponsible?.phone" fxHide.lt-md>{{ supplier.supplierResponsible?.phone }}</span>
+    </div>
+
+    <div fxFlex="noshrink" fxLayout fxLayoutAlign="start center" class="tools">
+        <a md-icon-button [routerLink]="'/suppliers/' + supplier.id + '/edit'">
+            <md-icon>edit</md-icon>
+        </a>
+
+        <mat-slide-toggle [checked]="supplier.active" (change)="suplierActiveSlideToggleChangeHandler($event)" [disabled]="isLoadingActive('doToggleSupplierActive')">
+            <md-spinner *ngIf="isLoadingActive('doToggleSupplierActive')" color="warn" class="relative"></md-spinner>
+            <span *ngIf="! isLoadingActive('doToggleSupplierActive')">{{ supplier.active ? 'ativo' : 'inativo' }}</span>
+        </mat-slide-toggle>
+    </div>
+</safety-list-item>

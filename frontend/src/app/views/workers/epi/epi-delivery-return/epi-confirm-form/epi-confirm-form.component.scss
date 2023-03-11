@@ -1,0 +1,53 @@
+@import '../../../../../../scss/components/color.scss';
+
+.header {
+    width: 100%;
+    font-size: 0.75em;
+    padding-top: 1em;
+
+    span {
+        font-weight: bold;
+        color: $warm-grey-four;
+    }
+}
+
+.separator {
+    background-color: $light-gray;
+    height: 1px;
+    flex: 1;
+    flex-grow: 1;
+}
+
+.epi-data-container {
+    margin-top: 1em;
+    border: 1px solid $light-gray;
+    
+    .epi-data {
+        padding: 0.5em 1em;
+        text-align: justify; 
+
+        div {
+            margin: auto;
+        }
+    }
+
+    .epi-data:not(:last-child) {
+        border-bottom: 1px solid $light-gray;
+    }
+}
+
+
+.worker-password-confirmation-info-label {
+    max-width: 540px;
+    margin: 10px;
+    color: $warm-grey-four;
+    font-size: 0.75em;
+    text-transform: none;
+}
+
+.password-recovery-link {
+    font-size: 0.75em;
+    text-transform: none;
+    text-align: right;
+    cursor: pointer;
+}

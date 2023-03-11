@@ -1,0 +1,82 @@
+<div fxLayout="column" fxLayoutAlign="space-around start" [formGroup]="quantityEpiForm">
+    <div *ngIf="returnEpis?.length > 0 || returnIndividualEquipmentList?.length > 0">
+        <div class="header">
+            <span>informe a quantidade de epi a ser devolvido</span>
+        </div>
+        <section class="left-side-selection">
+            <table>
+                <tbody class="body-content">
+                    <tr *ngFor="let epi of returnEpis; let i = index;">
+                        <td>
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <span>CA{{epi.ca.ca}} - {{epi.epiId.description}}</span>
+                                <md-input-container class="search">
+                                    <input mdInput placeholder="Quantidade" [formControlName]="returnControl + i" [textMask]="{ mask: amountMask, guide: false }"
+                                        [(ngModel)]="availableReturnEpi.get(epi.id).amount">
+                                    <span mdSuffix>/ {{availableReturnEpi.get(epi.id).available}}</span>
+                                    <md-error *ngIf="getFormError(returnControl, epi, 'required')">campo obrigatório.</md-error>
+                                    <md-error *ngIf="getFormError(returnControl, epi, 'insufficient')">quantidade insuficiente.</md-error>
+                                </md-input-container>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let individualEquipment of returnIndividualEquipmentList; let i = index;">
+                        <td>
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <span>{{individualEquipment.description}}</span>
+                                <md-input-container class="search">
+                                    <input mdInput placeholder="Quantidade" [formControlName]="returnIndividualEquipmentControl + i" [textMask]="{ mask: amountMask, guide: false }"
+                                        [(ngModel)]="availableReturnIndividualEquipment.get(individualEquipment.id).amount">
+                                    <span mdSuffix>/ {{availableReturnIndividualEquipment.get(individualEquipment.id).available}}</span>
+                                    <md-error *ngIf="getFormError(returnIndividualEquipmentControl, individualEquipment, 'required')">campo obrigatório.</md-error>
+                                    <md-error *ngIf="getFormError(returnIndividualEquipmentControl, individualEquipment, 'insufficient')">quantidade insuficiente.</md-error>
+                                </md-input-container>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <div *ngIf="deliveryEpis?.length > 0 || deliveryIndividualEquipmentList?.length > 0">
+        <div class="header">
+            <span>informe a quantidade de epi a ser entregue</span>
+        </div>
+        <section class="left-side-selection">
+            <table>
+                <tbody class="body-content">
+                    <tr *ngFor="let epi of deliveryEpis; let i = index;">
+                        <td>
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <span>CA{{epi.ca.ca}} - {{epi.epiId.description}}</span>
+                                <md-input-container class="search">
+                                    <input mdInput placeholder="Quantidade" [formControlName]="deliverControl + i" [textMask]="{ mask: amountMask, guide: false }"
+                                        [(ngModel)]="availableDeliverEpi.get(epi.id).amount">
+                                    <span mdSuffix>/ {{availableDeliverEpi.get(epi.id).available}}</span>
+                                    <md-error *ngIf="getFormError(deliverControl, epi, 'required')">campo obrigatório.</md-error>
+                                    <md-error *ngIf="getFormError(deliverControl, epi, 'insufficient')">estoque insuficiente.</md-error>
+                                </md-input-container>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let individualEquipment of deliveryIndividualEquipmentList; let i = index;">
+                        <td>
+                            <div fxLayout="row" fxLayoutAlign="space-between center">
+                                <span>{{individualEquipment.description}}</span>
+                                <md-input-container class="search">
+                                    <input mdInput placeholder="Quantidade" [formControlName]="deliveryIndividualEquipmentControl + i" [textMask]="{ mask: amountMask, guide: false }"
+                                        [(ngModel)]="availableDeliveryIndividualEquipment.get(individualEquipment.id).amount">
+                                    <span mdSuffix>/ {{availableDeliveryIndividualEquipment.get(individualEquipment.id).available}}</span>
+                                    <md-error *ngIf="getFormError(deliveryIndividualEquipmentControl, individualEquipment, 'required')">campo obrigatório.</md-error>
+                                    <md-error *ngIf="getFormError(deliveryIndividualEquipmentControl, individualEquipment, 'insufficient')">quantidade insuficiente.</md-error>
+                                </md-input-container>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>

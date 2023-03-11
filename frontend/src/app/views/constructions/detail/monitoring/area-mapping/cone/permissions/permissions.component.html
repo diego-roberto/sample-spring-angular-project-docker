@@ -1,0 +1,74 @@
+<span>3 - Permissões</span>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" style="width: 1200px">
+
+    <!-- Filters for pc -->
+    <div fxLayout fxHide.lt-md>
+        <div fxFlex fxLayout="column">
+            <span>EPI</span>
+            <epi-filters fxFlex [epis]="epis"></epi-filters>
+        </div>
+        
+        <div fxHide.lt-md fxFlex="110px"></div>
+        
+        <div fxFlex fxLayout="column">
+            <span>Habilitações</span>
+            <quality-filters fxFlex [qualities]="qualities"></quality-filters>
+        </div>
+    </div>
+
+    <div fxLayout fxLayout.lt-md="column">
+        <selecting-workers #avaibleWorkers fxFlex.lt-md="200px" [style.height.px.gt-sm]="250" [emptyMessage]="avaibleEmptyMessage" [viewMode]="viewMode" [workers]="avaible"></selecting-workers>
+
+        <!-- buttons pc -->
+        <div fxHide.lt-md fxFlex="110px" fxLayout="column" fxLayoutAlign="center center">
+            <button [disabled]="viewMode" md-button fxLayout fxLayoutAlign="center" (click)="add()">
+                <md-icon>keyboard_arrow_right</md-icon>
+            </button>
+            <button [disabled]="viewMode" md-button fxLayout fxLayoutAlign="center" (click)="remove()">
+                <md-icon>keyboard_arrow_left</md-icon>
+            </button>
+        </div>
+
+        <!-- buttons tablet -->
+        <div fxHide.gt-sm>
+            <md-divider></md-divider>
+            <div fxHide.gt-sm fxLayout fxLayoutAlign="center center">
+                <button [disabled]="viewMode" md-button fxLayout fxLayoutAlign="center" (click)="add()">
+                    <md-icon>keyboard_arrow_down</md-icon>
+                </button>
+                <button [disabled]="viewMode" md-button fxLayout fxLayoutAlign="center" (click)="remove()">
+                    <md-icon>keyboard_arrow_up</md-icon>
+                </button>
+            </div>
+            <md-divider></md-divider>
+        </div>
+
+        <selecting-workers #selectedWorkers fxFlex.lt-md="200px" [style.height.px.gt-sm]="250" [emptyMessage]="selectedEmptyMessage" [viewMode]="viewMode" [workers]="selected" [checkAbleWorker]="checkAbleWorker"></selecting-workers>
+    </div>
+
+    <!-- Filters for tablet -->
+    <div fxLayout="column" fxHide.gt-sm>
+        <md-divider></md-divider>
+
+        <safety-card #cardEpis>
+            <safety-card-header>
+                <span fxFlex>{{!xs ? 'EPI\'s necessários' : 'EPI\'s'}}</span>
+            </safety-card-header>
+            <safety-card-content>
+                <epi-filters fxFlex [epis]="epis"></epi-filters>
+            </safety-card-content>
+        </safety-card>
+
+        <div fxFlex="10"></div>
+
+        <safety-card #cardQualities>
+            <safety-card-header>
+                <span fxFlex>{{!xs ? 'Habilitações necessárias' : 'Habilitações'}} </span>
+            </safety-card-header>
+            <safety-card-content>
+                <quality-filters fxFlex [qualities]="qualities"></quality-filters>
+            </safety-card-content>
+        </safety-card>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+<div fxLayout fxLayoutAlign="start" fxHide.gt-sm>
+    <div fxFlex="auto" fxFlexOffset="15px">
+        <p [fxHide]="selected !== 1">
+            <b>EPI</b>
+        </p>
+        <p [fxHide]="selected !== 2">
+            <b>Saúde</b>
+        </p>
+        <p [fxHide]="selected !== 3">
+            <b>Habilitação</b>
+        </p>
+    </div>
+
+    <div fxLayout fxLayoutAlign="end" fxHide.gt-sm>
+        <button md-icon-button (click)="selected = 1" [disabled]="selected === 1">
+            <md-icon class="safety-icn-epi-svg"></md-icon>
+        </button>
+        <button md-icon-button (click)="selected = 2" [disabled]="selected === 2">
+            <md-icon class="safety-icn-plus-svg"></md-icon>
+        </button>
+        <button md-icon-button (click)="selected = 3" [disabled]="selected === 3">
+            <md-icon class="safety-icn-h-svg"></md-icon>
+        </button>
+    </div>
+</div>
+<md-divider fxHide.gt-sm></md-divider>
+
+<div class="md-worker-list">
+    <!-- EPI -->
+    <md-list fxFlex="32" fxFlex.lt-md="100" [fxHide.lt-md]="selected !== 1">
+        <div class="list-header">
+            <md-icon fxHide.sm fxHide.xs class="safety-icn-epi-svg">
+                <h3 md-subheader>
+                    <b>EPI</b>
+                </h3>
+            </md-icon>
+        </div>
+        <div #epiScroll class="body-content">
+            <div *ngIf="!epiLoading">
+                <virtual-scroll [parentScroll]="getScroll(epiContainer)" [bufferAmount]="5" [childHeight]="98" [items]="epiWorkersDateGroup" (update)="scrollEpiDateGroup = $event">
+                    <div *ngFor="let epiWorkersDate of scrollEpiDateGroup">
+                        <div *ngIf="epiWorkersDate.date">
+                            <md-list-item>
+                                <div layout="column">
+                                    <p class="date-group">{{ epiWorkersDate.date }}</p>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                        <div>
+                            <md-list-item>
+                                <span [mdTooltip]="epiWorkersDate.epi" class="qualific">{{ epiWorkersDate.epi }}</span>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                    </div>
+                </virtual-scroll>
+                <div *ngIf="epiWorkersDateGroup?.length < 1" class="empty">
+                    <p>Não há vencimentos a exibir</p>
+                </div>
+            </div>
+            <div *ngIf="epiLoading">
+                <md-spinner class="in-component"></md-spinner>
+            </div>
+        </div>
+    </md-list>
+    <div class="vertical-line"></div>
+    <!-- ASO -->
+    <md-list fxFlex="32" fxFlex.lt-md="100" [fxHide.lt-md]="selected !== 2">
+        <div class="list-header">
+            <md-icon fxHide.sm fxHide.xs class="safety-icn-plus-svg">
+                <h3 md-subheader>
+                    <b>SAÚDE</b>
+                </h3>
+            </md-icon>
+            <button md-button class="button" (click)="openWorkerAsoDialog()" md-icon-button mdTooltip="GERAR RELATÓRIO DE ASO">
+                <md-icon class="button-icon">assignment</md-icon>
+            </button>
+        </div>
+        <div #asoScroll class="body-content">
+            <div *ngIf="!asoLoading">
+                <virtual-scroll [parentScroll]="getScroll(asoContainer)" [bufferAmount]="5" [childHeight]="98" [items]="asoDateGroup" (update)="scrollAsoDateGroup = $event">
+                    <div *ngFor="let asoDate of scrollAsoDateGroup">
+                        <div *ngIf="asoDate.date">
+                            <md-list-item>
+                                <p class="date-group">{{ asoDate.date }}</p>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                        <div>
+                            <md-list-item>
+                                <span [mdTooltip]="asoDate.aso" class="qualific">{{ asoDate.aso }}</span>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                    </div>
+                </virtual-scroll>
+                <div *ngIf="asoDateGroup?.length < 1" class="empty">
+                    <p>Não há vencimentos a exibir</p>
+                </div>
+            </div>
+
+            <div *ngIf="asoLoading">
+                <md-spinner class="in-component"></md-spinner>
+            </div>
+        </div>
+    </md-list>
+    <div class="vertical-line"></div>
+    <!-- QUALIFICATIONS -->
+    <md-list fxFlex="32" fxFlex.lt-md="100" [fxHide.lt-md]="selected !== 3">
+        <div class="list-header">
+            <md-icon fxHide.sm fxHide.xs class="safety-icn-h-svg">
+                <h3 md-subheader>
+                    <b>HABILITAÇÕES</b>
+                </h3>
+            </md-icon>
+            <button md-button class="button" (click)="openPrintQualificationsReportDialog()" md-icon-button mdTooltip="GERAR RELATÓRIO DE HABILITAÇÕES">
+                <md-icon class="button-icon">assignment</md-icon>
+            </button>
+        </div>
+
+        <div #qualificationScroll class="body-content">
+            <div *ngIf="!qualificationLoading">
+                <virtual-scroll [parentScroll]="getScroll(qualificationContainer)" [bufferAmount]="5" [childHeight]="98" [items]="qualificationDateGroup" (update)="scrollQualificationDateGroup = $event">
+                    <div *ngFor="let qualificationDate of scrollQualificationDateGroup">
+                        <div *ngIf="qualificationDate.date">
+                            <md-list-item>
+                                <p class="date-group">{{ qualificationDate.date }}</p>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                        <div>
+                            <md-list-item>
+                                <span [mdTooltip]="qualificationDate.qualification" class="qualific">{{ qualificationDate.qualification }}</span>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                    </div>
+                </virtual-scroll>
+                <div *ngIf="qualificationDateGroup?.length < 1" class="empty">
+                    <p>Não há vencimentos a exibir</p>
+                </div>
+            </div>
+
+            <div *ngIf="qualificationLoading">
+                <md-spinner class="in-component"></md-spinner>
+            </div>
+        </div>
+    </md-list>
+</div>

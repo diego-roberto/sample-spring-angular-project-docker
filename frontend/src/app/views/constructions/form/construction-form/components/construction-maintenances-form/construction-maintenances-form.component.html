@@ -1,0 +1,88 @@
+<form [formGroup]="maintenancesForm">
+    <div *ngIf="model.equipments.length > 0">
+        <ul class="no-margin-no-padding">
+            <li *ngFor="let equipment of model.equipments; let i = index;" formArrayName="maintenance">
+                <div fxLayout.lt-lg="column" [formGroupName]="i">
+                    <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" fxLayoutAlign.gt-md="space-between start">
+                        <div fxFlex="34" fxLayout="row" fxFlex.xs="100" class="equipment-category">
+                            <md-select [(ngModel)]="equipment.category.id" placeholder="Categoria De Equipamento" formControlName="category" (change)="categoryValidator(i)"
+                                required>
+                                <md-option [mdTooltip]="category.name" matTooltipPosition="right" *ngFor="let category of categories" [value]="category.id">{{ category.name }}</md-option>
+                            </md-select>
+                            <md-error *ngIf="dropDownCategory(i)">Campo Obrigatório.</md-error>
+                        </div>
+
+                        <div fxLayout.xs="row" fxFlex="66" fxFlex.xs="100">
+                            <div fxFlex="50" class="equipment-type">
+                                <md-select [(ngModel)]="equipment.type.id" placeholder="Equipamento" formControlName="type" required>
+                                    <md-option [mdTooltip]="type.name" matTooltipPosition="right" *ngFor="let type of filterItemsOfType(equipment)" [value]="type.id">{{ type.name }}</md-option>
+                                </md-select>
+                                <md-error *ngIf="dropDownType(i)">Campo Obrigatório.</md-error>
+                            </div>
+
+                            <div fxFlex="50" class="identification">
+                                <md-input-container fxFlex="100">
+                                    <input mdInput placeholder="Identificação" maxlength="30" [(ngModel)]="equipment.identification" formControlName="identification"
+                                        required trimText>
+                                    <md-error>Campo Obrigatório.</md-error>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div fxFlex.gt-md="50" fxFlex.lt-lg="100" fxLayout.lt-lg="row" fxLayout.xs="column" class="row-two equipment" fxLayoutAlign.gt-md="space-between start">
+                        <div fxLayout.xs="row" fxFlex="50" fxFlex.xs="100">
+                            <md-checkbox fxFlex="50" [ngModel]="equipment.hasMaintenance" (change)="equipment.hasMaintenance = maintenance(equipment.hasMaintenance, i)"
+                                formControlName="maintenance">
+                                Manutenção
+                            </md-checkbox>
+
+                            <md-input-container fxFlex="50" class="periodicity-container">
+                                <input mdInput placeholder="Periodicidade" class="periodicity" [textMask]="{ mask: number, guide: false }" [required]="equipment.hasMaintenance"
+                                    [(ngModel)]="equipment.periodicity" formControlName="periodicity">
+                                <md-error>Campo Obrigatório.</md-error>
+                                <span mdSuffix [class.suffixDisabled]="maintenancesForm.controls.maintenance.controls[i].controls.periodicity.disabled">MESES</span>
+                            </md-input-container>
+                        </div>
+
+                        <div fxLayout.xs="row" fxFlex="50" fxFlex.xs="100" fxLayoutAlign="space-between start">
+
+                            <md-input-container class="last-maintenance" fxFlex="60">
+                                <input mdInput dateMask="99/99/9999" formControlName="date" [mdDatepicker]="picker" placeholder="última manutenção"
+                                    [(ngModel)]="equipment.lastMaintenance" [required]="equipment.hasMaintenance" validateOnBlur > <!-- [max]="maxDateLastMaintenance" -->
+                                <button mdSuffix [mdDatepickerToggle]="picker" [disabled]="equipment.maintenanceDone ? true : !equipment.hasMaintenance"></button>
+                                <md-datepicker #picker></md-datepicker>
+                                <md-error *ngIf="maintenancesForm.controls.maintenance.controls[i].controls.date.hasError('invalid')">Data inválida.</md-error>
+                                <md-error *ngIf="maintenancesForm.controls.maintenance.controls[i].controls.date.hasError('required') && !maintenancesForm.controls.maintenance.controls[i].controls.date.hasError('invalid')">Campo Obrigatório.</md-error>
+                                <md-error *ngIf="!maintenancesForm.controls.maintenance.controls[i].controls.date.hasError('invalid') && maintenancesForm.controls.maintenance.controls[i].controls.date.hasError('isbefore')">Data Maior que Atual.</md-error>
+                            </md-input-container>
+
+                            <div class="clock-icn" *ngIf="due(equipment)">
+                                <img src="assets/activities/tasks/ic-time-late.svg" mdTooltip="manutenção atrasada" alt="late">
+                            </div>
+
+                            <md-slide-toggle fxFlex="25" fxFlex.xs="40" [ngModel]="equipment.maintenanceDone" (change)="equipment.maintenanceDone = maintenanceDone(equipment.maintenanceDone, i, equipment)"
+                                formControlName="done" [class.suffixDisabled]="equipment.maintenanceDone">
+                                Feito
+                            </md-slide-toggle>
+
+                            <button md-icon-button fxFlex="5" fxFlex.xs="10" (click)="removeEquipment(i)" [disabled]="equipment.maintenanceDone">
+                                <md-icon class="delete">delete</md-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div (click)="addEquipment()" class="new-equipment" fxLayout="row" fxLayoutAlign="start center">
+        <md-icon class="add-icon">add</md-icon>
+        <span>ADICIONE UMA NOVA CATEGORIA DE EQUIPAMENTO</span>
+    </div>
+
+    <div class="form-bottom">
+        <button md-raised-button class="button-default" (click)="save()" [disabled]="isCreating() || maintenancesForm.invalid || (model.equipments.length === 0 && empty) " name="btnSalveAndContinue">
+            Salvar e continuar</button>
+    </div>
+</form>

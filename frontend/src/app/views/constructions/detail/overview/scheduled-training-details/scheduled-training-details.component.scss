@@ -1,0 +1,42 @@
+@import '../../../../../../scss/components/color';
+
+.content {
+    font-size: 14px;
+}
+
+.mat-dialog-title{
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    color: $greyish-brown;
+    margin-bottom: 0px;
+}
+
+.title-container {
+    width: 100%;
+    height: 45px;
+    object-fit: contain;
+    background-color: $pale-gray;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+virtual-scroll {
+    width: 100%;
+    min-width: 600px;
+    height: 150px;
+
+    div.info-empty-box {
+        margin-top: 35px;
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.grey-btn {
+    color: white;
+    background-color: darkgray;
+    font-size: 11px;
+}

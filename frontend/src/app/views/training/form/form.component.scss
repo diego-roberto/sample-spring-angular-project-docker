@@ -1,0 +1,82 @@
+@import '../../../../scss/components/color.scss';
+
+.grid-row-last {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    //height: 85px;
+    border: dashed 2px $light-gray;
+
+    a {
+        color: $grapefruit;
+        text-decoration: underline;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+}
+
+.body-content {
+    padding: 20px 20px 20px 20px;
+}
+
+img {
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 32px;
+}
+
+
+
+.button-link {
+    background-color: transparent;
+    border: 0;
+    color: #de4d4d;        
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1.0;
+    margin-top: 10px;
+    object-fit: contain;
+    outline: 0;
+    text-decoration: underline;    
+    margin-right: 10px;
+}
+
+.button-link-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.button-default{
+       margin-top: 35px;
+
+}
+.md-raised-button{
+    text-align: center;
+    margin-left: 10px;
+}
+
+.pnl-botoes{
+padding-top: 10px;
+}
+
+.mat-icon-button ng-tns-c10-1{
+    display: none;
+}
+
+.md-toolbar .a{
+    color:transparent;
+}
+.horario{
+    width:80px;
+    margin-top: -10px;
+  }
+
+.keyword{
+    width:100% !important;
+}  

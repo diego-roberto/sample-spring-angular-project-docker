@@ -1,0 +1,22 @@
+<safety-card-content>
+      <div fxFlex fxLayout.lt-md="column" *ngIf="worker.security.cipeiro || worker.security.brigade">
+            <div *ngIf="worker.security.cipeiro" fxLayoutGap="10px" fxFlex="initial">
+                  <span>Cipeiro</span>
+                  <span>|</span>
+                  <span>{{ this.laborsInCipa.get(worker.security.laborsInCipa) }}</span>
+            </div>
+            <div fxLayout="row no" fxFlexOffset.gt-sm="10px">
+                  <div *ngIf="worker.security.cipeiro" fxLayoutGap="10px">
+                        <span fxHide.lt-md>|</span>
+                        <span>{{worker.security?.mandateBegin | date: 'dd/MM/yyyy'}} a  {{worker.security?.mandateEnd | date: 'dd/MM/yyyy'}}</span>
+                  </div>
+                  <div *ngIf="worker.security.brigade" fxLayoutGap="10px" fxFlexOffset="10px">
+                        <span *ngIf="worker.security.cipeiro">|</span>
+                        <span>brigadista</span>
+                  </div>
+            </div>
+      </div>
+      <div *ngIf="!worker.security.cipeiro && !worker.security.brigade">
+            sem dados cadastrados
+      </div>
+</safety-card-content>

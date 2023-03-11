@@ -1,0 +1,119 @@
+<safety-card #checklistResultConstructionIntroCard toggleDisable topBarDisable>
+    <safety-card-header>{{ titleIntro }}</safety-card-header>
+    <safety-card-content>
+
+        <div>
+           <div class="no-transform" [innerHTML]="checklist.introduction"></div>
+        </div>
+
+    </safety-card-content>
+</safety-card>
+
+<safety-card #checklistResultEvaluationCard toggleDisable topBarDisable>
+    <safety-card-header>{{ titleEvaluation }}</safety-card-header>
+    <safety-card-content>
+        <p>Nesta avaliação as respostas podem variar segundo a tabela abaixo:</p>
+        <div fxLayout='row' fxLayoutAlign="start center">
+            <div class="chip-success yes-tag" fxFlex="0 0 12.5em">CONFORME</div>
+            <div class="no-transform" fxFlexOffset="2">A empresa está em completa conformidade com o item da norma, e não são geradas multas, notificações ou recomendações.</div>
+        </div>
+        <div fxLayout='row' fxLayoutAlign="start center">
+            <div class="chip-danger no-tag" fxFlex="0 0 12.5em">IRREGULAR</div>
+            <div class="no-transform" fxFlexOffset="2">A empresa está em completa irregularidade com o item da norma, e são geradas multas, notificações e/ou recomendações.</div>
+        </div>
+        <div fxLayout='row' fxLayoutAlign="start center">
+            <div class="chip-warn partial-tag" fxFlex="0 0 12.5em">PARCIALMENTE</div>
+            <div class="no-transform" fxFlexOffset="2">A empresa está em conformidade parcial com o item da norma, e são geradas multas, notificações e/ou recomendações</div>
+        </div>
+        <div fxLayout='row' fxLayoutAlign="start center">
+            <div class="chip-none not-tag" fxFlex="0 0 12.5em">NÃO SE APLICA</div>
+            <div class="no-transform" fxFlexOffset="2">Este item da norma não se aplica ao momento da realização da avaliação, e não irá compor o percentual de itens
+                atendidos e o valor de multa previsto</div>
+        </div>
+
+        <p>O valor passível da multa é calculado com base na quantidade de trabalhadores informada pela empresa no momento da
+            visita, em conformidade com a NR 28.</p>
+    </safety-card-content>
+</safety-card>
+
+<safety-card #checklistResultGeneralEvaluationCard toggleDisable topBarDisable>
+    <safety-card-header>{{ titleGeneral }}</safety-card-header>
+    <safety-card-content>
+        <div fxLayout='column'>
+            <div fxLayout='row'>
+                <p>Total de itens analisados na visita:
+                    <b>{{ _answersCount.totalAnswers - _answersCount.notAnswered - _answersCount.notApplicableAnswer}}</b> de
+                    <b>{{ _answersCount?.totalAnswers }}</b>
+                </p>
+            </div>
+
+            <div class="pizza-graph" fxLayout='row' fxLayoutAlign="center center">
+                <canvas #pizzaChart baseChart [datasets]="pieDatasets" [legend]="false" [colors]="pieColorsEmptyObject" [data]="pieChartData"
+                    [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                <div class="graph-legend">
+                    <p *ngFor="let label of pieChartLabels">
+                        <svg width="3em" height="1em">
+                            <rect width="3em" height="1em" [ngStyle]="{ fill: pieDatasets['0'].backgroundColor[pieChartLabels.indexOf(label)] }" />
+                        </svg>
+                        {{ label }}
+                    </p>
+                </div>
+            </div>
+
+            <div fxLayout='row'>
+                <p>Valor passível de multa:
+                    <b>{{ checklistPenalty.checklistPenalty | currency:'BRL':true:'1.2-2' }}</b>
+                </p>
+            </div>
+        </div>
+    </safety-card-content>
+</safety-card>
+
+<safety-card #checklistResultGeneralEvaluationSectionCard toggleDisable topBarDisable>
+    <safety-card-header>{{ titleSection }}</safety-card-header>
+    <safety-card-content>
+        <div fxLayout='column'>
+            <div fxLayout='row' fxFlex="100">
+                <div fxLayout='column' fxFlex="50" fxFlex.lt-md="40" class="general-head">
+                    <b>Itens da Norma Regulamentadora</b>
+                </div>
+                <div fxLayout='column' fxFlex="10" fxFlex.lt-md="14" class="general-head">
+                    <b>Valor passível de multa</b>
+                </div>
+                <div fxLayout='column' fxFlexOffset.lt-md="2" fxFlex="40" fxFlex.lt-md="46" class="general-head">
+                    <b>Porcentagem</b>
+                </div>
+            </div>
+            <div *ngFor="let session of resultSessions; index as i" class="section-result" fxLayout='row' fxFlex="100">
+                <div fxLayout='column' fxFlex="50" fxFlex.lt-md="40">
+                    {{ answerAnalisys.session[i] }}
+                </div>
+                <div fxLayout='column' fxFlex="10" fxFlex.lt-md="14">
+                    {{ checklistPenalty.sessionsPenalty[i].penalty | currency:'BRL':true:'1.2-2' }}
+                </div>
+                <div fxLayout='row' fxFlexOffset.lt-md="2" fxFlex="40" fxFlex.lt-md="46">
+                    <div *ngIf="answerAnalisys.percentYes[i] > 0" class="bars-chart percent-yes tooltip" fxLayout='column' fxFlex="{{ answerAnalisys.percentYes[i] }}">
+                        <span *ngIf="showPencentageLabelCondition(answerAnalisys.percentYes[i])" class="bars-chart-text">{{ answerAnalisys.percentYes[i] | number: '.0-0' }}%</span>
+                        <span class="tooltip-text tooltip-top">{{ answerAnalisys.percentYes[i] | number: '.0-0' }}%</span>
+                    </div>
+                    <div *ngIf="answerAnalisys.percentNo[i] > 0" class=" bars-chart percent-no tooltip" fxLayout='column' fxFlex="{{ answerAnalisys.percentNo[i] }}">
+                        <span *ngIf="showPencentageLabelCondition(answerAnalisys.percentNo[i])" class="bars-chart-text">{{ answerAnalisys.percentNo[i] | number: '.0-0' }}%</span>
+                        <span class="tooltip-text tooltip-top">{{ answerAnalisys.percentNo[i] | number: '.0-0' }}%</span>
+                    </div>
+                    <div *ngIf="answerAnalisys.percentPartially[i] > 0" class="bars-chart percent-partially tooltip" fxLayout='column' fxFlex="{{ answerAnalisys.percentPartially[i] }}">
+                        <span *ngIf="showPencentageLabelCondition(answerAnalisys.percentPartially[i])" class="bars-chart-text">{{ answerAnalisys.percentPartially[i] | number: '.0-0' }}%</span>
+                        <span class="tooltip-text tooltip-top">{{ answerAnalisys.percentPartially[i] | number: '.0-0' }}%</span>
+                    </div>
+                    <div *ngIf="answerAnalisys.percentNotApplicable[i] > 0" class="bars-chart percent-notApplicable tooltip" fxLayout='column' fxFlex="{{ answerAnalisys.percentNotApplicable[i] }}">
+                        <span *ngIf="showPencentageLabelCondition(answerAnalisys.percentNotApplicable[i])" class="bars-chart-text">{{ answerAnalisys.percentNotApplicable[i] | number: '.0-0' }}%</span>
+                        <span class="tooltip-text tooltip-top">{{ answerAnalisys.percentNotApplicable[i] | number: '.0-0' }}%</span>
+                    </div>
+                    <div *ngIf="answerAnalisys.percentNotAnswered[i] > 0" class="bars-chart percent-notAnswered tooltip" fxLayout='column' fxFlex="{{ answerAnalisys.percentNotAnswered[i] }}">
+                        <span *ngIf="showPencentageLabelCondition(answerAnalisys.percentNotAnswered[i])" class="bars-chart-text">{{ answerAnalisys.percentNotAnswered[i] | number: '.0-0' }}%</span>
+                        <span class="tooltip-text tooltip-top">{{ answerAnalisys.percentNotAnswered[i] | number: '.0-0' }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </safety-card-content>
+</safety-card>

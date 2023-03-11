@@ -1,0 +1,9 @@
+<li class="{{display}}">
+    <img *ngIf="icon != ''" src="{{icon}}">
+    <div *ngIf="id === ''; else hasId">
+        <span> {{text}} {{time}} </span>
+    </div>
+    <ng-template #hasId>
+        <a class="link" (click)="openTrainingDetails(id)" mdTooltip="Ver detalhes"><span> {{text}} </span></a>
+    </ng-template>
+</li>

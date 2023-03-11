@@ -1,0 +1,43 @@
+<form [formGroup]="constructionDocumentationForm" novalidate>
+  <div class="form-content" fxFlex="100" fxLayoutAlign="start center" fxLayoutGap="1em">
+    <div fxFlex="24px" fxLayoutAlign="center center">
+      <md-icon [fxHide]="! showLateIcon()" id="late-icon" mdTooltip="atrasado" alt="Atrasado">access_time</md-icon>
+    </div>
+
+    <md-input-container fxFlex="28">
+      <input mdInput placeholder="Documentação" [(ngModel)]="constructionDocumentation.description" [reactiveFormControlDisabled]="isDescriptionDisabled() || isFormDisabled()"
+        formControlName="description" name="description" required trimText>
+      <md-error *ngIf="constructionDocumentationForm.controls.description.hasError('required')">Campo obrigatório.</md-error>
+      <md-error *ngIf="constructionDocumentationForm.controls.description.hasError('maxlength')">Máximo de {{ descriptionMaxLength }} caracteres.</md-error>
+    </md-input-container>
+
+    <md-input-container fxFlex="10">
+      <input mdInput formControlName="dueDate" [(ngModel)]="constructionDocumentation.dueDate" formControlName="dueDate" name="dueDate"
+        dateMask="99/99/9999" placeholder="Vencimento" [mdDatepicker]="dueDatePicker" validateOnBlur [reactiveFormControlDisabled]="isFormDisabled()">
+      <button mdSuffix [mdDatepickerToggle]="dueDatePicker" [disabled]="isFormDisabled()"></button>
+      <md-datepicker #dueDatePicker></md-datepicker>
+      <md-error *ngIf="constructionDocumentationForm.controls.dueDate.hasError('beforeToday')">Data menor que hoje.</md-error>
+    </md-input-container>
+
+    <mat-slide-toggle fxFlex="18" fxLayoutAlign="start center" [checked]="constructionDocumentation.accessBlocked" (change)="accessBlockedSlideToggleChangeHandler($event)"
+      formControlName="accessBlocked" name="accessBlocked" [reactiveFormControlDisabled]="isFormDisabled()">
+      <span mdTooltip="Bloquear acesso dos trabalhadores quando este documento estiver vencido">{{ constructionDocumentation.accessBlocked ? 'desbloquear acesso' : 'bloquear acesso' }}</span>
+    </mat-slide-toggle>
+
+    <md-radio-group fxLayoutAlign="start center" [value]="constructionDocumentation.shelved" (change)="shelvedRadioGroupChangeHandler($event)"
+      >
+      <md-radio-button [value]="false" [disabled]="isRenewDisabled()">Renovar</md-radio-button>
+      <md-radio-button [value]="true" [disabled]="canEditShelved()" >Arquivar</md-radio-button>
+    </md-radio-group>
+
+    <div fxFlex fxLayoutAlign="end center">
+      <input-file [fileName]="constructionDocumentation.fileName" [fileUrl]="constructionDocumentation.fileUrl" [showClear]="true" [showFileName]="true"
+        [downloadable]="true" [disabled]="isFormDisabled()" [accept]="'application/pdf'" (onFileSelect)="inputFileSelectHandler($event)"
+        (undoClear)="inputFileUndoClearHandler($event)" (clear)="inputFileClearHandler()"></input-file>
+
+      <button md-icon-button (click)="doRemove()" [disabled]="isFormDisabled()">
+        <md-icon>delete</md-icon>
+      </button>
+    </div>
+  </div>
+</form>

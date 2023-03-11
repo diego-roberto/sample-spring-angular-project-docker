@@ -1,0 +1,204 @@
+<div class="filters">
+  <div
+    fxLayout
+    fxLayout.lt-md="column"
+    fxLayoutAlign.lt-md="start start"
+    fxLayoutAlign="space-between center"
+  >
+    <search
+      fxFlexOrder.lt-md="2"
+      (applyFilter)="applyFilter()"
+      (onTextChange)="onSearchValueChange($event)"
+      [(value)]="searchValue"
+    ></search>
+
+    <md-chip-list fxFlexOrder.lt-md="1">
+      <md-chip
+        *ngFor="let category of categoryList"
+        class="main-chip"
+        [ngClass]="{ active: categoryFilter.get(category) }"
+        (click)="toggleCategoryFilter(category)"
+        mdTooltip="Clique para Filtrar"
+        mdTooltipPosition="above"
+      >
+        <span>{{ category.name }}</span>
+      </md-chip>
+    </md-chip-list>
+
+    <form [formGroup]="trainingScheduleConstructionFilterForm" novalidate>
+      <span>&nbsp;&nbsp;&nbsp;</span>
+      <md-input-container fxFlex="35">
+        <input
+          mdInput
+          md-datepicker
+          dateMask="99/99/9999"
+          formControlName="beginAt"
+          [(ngModel)]="filterTemp.beginAt"
+          [mdDatepicker]="pickerBegin"
+          placeholder="data início"
+          validateOnBlur
+        />
+        <button mdSuffix [mdDatepickerToggle]="pickerBegin"></button>
+        <md-error *ngIf="hasErrorForm('beginAt', 'invalid')"
+          >data inválida.</md-error
+        >
+        <md-error *ngIf="hasErrorForm('beginAt', 'isbefore')"
+          >data superior a data fim.</md-error
+        >
+        <md-error *ngIf="hasErrorForm('beginAt', 'isnecessary')"
+          >data fim não preenchida ou inválida.</md-error
+        >
+        <md-datepicker #pickerBegin></md-datepicker>
+      </md-input-container>
+
+      <span>&nbsp;&nbsp;&nbsp;</span>
+      <md-input-container fxFlex="35">
+        <input
+          mdInput
+          dateMask="99/99/9999"
+          formControlName="endAt"
+          [(ngModel)]="filterTemp.endAt"
+          [mdDatepicker]="pickerEnd"
+          placeholder="data fim"
+          validateOnBlur
+        />
+        <button mdSuffix [mdDatepickerToggle]="pickerEnd"></button>
+        <md-error *ngIf="hasErrorForm('endAt', 'invalid')"
+          >data inválida.</md-error
+        >
+        <md-error *ngIf="hasErrorForm('endAt', 'isbefore')"
+          >data inferior a data início.</md-error
+        >
+        <md-error *ngIf="hasErrorForm('endAt', 'isnecessary')"
+          >data início não preenchida ou inválida.</md-error
+        >
+        <md-datepicker #pickerEnd></md-datepicker>
+      </md-input-container>
+    </form>
+
+    <button
+      md-raised-button
+      class="button-red mat-button"
+      (click)="applyFilter()"
+    >
+      Filtrar
+    </button>
+  </div>
+</div>
+
+<md-spinner *ngIf="loadingActive" color="warn"></md-spinner>
+
+<div class="list-container list-item paginator">
+  <div
+    fxFlexOrder.lt-md="2"
+    fxFlex.gt-sm="nogrow"
+    fxFlex
+    fxLayoutAlign="end center"
+    *ngIf="scheduledTrainingList && scheduledTrainingList.length > 0"
+  >
+    <button
+      md-icon-button
+      (click)="togglePage(requestFilter.page - 1)"
+      [disabled]="requestFilter.page == 1"
+    >
+      <md-icon>keyboard_arrow_left</md-icon>
+    </button>
+    <span class="page">{{ requestFilter.page }} </span>
+    <button
+      md-icon-button
+      (click)="togglePage(requestFilter.page + 1)"
+      [disabled]="requestFilter.page == requestFilter.totalPages"
+    >
+      <md-icon>keyboard_arrow_right</md-icon>
+    </button>
+  </div>
+</div>
+
+<div class="list-container">
+  <div
+    *ngIf="
+      (!scheduledTrainingList || scheduledTrainingList.length === 0) &&
+      !byFilter &&
+      !loadingActive
+    "
+  >
+    <div class="body-content">
+      <div fxFlex fxLayout="column" fxLayoutAlign="space-around center">
+        <div fxFlex class="hello">
+          <p>
+            Você não tem agendamento cadastrado, cadastre um
+            <b>novo agendamento.</b>
+          </p>
+        </div>
+        <div fxFlex>
+          <a
+            class="start"
+            md-raised-button
+            type="button"
+            name="button"
+            (click)="showAddTrainingSchedule()"
+          >
+            <span>Cadastrar</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p
+    *ngIf="
+      (!scheduledTrainingList || scheduledTrainingList.length === 0) &&
+      byFilter &&
+      !loadingActive
+    "
+    id="message-empty"
+  >
+    Nenhum agendamento encontrado.
+  </p>
+
+  <div
+    class="list iconImg"
+    *ngFor="let list of scheduledTrainingGroups; let i = index"
+  >
+    <div class="label">
+      <span class="group-title"> {{ list.group }} </span>
+      <div class="line"></div>
+    </div>
+    <div
+      class="list-item"
+      *ngFor="let scheduledTraining of list.scheduledTrainingList"
+    >
+      <scheduled-trainings-list-item
+        (toShowPrintLoader)="toShowPrintLoader($event)"
+        (doUpdateList)="update()"
+        [scheduledTraining]="scheduledTraining"
+      ></scheduled-trainings-list-item>
+    </div>
+  </div>
+
+  <fab-speed-dial
+    #myFab
+    [direction]="'up'"
+    [animationMode]="'fling'"
+    [fixed]="fixed"
+    (mouseenter)="myFab.open = true"
+    (mouseleave)="myFab.open = false"
+  >
+    <fab-trigger [spin]="spin">
+      <button md-fab>
+        <md-icon>add</md-icon>
+      </button>
+    </fab-trigger>
+    <fab-actions>
+      <button
+        md-mini-fab
+        mdTooltip="Agendar Capacitações"
+        mdTooltipPosition="before"
+        (onUpdate)="update()"
+        (click)="showAddTrainingSchedule()"
+      >
+        <i class="safety-icn-capacita-svg"></i>
+      </button>
+    </fab-actions>
+  </fab-speed-dial>
+</div>

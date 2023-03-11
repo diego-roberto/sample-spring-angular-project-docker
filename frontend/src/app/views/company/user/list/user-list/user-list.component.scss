@@ -1,0 +1,141 @@
+@import '../../../../../../scss/components/color.scss';
+
+.top-actionbar {
+    margin-bottom: 10px;
+
+    .right-actionbar {
+        & > md-select {
+            margin: 0 10px;
+        }
+
+        md-icon {
+            color: $warm-grey-four;
+        }
+
+        .actived {
+            color: black;
+        }
+    }
+}
+
+
+:host {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+// .top-actionbar {
+//     padding: 20px 0;
+//     margin:  5px;
+//     height: 60px;
+// }
+
+
+.user-info {
+    span {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.21;
+        text-align: center;
+        color: $greyish-brown;
+        margin-left: 10px;
+    }
+    .image-wrapper {
+        height: 50px;
+        width: 80px;
+
+        img {
+            height: 50px;
+            width: 80px;
+            margin-left: 5%;
+        }
+    }
+}
+
+.listTemplate {
+    width: 100%;
+    height: 100%;
+}
+
+.list-wrapper {
+    & > div {
+        & > div {
+            margin: 16px 0;
+        }
+    }
+}
+
+.order {
+    min-width: 150px;
+
+    & /deep/ {
+        .mat-select-placeholder,
+        .mat-select-value {
+            color:          $warm-grey-four;
+            font-size:      10px;
+            font-weight:    900;
+            line-height:    1.4;
+            letter-spacing: 0.5px;
+            text-align:     left;
+        }
+
+        .mat-select-underline {
+            display: none !important;
+        }
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2em;
+    width: 100%;
+  
+    .separator {
+      background-color: $light-gray;
+      height: 1px;
+      flex: 1;
+      flex-grow: 1;
+    }
+  
+    .section-area {
+      width: 280px;
+    }
+}
+
+.user-item {
+    margin-bottom: 20px !important;
+}
+
+span {
+    width: 100%;
+    display: block;
+    color: white;
+    font-size: 1em;
+    font-weight: 900;
+    text-align: center;
+  
+    &.new {
+      color: $light-gray;
+    }
+}
+
+.body-content {
+    height: 100vh;
+}
+
+.line {
+    display: inline !important;
+    margin: 20px 0 20px 0 !important;
+}
+
+user-line-detail {
+    margin: 0 0 20px 0 !important;
+}
+
+.filters {
+    display: flex;
+    margin-bottom: 50px;
+
+}

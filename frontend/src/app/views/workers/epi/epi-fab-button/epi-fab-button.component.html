@@ -1,0 +1,23 @@
+<fab-speed-dial *ngIf="showFabButton" #myFab direction="up" animationMode="fling" fixed="false"
+  (mouseenter)="myFab.open = true" (mouseleave)="myFab.open = false">
+  <fab-trigger spin="true">
+    <button md-fab>
+      <md-icon>add</md-icon>
+    </button>
+  </fab-trigger>
+
+  <fab-actions>
+    <button md-mini-fab mdTooltip="Devolução e Entrega de EPI" mdTooltipPosition="before" (click)="openDeliveryReturnDialog(3)">
+      <i class="material-icons">swap_horiz</i>
+    </button>
+    <button md-mini-fab mdTooltip="Apenas entrega de EPI" mdTooltipPosition="before" (click)="openDeliveryReturnDialog(2)">
+      <i class="material-icons">arrow_forward</i>
+    </button>
+    <button md-mini-fab mdTooltip="Apenas devolução de EPI" mdTooltipPosition="before" (click)="openDeliveryReturnDialog(1)">
+      <i class="material-icons">arrow_back</i>
+    </button>
+    <button md-mini-fab mdTooltip="Cadastrar novo EPI" mdTooltipPosition="before" (click)="openEpiDialog()">
+      <i class="safety-icn-epi-svg"></i>
+    </button>
+  </fab-actions>
+</fab-speed-dial>

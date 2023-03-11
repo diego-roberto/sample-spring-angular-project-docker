@@ -1,0 +1,29 @@
+version: '3.7'
+networks:
+  network:
+    driver: bridge
+    name: traefik_network
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: 127.0.0.1
+volumes:
+  mariadb: null
+services:
+  traefik:
+    image: 'traefik:v2.4'
+    container_name: devops_traefik
+    restart: unless-stopped
+    security_opt:
+      - 'no-new-privileges:true'
+    networks:
+      - network
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - './configs/traefik/traefik.yml:/etc/traefik/traefik.yml:ro'
+      - './configs/traefik/config.yml:/etc/traefik/config.yml:ro'
+      - './certs:/etc/certs:ro'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik=true

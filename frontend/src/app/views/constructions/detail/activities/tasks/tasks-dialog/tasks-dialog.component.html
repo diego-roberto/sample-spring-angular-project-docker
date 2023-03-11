@@ -1,0 +1,14 @@
+<safety-dialog>
+  <safety-dialog-header>
+    {{ dataForm.title | Limit: 30 }}
+  </safety-dialog-header>
+  <safety-dialog-content>
+    <tasks-data-form #dataForm (onAddTask)="onAddTaskEvent($event)"></tasks-data-form>
+  </safety-dialog-content>
+
+  <safety-dialog-actions>
+    <md-spinner class="in-component" *ngIf="dataForm.isSaving" color="warn"></md-spinner>
+    <button md-button class="button-red" [disabled]="dataForm.taskForm.invalid || dataForm.isSaving"
+      (click)="dataForm.saveTask()">Salvar</button>
+  </safety-dialog-actions>
+</safety-dialog>

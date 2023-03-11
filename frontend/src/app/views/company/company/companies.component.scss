@@ -1,0 +1,21 @@
+
+
+@import '../../../../scss/components/color.scss';
+
+:host {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+safety-card {
+    margin-bottom: 20px;
+}
+
+.listTemplate {
+    width: 100%;
+    height: 100%;
+}
+
+.body-content {
+    height: 100vh;
+}

@@ -1,0 +1,43 @@
+<div class="body-content">
+
+<div>
+    <a md-raised-button class="button-default mat-button" routerLink="/settings/">Voltar</a>
+</div>
+ 
+  <div class="list-wrapper">
+      <div *ngFor="let module of modulesList">
+      
+         <div fxFlex fxLayout fxLayoutAlign="space-between center">
+
+            <safety-list-item fxFlex="100">
+                <div fxLayout fxFlex="fill" fxLayoutAlign="start center" class="item-info" >        
+                    <span class="corporate-name">{{ module.name  }}</span>
+              </div>
+            
+                <div fxFlex="noshrink" fxLayout fxLayoutAlign="start center" class="tools">
+                    <a md-icon-button (click)="openModuleDialog(module)">
+                        <md-icon>edit</md-icon>
+                    </a>
+
+                </div>
+            </safety-list-item>
+         </div>
+      </div>
+  </div>
+
+  <fab-speed-dial #myFab *ngIf="permissionService.hasSomePermission(['COMPANY_SETTINGS'])" [direction]="'up'" [animationMode]="'fling'" [fixed]="false" (mouseenter)="myFab.open = true"
+      (mouseleave)="myFab.open = false">
+      <fab-trigger [spin]="true">
+          <button md-fab>
+              <md-icon>add</md-icon>
+          </button>
+      </fab-trigger>
+
+      <fab-actions>
+          <button md-mini-fab *ngIf="permissionService.hasSomePermission(['COMPANY_SETTINGS'])" mdTooltip="Adicionar Módulo" mdTooltipPosition="before"  (click)="openModuleDialog(null)">
+              <i class="safety-icn-gerenciamento-svg"></i>
+          </button>
+         
+      </fab-actions>
+  </fab-speed-dial>
+</div>

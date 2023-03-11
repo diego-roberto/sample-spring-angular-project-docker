@@ -1,0 +1,16 @@
+.inner-spinner {
+    position: initial;
+}
+
+.card-container {
+    min-width: 560px;
+}
+
+safety-card-content {
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    } 
+}

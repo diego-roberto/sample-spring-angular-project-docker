@@ -1,0 +1,100 @@
+<md-spinner
+  *ngIf="loading"
+  color="warn"
+></md-spinner>
+
+<div *ngIf="!loading">
+  <checklist-list
+    *ngIf="!result && !questions && !resultList && !answers"
+    [taskScroll]="taskScroll"
+    [checklistsFilteredList]="checklistsFilteredList"
+    [lastChecklistAnswers]="lastChecklistAnswers"
+    [checklistsList]="checklistsFilteredList"
+    (verifyChecklistAnswer)="toVerifyChecklist($event)"
+    (activeChangeQuestions)="toChangeQuestions($event)"
+    (activeResultList)="toChangeResultList($event)"
+  >
+  </checklist-list>
+
+  <checklist-answers
+    *ngIf="!result && !questions && !resultList && answers"
+    [checklist]="checklist"
+    [checklistAnswers]="checklistAnswers"
+    (goVisualizeResult)="toVisualizeResult($event)"
+    (activeChangeQuestions)="toAnswer($event)"
+    (goBackChecklist)="toChecklistList($event)"
+    (hideFloatButton)="hideFloatButton($event)"
+  >
+  </checklist-answers>
+
+  <checklist-question
+    *ngIf="!result && questions && !resultList"
+    [checklist]="checklist"
+    [checklistAnswer]="checklistAnswer"
+    [checklistPossibleAnswers]="checklistPossibleAnswers"
+    [editable]="checklistQuestionEditable"
+    (changeEditable)="changeEditable($event)"
+    (goVisualizeResult)="toVisualizeResult($event)"
+    (goBackChecklist)="toUpdateChecklistAnswer($event)"
+    (hideFloatButton)="hideFloatButton($event)"
+  >
+  </checklist-question>
+
+  <checklist-result
+    *ngIf="result && !questions && !resultList"
+    [checklist]="checklist"
+    [checklistPenalty]="checklistPenalty"
+    [lastChecklistAnswer]="getLastChecklistAnswer(checklist)"
+    [resultSessions]="resultSessions"
+    [answersSessionsCount]="answersSessionsCount"
+    [answersCount]="answersCount"
+    [savedAnswer]="checklistAnswer"
+    [checklistPossibleAnswers]="checklistPossibleAnswers"
+    [construction]="construction"
+    (backScroll)="goBackScroll()"
+    (goBackToChecklistQuestions)="toChecklistQuestions($event)"
+    (returnToList)="backResult()"
+  >
+  </checklist-result>
+
+  <checklist-result-list
+    *ngIf="!result && !questions && resultList"
+    [checklist]="checklist"
+    [taskScroll]="taskScroll"
+    [checklistsFilteredList]="checklistsFilteredList"
+    [construction]="construction"
+    [checklistsList]="checklistsFilteredList"
+    (hideFloatButton)="hideFloatButton($event)"
+  >
+  </checklist-result-list>
+
+</div>
+
+<fab-speed-dial
+  *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_INSERT']) && showFloatButton"
+  #myFab
+  [direction]="'up'"
+  [animationMode]="'fling'"
+  [fixed]="fixed"
+  (mouseenter)="myFab.open = true"
+  (mouseleave)="myFab.open = false"
+>
+  <fab-trigger [spin]="spin">
+    <button md-fab>
+      <md-icon>add</md-icon>
+    </button>
+  </fab-trigger>
+
+  <fab-actions>
+
+    <button
+      md-mini-fab
+      mdTooltip="Adicionar Checklist"
+      mdTooltipPosition="before"
+      (click)="redirectToChecklistCreate()"
+      *ngIf="permissionService.hasSomePermission(['CONSTRUCTION_ACTIVITIES_CHECKLIST_INSERT'])"
+    >
+      <md-icon>insert_chart</md-icon>
+    </button>
+  </fab-actions>
+</fab-speed-dial>

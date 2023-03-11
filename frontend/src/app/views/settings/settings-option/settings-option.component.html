@@ -1,0 +1,33 @@
+<div class="body-content">
+    <div>
+        <a md-raised-button class="button-default mat-button" routerLink="/settings/">Voltar</a>
+    </div>
+
+    <safety-card toggleDisable>
+        <safety-card-header>
+          <span>Opções de Sistema</span>
+        </safety-card-header>
+
+        <safety-card-content>
+            <div class="options-form">
+
+                <div class="options-div">
+                    <span class="option-label">Travar expansão de menu lateral</span>
+                    <md-slide-toggle
+                        md-tooltip="Travar expansão de menu lateral"
+                        [checked]="navbarHoverOption"
+                        (change)="changeHoverOption()">
+                    </md-slide-toggle>
+                </div>
+
+            </div>
+
+            <div class="form-bottom">
+                <button md-button class="button-red" (click)="setOption()">Salvar</button>
+                <button md-button class="button-red" (click)="clearOptions()">Resetar</button>
+            </div>
+
+        </safety-card-content>
+
+    </safety-card>
+</div>

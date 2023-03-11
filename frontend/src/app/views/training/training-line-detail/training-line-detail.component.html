@@ -1,0 +1,32 @@
+<safety-list-item [bulkEditable]="false" class="epi-line">
+    <div fxLayout fxFlex fxLayoutAlign="start center" class="wearable-info">
+        
+        <a   style="cursor:pointer;">
+            <span class="epi-quantity"> 
+                <b>{{training.title}}</b>
+            </span>
+            <span class="horizontal-divider"> | </span>
+            
+            <span  *ngFor="let category of training.category;let isLast=last">
+                <b>{{ category.name }}{{isLast ? '' : ', '}}</b>
+            </span>
+            <span class="horizontal-divider"> | </span>
+            <span  *ngFor="let exhibition of training.exhibition;let isLast=last">
+                <b>{{ exhibition.name }}{{isLast ? '' : ', '}}</b>
+            </span>
+            <span class="horizontal-divider"> | Serviço de obra relacionado:</span>
+            
+            <span [mdTooltip]="training.stringServices">       
+                <b>{{ training.stringServices |  Limit:40  }}</b>
+            </span>
+            
+
+
+            
+        </a>
+    </div>    
+    <div fxLayout fxLayoutAlign="end center" class="tools">            
+        <md-icon  *ngIf="permissionService.hasSomePermission(['COMPANY_TRAINING_REMOVE']) || !training.global" fxLayout fxLayoutAlign="center center" (click)="toInactivateTraining(training)" mdTooltip="Excluir capacitação" >delete</md-icon>
+        
+    </div>
+</safety-list-item>

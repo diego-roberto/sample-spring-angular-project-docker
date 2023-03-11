@@ -1,0 +1,19 @@
+<safety-list-item [bulkEditable]="false" class="epi-line">
+    <div fxLayout fxFlex fxLayoutAlign="start center" class="wearable-info">
+
+        <a (click)="toEditWorkerWearable()" style="cursor:pointer;">
+            <span class="epi-quantity"> ID SENSOR:
+                <b>{{ workerWearable.idWearable | idWearablePipe }}</b>
+            </span>
+            <span class="horizontal-divider"> | </span>
+            <span class="epi-desc" [mdTooltip]="worker?.name">
+                <b>{{ worker.name | Limit: 30 }}</b>
+            </span>
+        </a>
+    </div>
+
+
+    <div fxLayout fxLayoutAlign="end center" class="tools">
+        <md-icon (click)="toDeleteWorkerWearable()">delete</md-icon>
+    </div>
+</safety-list-item>

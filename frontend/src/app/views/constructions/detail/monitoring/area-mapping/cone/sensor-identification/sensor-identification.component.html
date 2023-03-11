@@ -1,0 +1,16 @@
+<form id="sensorForm" [formGroup]="sensorForm" name="sensorForm">
+    <span class="sensor-identification-title">1 - Identificação do sensor</span>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" style="width: 396px">
+        <md-input-container fxFlex>
+            <input mdInput [(ngModel)]="title" formControlName="title" placeholder="Título" maxlength="100">
+            <md-error *ngIf="sensorForm.controls.title.hasError('required')">Campo Obrigatório.</md-error>
+        </md-input-container>
+        
+        <md-input-container fxFlex>
+            <input mdInput [(ngModel)]="identification" formControlName="identification" placeholder="ID" [textMask]="{ mask: coneIdMask, guide: true }">
+            <md-error *ngIf="sensorForm.controls.identification.hasError('required')">Campo Obrigatório.</md-error>
+            <md-error *ngIf="sensorForm.controls.identification.hasError('existCone')">Já existe um cone cadastrado com esse identificador.</md-error>
+            <md-error *ngIf="!sensorForm.controls.identification.hasError('required') && sensorForm.controls.identification.hasError('coneId')">Identificador inválido.</md-error>
+        </md-input-container>
+    </div>
+</form>

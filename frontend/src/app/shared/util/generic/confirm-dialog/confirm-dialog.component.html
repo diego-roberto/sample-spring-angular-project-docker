@@ -1,0 +1,12 @@
+<safety-dialog (remove)="remove($event)">
+    <safety-dialog-header>
+        {{ title }}
+    </safety-dialog-header>
+    <safety-dialog-content>
+        {{ description }}
+    </safety-dialog-content>
+    <safety-dialog-actions>
+        <button md-button class="button-default" (click)="removed.emit(false)" md-dialog-close>{{ buttons.falseValue }}</button>
+        <button md-button class="button-red" (click)="removed.emit(true)">{{ buttons.trueValue }}</button>
+    </safety-dialog-actions>
+</safety-dialog>

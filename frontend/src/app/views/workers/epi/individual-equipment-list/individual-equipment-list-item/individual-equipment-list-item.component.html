@@ -1,0 +1,32 @@
+<safety-list-item>
+  <div fxLayout="row">
+    <div fxLayout="row" fxFlex="fill" fxLayoutGap="1em" fxLayoutAlign="start center" class="info">
+      <div fxFlex="initial" class="image-wrapper">
+        <img *ngIf="hasImageToShow()" [src]="(individualEquipment.fileUrl  + '?t=' + individualEquipment.fileName) | backendPath" [alt]="individualEquipment.fileName">
+        <img *ngIf="! hasImageToShow()" src="assets/no-image-placeholder.jpg" alt="no-image">
+      </div>
+
+      <div [mdTooltip]="individualEquipment.description">
+        <p><b>{{ individualEquipment.description | Limit:50 }}</b></p>
+      </div>
+
+      <div fxFlex="initial"> | </div>
+
+      <div fxLayoutAlign="center">
+        <p>Tamanho <b>{{ individualEquipment.size }}</b></p>
+      </div>
+
+      <div fxFlex="initial"> | </div>
+
+      <div fxLayoutAlign="center">
+        <p><b>{{ individualEquipment.quantity }} unidades</b></p>
+      </div>
+    </div>
+
+    <div fxFlex="initial" fxLayoutAlign="end center" class="tools">
+        <md-icon ngClass.lt-md="slim" fxLayout fxLayoutAlign="center center" (click)="editIndividualEquipment()">edit</md-icon>
+
+        <md-icon ngClass.lt-md="slim" fxLayout fxLayoutAlign="center center" (click)="deleteIndividualEquipment()">delete</md-icon>
+    </div>
+  </div>
+</safety-list-item>

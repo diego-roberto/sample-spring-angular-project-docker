@@ -1,0 +1,16 @@
+<safety-card *ngFor="let section of sections" [noPadding]="true">
+    <safety-card-header>
+        {{section.title}}
+    </safety-card-header>
+    <safety-card-content>
+        <ul *ngFor="let date of section.dates" class="no-margin-no-padding">
+            <li>{{date.title}}</li>
+            <list-cell *ngFor="let item of date.items" 
+                text="{{item.text}}" 
+                time="{{item.time}}" 
+                icon="{{item.icon}}"
+                display="{{item.display}} ? '' : null" >
+            </list-cell>
+        </ul>
+    </safety-card-content>
+</safety-card>

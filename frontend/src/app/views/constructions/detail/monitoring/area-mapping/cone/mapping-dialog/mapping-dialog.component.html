@@ -1,0 +1,53 @@
+<safety-dialog topBarDisable>
+    <safety-dialog-header>
+        mapear
+        <button class="close" (click)="close()" md-icon-button>
+            <md-icon>clear</md-icon>
+        </button>
+    </safety-dialog-header>
+    <safety-dialog-content>
+        <div class="danger-msg" *ngIf="!loadingFilters && current === 3 && hasSomeUnableWorker()">
+            <img src="assets/icon/myconstructionsite/danger.png" alt="" class="font-unable-worker-alert danger-icon"> Você autorizou o acesso a esta área de risco para trabalhadores que não atendem aos requisitos mínimos estipulados
+            pelo Seif.
+        </div>
+        <div *ngIf="loadingCone || loadingRisks" fxLayout="column" fxLayoutAlign="center center">
+            <md-spinner class="in-component"></md-spinner>
+        </div>
+        <div *ngIf="!loadingCone && !loadingRisks">
+            <mapping-stages [current]="current" total="3" (back)="back()"></mapping-stages>
+            
+            <div *ngIf="current === 1">
+                <sensor-identification [(identification)]="cone.identification" [(title)]="cone.title" [viewMode]="viewMode" [editMode]="editMode" (validChange)="identificationValid = $event">
+                </sensor-identification>
+            </div>
+
+            <div *ngIf="current === 2" >
+                <related-risks [riskTypes]="riskTypes" [riskFactors]="riskFactors" [(risks)]="cone.risks" [viewMode]="viewMode" (validChange)="risksValid = $event">
+                </related-risks>
+            </div>
+
+            <div *ngIf="current === 3">
+                <md-spinner class="in-component" *ngIf="loadingWorkers || loadingFilters"></md-spinner>
+                <permissions-component *ngIf="!loadingWorkers && !loadingFilters" [workers]="workers" [viewMode]="viewMode" [(selected)]="selectedWorkers" [qualities]="qualities" [epis]="epis" [checkAbleWorker]="checkAbleWorker.bind(this)"
+                    (workersValid)="workersValid = $event">
+                </permissions-component>
+            </div>
+        </div>
+
+    </safety-dialog-content>
+    
+    <safety-dialog-actions>
+        <button md-button class="button-default" *ngIf="current === 1" (click)="current = 2" [disabled]="!identificationValid">Próximo</button>
+        <button md-button class="button-default" *ngIf="current === 2" (click)="current = 3" [disabled]="!risksValid">Próximo</button>
+        
+        <button md-button class="button-default" *ngIf="current === 3 && !confirming && !loadingFilters && !viewMode" (click)="finish()" [disabled]="!workersValid">Finalizar</button>
+        <button md-button class="button-default" *ngIf="current === 3 && confirming && !loadingFilters && !viewMode" (click)="cancel()" [disabled]="!workersValid">Cancelar</button>
+        <button md-button class="button-default" *ngIf="current === 3 && confirming && !loadingFilters && !viewMode" (click)="confirm()" [disabled]="!workersValid">Confirmar</button>
+        <button md-button class="button-default" *ngIf="current === 3 && !loadingFilters && viewMode" (click)="close()" [disabled]="!workersValid">Fechar</button>
+        <!--<button *nfIf="current === 2" [disabled]="">Próximo</button>
+        <button md-button class="button-default" (click)="updateStepStage('next')" *ngIf="currentStageStep < 3" [disabled]="(currentStageStep === 1 && !validSensor) || (currentStageStep === 2 && !validRisk)">{{actionButton}}</button>
+        <button md-button class="button-default" [disabled]="data?.view" (click)="finishConeMapping()" *ngIf="currentStageStep == 3 && finishBtn">{{actionButton}}</button>
+        <button md-button class="button-default" (click)="permissionCancel()" *ngIf="currentStageStep == 3 && validBtn">CANCELAR</button>
+        <button md-button class="button-default" (click)="permissionConfirm()" *ngIf="currentStageStep == 3 && validBtn">CONFIRMAR</button> -->
+    </safety-dialog-actions>
+</safety-dialog>

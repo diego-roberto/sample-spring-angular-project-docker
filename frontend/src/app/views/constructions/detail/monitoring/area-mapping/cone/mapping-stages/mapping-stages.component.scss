@@ -1,0 +1,49 @@
+@import '../../../../../../../../scss/components/color.scss';
+
+img {
+    width: 17px;
+    height: 23px;
+    object-fit: contain;
+    margin-right: 9px;
+}
+
+.back {
+    float: left;
+    clear: both;
+    opacity: 0.6;
+    background: transparent !important;
+    border: 0;
+    outline: 0;
+    margin-right: 50px;
+
+    &:hover, &:focus {
+        opacity: 1;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .mat-icon {
+        font-weight: 300;
+        color: $greyish-brown;
+    }
+
+}
+
+span {
+    font-size: 10px;
+    font-weight: 900;
+    font-style: normal;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    color: $warm-grey-four;
+
+    em {
+        color: $grapefruit;
+        font-style: normal;
+    }
+
+}
+
+div:first-of-type[fxLayoutAlign='space-between'] {
+    margin-bottom: 30px;
+}

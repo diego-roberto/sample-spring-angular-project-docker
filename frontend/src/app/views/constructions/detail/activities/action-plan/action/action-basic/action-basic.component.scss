@@ -1,0 +1,86 @@
+@import '../../../../../../../../scss/components/color.scss';
+
+.message-empty {
+    font-size: 2em;
+    font-weight: 300;
+    text-align: center;
+    color: #999999;
+    padding: 1em;
+    margin: 0;
+}
+
+.but-form {
+    flex-basis: 100%;
+    display: flex;
+    direction: rtl;
+    margin-top: 30px;
+  
+    button {
+      font-weight: normal;
+    }
+  }
+
+.action-plan-container {
+    margin: 20px 35px 20px 35px;
+}
+
+.list-item {
+    margin-bottom: 20px;
+}
+
+.separator {
+    background-color: $light-gray;
+    height: 1px;
+    flex: 1;
+    flex-grow: 1;
+}
+
+mat-card-content, .mat-card-header .mat-card-title, .mat-card-subtitle {
+    font-size: 14px;
+    background-color: aliceblue;
+}
+
+.line-info {
+
+    padding: 20px;
+
+    span {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.21;
+        text-align: left;
+        color: $greyish-brown;
+        margin: 0 10px 0 0;
+    }
+
+    .name {
+        font-weight: bold;
+        white-space: normal;
+    }
+}
+
+.status-info {
+    span {
+        font-weight: bold;
+    }
+}
+
+.status-completed {
+    color: #00BD87;
+}
+
+.status-scheduled {
+    color: #A1ABB0;
+}
+
+.status-progress {
+    color: #FFC315;
+}
+
+.status-delayed {
+    color: #FF4C4C;
+}
+
+.status-pending {
+    color: #3C3C3C;
+}

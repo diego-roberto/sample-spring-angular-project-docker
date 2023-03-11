@@ -1,0 +1,115 @@
+@import '../../../../../../../../scss/components/color.scss';
+
+p, .no-transform {
+    text-transform: none;
+}
+
+.pizza-graph {
+    margin: 0 auto;
+    width: 35%;
+}
+
+.graph-legend {
+    margin: 0 5%;
+}
+
+.graph-legend p {
+    white-space: nowrap;
+    margin: 0.25em 0;
+}
+
+.yes-tag, .no-tag, .partial-tag, .not-tag {
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.general-head {
+    text-align: center;
+}
+
+.bars-chart {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    color: white;
+    text-align: center;
+}
+
+.percent-yes {
+    background-color: $green-blue;
+}
+
+.percent-no {
+    background-color: $grapefruit;
+}
+
+.percent-partially {
+    background-color: $sunflower;
+}
+
+.percent-notApplicable {
+    background-color: $cool-grey;
+}
+
+.percent-notAnswered {
+    background-color: $greyish-brown;
+}
+
+.section-result {
+    margin-top: 20px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    // border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 40px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 2px; // padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip-top {
+    bottom: 125%;
+    left: 50%;
+    margin-left: -22px;
+}
+
+.tooltip-top::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+
+.bars-chart-text {
+    opacity: 1;
+}
+
+.bars-chart:hover .bars-chart-text {
+    opacity: 0;
+    transition: opacity 0.6s;
+}

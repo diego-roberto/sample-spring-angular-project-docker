@@ -1,0 +1,78 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;;
+}
+
+.indices {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 0.57;
+  text-align: center;
+  color: #3c3c3c;
+  width: 15px;
+}
+
+.date-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.input-date-year {
+  text-align: center;
+  width: 50px;
+  margin-left: 15px;
+  color: black;
+}
+
+thead {
+  border-bottom: 1px solid #d0d0d0;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
+  margin-left: 16vw;
+}
+
+img {
+  max-width: 15px;
+  max-height: 15px;
+}
+
+.names {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 16vw;
+}
+
+.table-paginator {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 959px) {
+  img {
+    max-width: 12px;
+    max-height: 12px;
+  }
+
+  .indices{
+    font-size: 12px;
+    width: 12px;
+  }
+
+}
+
+@media screen and (max-width: 650px) {
+  img {
+    max-width: 10px;
+    max-height: 10px;
+  }
+
+  .indices{
+    font-size: 10px;
+    width: 10px;
+  }
+
+}
