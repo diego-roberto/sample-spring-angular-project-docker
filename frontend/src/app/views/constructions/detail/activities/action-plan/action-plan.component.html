@@ -1,3 +1,0 @@
-<action-plan-list #actionPlanList *ngIf="! isActionPlanOpened()" [taskScroll]="taskScroll" (openActionPlan)="doOpenActionPlan($event)"></action-plan-list>
-
-<action-basic *ngIf="isActionPlanOpened()" [actionPlan]="actionPlan" (goBackToList)="doGoBackToList()"></action-basic>

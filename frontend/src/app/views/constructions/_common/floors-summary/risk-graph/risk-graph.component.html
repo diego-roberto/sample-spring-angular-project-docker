@@ -1,9 +1,0 @@
-<ul class="type no-margin-no-padding">
-    <li *ngFor="let risk of risks" [mdTooltip]="risk.riskType?.name + ' - ' + risk.riskFactor?.name" [ngClass]="{'biological': risk.riskType?.id == 1, 'erghonomic': risk.riskType?.id == 2 || risk.riskType?.id == 3 || risk.riskType?.id == 4, 'physical': risk.riskType?.id == 5, 'accident': risk.riskType?.id == 6, 'chemical': risk.riskType?.id == 8 }">
-        <ul class="size no-margin-no-padding">
-            <li class="low" [ngClass]="{'active': risk.level === 1}"></li>
-            <li class="medium" [ngClass]="{'active': risk.level === 2}"></li>
-            <li class="high" [ngClass]="{'active': risk.level === 3}"></li>
-        </ul>
-    </li>
-</ul>

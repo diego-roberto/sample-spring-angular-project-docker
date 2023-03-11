@@ -1,9 +1,0 @@
-<div class="alerts-tab">
-  <a class="alert-button" [ngClass]="{ active: active }" (click)="toggleActive()">
-      <div class="icon"></div>
-      <span>Alertas</span>
-  </a>
-  <ul class="alerts-dropdown no-margin-no-padding" [ngClass]="{ active: active }">
-    <safety-alerts-tab-item *ngFor="let alert of alerts" [alert]="alert"></safety-alerts-tab-item>
-  </ul>
-</div>
