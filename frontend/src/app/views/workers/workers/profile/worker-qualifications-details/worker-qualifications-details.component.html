@@ -1,9 +1,0 @@
-<safety-card-content>
-    <div *ngFor="let qualification of worker.qualifications" class="worker-info">
-        <span class="display"> {{ qualification.qualities.name }} </span>
-        <span *ngIf="qualification.nextDate" class="display"> Venc.: {{ qualification.nextDate | date: 'dd/MM/yyyy' }} </span>
-    </div>
-    <div *ngIf="worker.qualifications?.length == 0" class="worker-info">
-        <span class="display">Sem dados cadastrados</span>
-    </div>
-</safety-card-content>
