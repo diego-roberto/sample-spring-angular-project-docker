@@ -1,0 +1,36 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+
+.blue-toolbar {
+    background-color: #0047ab;
+}
+
+.navbar-brand {
+    margin-right: auto;
+  }
+  
+  .spacer {
+    flex: 1;
+  }
+  
+  button {
+    margin: 0 10px;
+  }
+
+  .navbar-container {
+    background-color: #333;
+    color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .navbar-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+  }
+  
