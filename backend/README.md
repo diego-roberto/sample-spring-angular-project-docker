@@ -29,4 +29,5 @@ Execute os seguintes comandos dentro da pasta raiz do `backend`:
 
 - `sudo chmod -R 777 ./target`
 - `sudo chmod -R 777 ./logs`
+- `sudo chmod -R 777 ./.m2`
 

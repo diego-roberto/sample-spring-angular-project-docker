@@ -3,7 +3,7 @@ FROM atlassian/default-image:2 AS BUILD_APP
 
 WORKDIR /app
 
-RUN npm install --silent -g @angular/cli@7.3.9 \
+RUN npm install --silent -g @angular/cli@15.2.2 \
     && npm install --silent -g typings
 
 COPY package*.json ./
